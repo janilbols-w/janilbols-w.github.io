@@ -9,3 +9,5 @@
 ![1717749243714](image/large_language_models_A_Survey/1717749243714.png)
 
 ![1717749355458](image/large_language_models_A_Survey/1717749355458.png)![1717749634164](image/large_language_models_A_Survey/1717749634164.png)
+
+![1717750343233](image/large_language_models_A_Survey/1717750343233.png)
