@@ -4,10 +4,12 @@ records for large language models
 
 ## 1 References
 
-| name        | link                                       | type     |
-| ----------- | ------------------------------------------ | -------- |
-| Awesome-LLM | https://github.com/Hannibal046/Awesome-LLM | 项目集合 |
-| llm-action  | https://github.com/liguodongiot/llm-action | 课程     |
+| name                                                                    | link                                         | type     |
+| ----------------------------------------------------------------------- | -------------------------------------------- | -------- |
+| Awesome-LLM                                                             | https://github.com/Hannibal046/Awesome-LLM   | 项目集合 |
+| llm-action                                                              | https://github.com/liguodongiot/llm-action   | 课程     |
+| **[LLMSys-PaperList](https://github.com/AmberLJC/LLMSys-PaperList)** | https://github.com/AmberLJC/LLMSys-PaperList | 集合     |
+| stanford-cs324                                                          | https://stanford-cs324.github.io/winter2022/ | 课程     |
 
 ## 2 Paper Reading
 
@@ -31,8 +33,6 @@ records for large language models
 | Mistrial           | https://huggingface.co/mistralai/Mistral-7B-v0.1                                           | DONE   |
 | fairscale          | https://github.com/facebookresearch/fairscale                                              | DONE   |
 | Horovod            | https://github.com/horovod/horovod                                                         | DONE   |
-
-
 
 | name            | link                                      | status                                  |
 | --------------- | ----------------------------------------- | --------------------------------------- |
