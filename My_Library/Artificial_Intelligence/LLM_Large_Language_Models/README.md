@@ -10,6 +10,7 @@ records for large language models
 | llm-action                                                              | https://github.com/liguodongiot/llm-action   | 课程     |
 | **[LLMSys-PaperList](https://github.com/AmberLJC/LLMSys-PaperList)** | https://github.com/AmberLJC/LLMSys-PaperList | 集合     |
 | stanford-cs324                                                          | https://stanford-cs324.github.io/winter2022/ | 课程     |
+| LLMSys-cmu-course                                                       | https://llmsystem.github.io/llmsystem2024spring/docs/Syllabus | 课程 |
 
 ## 2 Paper Reading
 
