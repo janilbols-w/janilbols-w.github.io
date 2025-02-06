@@ -1,12 +1,12 @@
-# My Notes
-
-[FlashAttention](./model/flash_attention.md)
-
-[DeepSeek](./model/deepseek.md)
-
-[AI Agent](./survey/ai_agent/summary.md)
-
 # LLM Readings
+
+## My Notes
+
+|                                           |  |
+| ----------------------------------------- | - |
+| [FlashAttention](./model/flash_attention.md) |  |
+| [DeepSeek](./model/deepseek.md)              |  |
+| [AI Agent](./survey/ai_agent/summary.md)     |  |
 
 ## Milestone Papers ([Awesome LLM](https://github.com/Hannibal046/Awesome-LLM/edit))
 
