@@ -1,16 +1,16 @@
 # DeepSeek Paper Reading
 
-|    | date     |                      | title | link | abstract | details                                                       |
-| -- | -------- | -------------------- | ----- | ---- | -------- | ------------------------------------------------------------- |
-| 1  | 20240105 | DeepSeek LLM         |       |      |          | [details](./deepseek-paper/"01-DeepSeek LLM.2401.02954v1".md) |
-| 2  | 20240111 | DeepSeek MoE         |       |      |          |                                                               |
-| 3  | 20240126 | DeepSeek Coder       |       |      |          |                                                               |
-| 4  | 20240311 | DeepSeek VL          |       |      |          |                                                               |
-| 5  | 20240523 | DeepSeek Prover      |       |      |          |                                                               |
-| 6  | 20240617 | DeepSeek Coder-V2    |       |      |          |                                                               |
-| 7  | 20240619 | DeepSeek V2          |       |      |          |                                                               |
-| 8  | 20240815 | DeepSeek Prover-V1.5 |       |      |          |                                                               |
-| 9  | 20241213 | DeepSeek VL2         |       |      |          |                                                               |
-| 10 | 20241227 | DeepSeek v3          |       |      |          |                                                               |
-| 11 | 20250122 | DeepSeek R1          |       |      |          |                                                               |
-| 12 | 20250129 | Janus-Pro            |       |      |          |                                                               |
+|    | date     |                      | title                                                                                                                 | link                            | abstract | details                                                       |
+| -- | -------- | -------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------- | -------- | ------------------------------------------------------------- |
+| 1  | 20240105 | DeepSeek LLM         | DeepSeek LLM: Scaling Open-Source<br />Language Models with Longtermism                                               | http://arxiv.org/abs/2401.02954 |          | [details]("./deepseek-paper/01-DeepSeek LLM.2401.02954v1".md) |
+| 2  | 20240111 | DeepSeek MoE         | DeepSeekMoE: Towards Ultimate Expert<br />Specialization in Mixture-of-Experts Language Models                        | http://arxiv.org/abs/2401.06066 |          |                                                               |
+| 3  | 20240126 | DeepSeek Coder       | DeepSeek-Coder: When the Large Language<br />Model Meets Programming -- The Rise of Code Intelligence                 | http://arxiv.org/abs/2401.14196 |          |                                                               |
+| 4  | 20240311 | DeepSeek VL          | DeepSeek-VL: Towards Real-World<br />Vision-Language Understanding                                                    | http://arxiv.org/abs/2403.05525 |          |                                                               |
+| 5  | 20240523 | DeepSeek Prover      | DeepSeek-Prover: Advancing Theorem<br />Proving in LLMs through Large-Scale Synthetic Data                            | http://arxiv.org/abs/2405.14333 |          |                                                               |
+| 6  | 20240617 | DeepSeek Coder-V2    | DeepSeek-Coder-V2: Breaking the Barrier<br /> of Closed-Source Models in Code Intelligence                            | http://arxiv.org/abs/2406.11931 |          |                                                               |
+| 7  | 20240619 | DeepSeek V2          | DeepSeek-V2: A Strong, Economical, and Efficient<br />Mixture-of-Experts Language Model                               | http://arxiv.org/abs/2405.04434 |          |                                                               |
+| 8  | 20240815 | DeepSeek Prover-V1.5 | DeepSeek-Prover-V1.5: Harnessing Proof Assistant<br />Feedback for Reinforcement Learning and Monte-Carlo Tree Search | http://arxiv.org/abs/2408.08152 |          |                                                               |
+| 9  | 20241213 | DeepSeek VL2         | DeepSeek-VL2: Mixture-of-Experts Vision-Language<br />Models for Advanced Multimodal Understanding                    | http://arxiv.org/abs/2412.10302 |          |                                                               |
+| 10 | 20241227 | DeepSeek v3          | DeepSeek-V3 Technical Report                                                                                          | http://arxiv.org/abs/2412.19437 |          |                                                               |
+| 11 | 20250122 | DeepSeek R1          | DeepSeek-R1: Incentivizing Reasoning Capability<br /> in LLMs via Reinforcement Learning                              | http://arxiv.org/abs/2501.12948 |          |                                                               |
+| 12 | 20250129 | Janus-Pro            | Janus-Pro: Unified Multimodal Understanding and<br />Generation with Data and Model Scaling                           | http://arxiv.org/abs/2501.17811 |          |                                                               |
