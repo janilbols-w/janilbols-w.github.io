@@ -18,6 +18,8 @@ records for large language models
 
 ## 3 Projects (Hands on)
 
+[LLM Implementation](llm_projects/llm_implementation.md)
+
 | name               | link                                                                                       | status |
 | ------------------ | ------------------------------------------------------------------------------------------ | ------ |
 | llama1/2/3         | https://github.com/meta-llama/llama<br />https://github.com/meta-llama/llama3              | DONE   |
