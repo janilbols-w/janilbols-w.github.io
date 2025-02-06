@@ -1,6 +1,6 @@
 # DeepSeek Paper Reading
 
-![1738815408441](image/deepseek/1738815408441.png)
+![1738832448322](image/deepseek/1738832448322.png)
 
 ## 1 DeepSeek LLM
 
