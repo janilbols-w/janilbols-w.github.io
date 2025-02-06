@@ -4,17 +4,17 @@ records for large language models
 
 ## 1 References
 
-| name                                                                    | link                                         | type     |
-| ----------------------------------------------------------------------- | -------------------------------------------- | -------- |
-| Awesome-LLM                                                             | https://github.com/Hannibal046/Awesome-LLM   | 项目集合 |
-| llm-action                                                              | https://github.com/liguodongiot/llm-action   | 课程     |
-| **[LLMSys-PaperList](https://github.com/AmberLJC/LLMSys-PaperList)** | https://github.com/AmberLJC/LLMSys-PaperList | 集合     |
-| stanford-cs324                                                          | https://stanford-cs324.github.io/winter2022/ | 课程     |
-| LLMSys-cmu-course                                                       | https://llmsystem.github.io/llmsystem2024spring/docs/Syllabus | 课程 |
+| name                                                                    | link                                                          | type     |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------- | -------- |
+| Awesome-LLM                                                             | https://github.com/Hannibal046/Awesome-LLM                    | 项目集合 |
+| llm-action                                                              | https://github.com/liguodongiot/llm-action                    | 课程     |
+| **[LLMSys-PaperList](https://github.com/AmberLJC/LLMSys-PaperList)** | https://github.com/AmberLJC/LLMSys-PaperList                  | 集合     |
+| stanford-cs324                                                          | https://stanford-cs324.github.io/winter2022/                  | 课程     |
+| LLMSys-cmu-course                                                       | https://llmsystem.github.io/llmsystem2024spring/docs/Syllabus | 课程     |
 
 ## 2 Paper Reading
 
-[LLM Paper Readings](./llm_papers/README.md)
+[LLM Paper Readings](reading_room/artificial_intelligence/llm_large_language_models/llm_papers/README.md)
 
 ## 3 Projects (Hands on)
 
