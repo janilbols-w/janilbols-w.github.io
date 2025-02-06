@@ -1,3 +1,11 @@
+# My Notes
+
+[FlashAttention](./model/flash_attention.md)
+
+[DeepSeek](./model/deepseek.md)
+
+[AI Agent](./survey/ai_agent/summary.md)
+
 # LLM Readings
 
 ## Milestone Papers ([Awesome LLM](https://github.com/Hannibal046/Awesome-LLM/edit))
@@ -56,8 +64,6 @@
 | 2023-10 |      Mistral 7B      |      Mistral      | [Mistral 7B](https://arxiv.org/pdf/2310.06825.pdf)                                                                                                                                                                 |                |      `<br>`![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fdb633c6b1c286c0386f0078d8a2e6224e03a6227%3Ffields%3DcitationCount&query=%24.citationCount&label=citation)      |
 | 2023-12 |        Mamba        |   CMU&Princeton   | [Mamba: Linear-Time Sequence Modeling with Selective State Spaces](https://arxiv.org/ftp/arxiv/papers/2312/2312.00752.pdf)                                                                                         |                |          ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F432bef8e34014d726c674bc458008ac895297b51%3Ffields%3DcitationCount&query=%24.citationCount&label=citation)          |
 | 2024-03 |        Jamba        |     AI21 Labs     | [Jamba: A Hybrid Transformer-Mamba Language Model](https://arxiv.org/pdf/2403.19887)                                                                                                                               |                |          ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fcbaf689fd9ea9bc939510019d90535d6249b3367%3Ffields%3DcitationCount&query=%24.citationCount&label=citation)          |
-
-
 
 ## 2 Videos
 
