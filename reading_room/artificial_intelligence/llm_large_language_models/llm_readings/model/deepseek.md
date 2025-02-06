@@ -17,6 +17,8 @@
 | 11 | 20250122 | DeepSeek R1          | DeepSeek-R1: Incentivizing Reasoning Capability<br /> in LLMs via Reinforcement Learning                              | [link](http://arxiv.org/abs/2501.12948) | 通过大规模强化学习开发第一代推理模型 DeepSeek-R1-Zero，该模型在<br />推理任务中展现出强大的能力，但存在一些问题，如可读性差和语言混合。<br />为解决这些问题，引入 DeepSeek-R1，通过多阶段训练和冷启动数据，<br />使其在推理任务上的性能与 OpenAI-o1-1217 相当。此外，还探索了从 <br />DeepSeek-R1 到较小密集模型的蒸馏，提高了模型的推理能力。 | [details](./deepseek-paper/11-DeepSeek-R1.2501.12948v1.md)          |
 | 12 | 20250129 | Janus-Pro            | Janus-Pro: Unified Multimodal Understanding and<br />Generation with Data and Model Scaling                           | [link](http://arxiv.org/abs/2501.17811) | 对 Janus 模型进行改进，优化训练策略，扩展训练数据，增加模型规模，<br />提升了多模态理解和文本到图像指令跟随能力。在多个基准测试中表现<br />出色，优于之前的统一多模态模型和一些任务特定模型，为多模态理解<br />和生成领域的发展提供了新的解决方案。                                                                                            | [details](./deepseek-paper/12-Janus-Pro.2501.17811v1.md)            |
 
+
+
 ## 1 **DeepSeek LLM**
 
 * **模型与数据** ：DeepSeek LLM 基于 Transformer 架构，7B 和 67B 模型在数据收集和预处理上有严格流程，如采用多种策略进行数据 deduplication、filtering 和 remixing。
