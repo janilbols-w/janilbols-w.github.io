@@ -14,7 +14,7 @@ records for large language models
 
 ## 2 Paper Reading
 
-[LLM Paper Readings](reading_room/artificial_intelligence/llm_large_language_models/llm_papers/README.md)
+[LLM Paper Readings](llm_papers/README.md)
 
 ## 3 Projects (Hands on)
 
