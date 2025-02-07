@@ -1,4 +1,4 @@
-# eepSeek LLM Scaling Open-Source Language Models with Longtermism
+# DeepSeek LLM Scaling Open-Source Language Models with Longtermism
 
 Date: 5 Jan 2024
 
@@ -83,6 +83,7 @@ Budget could be a restriction!
 ```
 
 ### 3.1 Scaling Laws and Hyperparameter choosing
+
 ```
 OPTIMIZE TARGET:
 SAME COST, BEST RESULT
@@ -92,7 +93,7 @@ batchsize & iterations are adjustable
 - We established the scaling laws for hyperparameters, providing an empirical framework for determining the optimal hyperparameters.
 - Instead of model parameters N, we adopt non-embedding FLOPs/token M to represent the model scale, leading to a more accurate optimal model/data scaling-up allocation strategy and a better prediction of generalization loss for large-scale models.
 - The quality of pre-training data impacts the optimal model/data scaling-up allocation strategy. The higher the data quality, the more the increased compute budget should be allocated to model scaling.
-![1738908682011](image/01-DeepSeekLLM.2401.02954v1/1738908682011.png)
+  ![1738908682011](image/01-DeepSeekLLM.2401.02954v1/1738908682011.png)
 
 ![1738909133689](image/01-DeepSeekLLM.2401.02954v1/1738909133689.png)
 
@@ -100,17 +101,21 @@ batchsize & iterations are adjustable
 - assume the team found this pattern, the plot indicates the best choice for hyperparameter settings
 
 ### 3.2 Optimal Model and Data Scaling
+
 ```
 Given fixed amount of data, the best model size could be estimated
 ```
+
 ![1738930897792](image/01-DeepSeekLLM.2401.02954v1/1738930897792.png)
 
-
 ## 4 Eval (skip)
+
 ## 5 Discussion (skip)
+
 ## Conclusion
-- In this paper, we provide an in-depth explanation of hyper-parameters selection, scaling laws, as well as the various fine-tuning attempts we made. 
-- We calibrate the scaling laws in the previous work and propose a new optimal model/data scaling-up allocation strategy. 
-- In addition, we present a method to predict the near-optimal batch size and learning rate with given compute budget. 
-- We further conclude that the scaling laws is related to the data quality, which might be the root cause of varying scaling behavior in different works. 
+
+- In this paper, we provide an in-depth explanation of hyper-parameters selection, scaling laws, as well as the various fine-tuning attempts we made.
+- We calibrate the scaling laws in the previous work and propose a new optimal model/data scaling-up allocation strategy.
+- In addition, we present a method to predict the near-optimal batch size and learning rate with given compute budget.
+- We further conclude that the scaling laws is related to the data quality, which might be the root cause of varying scaling behavior in different works.
 - Guided by the scaling laws, we conduct pre-training with the best hyper-parameter and provide a comprehensive evaluation.
