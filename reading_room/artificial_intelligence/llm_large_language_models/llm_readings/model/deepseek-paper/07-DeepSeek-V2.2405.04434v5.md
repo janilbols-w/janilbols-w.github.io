@@ -77,12 +77,13 @@
 - SFT
 - ⭐RL: Group Relative Policy Optimization (GRPO)
 - ⭐Optimizations for Training Efficiency
+
   - 1) we propose a hybrid engine that adopts different parallel strategies for training and inference respectively to achieve higher GPU utilization
   - 2) we leverage vLLM with large batch sizes as our inference backend to accelerate the inference speed
   - 3) we carefully design a scheduling strategy for offloading models to CPUs and loading models back to GPUs, which achieves a near-optimal balance between the training speed and memory consumption
-
 - Performance (skip)
 - Discussion
+
   - ⭐Amount of SFT Data
     - Our observation underscores the critical need for sufficient data to equip an LLM with desired capabilities.
     - quality of SFT data is also crucial
@@ -92,11 +93,12 @@
     - we find that the online approach significantly outperforms the offline approach
 
 ## 5 Conclusion, limiations and future work
+
 - Economical training and efficient inference, benefit from MLA & DeepSeekMoE architecture
 - Stronger but cheaper
-  - achieves significantly stronger performance, 
-  - and meanwhile saves 42.5% of training costs, 
-  - reduces the KV cache by 93.3%, 
+  - achieves significantly stronger performance,
+  - and meanwhile saves 42.5% of training costs,
+  - reduces the KV cache by 93.3%,
   - and boosts the maximum generation throughput to 5.76 times.
 - Future work
   - scale up
