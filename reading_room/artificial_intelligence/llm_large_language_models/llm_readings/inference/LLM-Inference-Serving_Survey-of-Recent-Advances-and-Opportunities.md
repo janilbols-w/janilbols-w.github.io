@@ -15,34 +15,8 @@
   - and scaling LLMs in real-world production environments.
 - This survey serves as a valuable resource for LLM practitioners seeking to stay abreast of the latest developments in this rapidly evolving field.
 
-## 1 Introduction
+![1740103233681](image/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities/1740103233681.png)
 
-Three sections for system level enhancements
-
-- KV cache and memory management
-  - Efficient Management of KV Cache
-    - PagedAttention
-      - advantage: significantly reduces the memory waste on pre-allocation and fragmentation
-      - TGI/vLLM/TensorRT-LLM supported
-      - drawback!!! requires rewriting attention kernels
-    - vAttention: “vattention: Dynamic memory management for serving llms without pagedattention,” arXiv preprint arXiv:2405.04437, 2024
-  - Support for Long-Context Applications
-  - Compression of KV Cache
-- LLM computation optimization
-- Cloud LLM deployment.
-
-
-## 2 Background
-
-## 3 Memroy Management and Caching
-
-## 4 Computation Task Scheduling
-
-## 5 LLMs in the Cloud
-
-## 6 Emerging Reasearch Fields
-
-## 7 Conclusion
 
 ## Reference
 
