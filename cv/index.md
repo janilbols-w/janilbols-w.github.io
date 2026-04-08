@@ -96,66 +96,6 @@ hide_sidebar: true
     </details>
   </section>
 
-  <section class="cv-card">
-    <h2>Selected Highlights</h2>
-
-    <details class="cv-project">
-      <summary>China Mobile MaaS and vLLM Workload Planning</summary>
-      <div class="cv-project-body">
-        <p>Supported model deployment planning and resource analysis for China Mobile-related A100 environments spanning MaaS, vLLM, Qwen, DeepSeek, agent, RAG, multimodal, and training workloads, including fractional-GPU allocations as well as 1, 2, 4, 8, and 16 GPU deployment patterns.</p>
-      </div>
-    </details>
-
-    <details class="cv-project">
-      <summary>DeepSeek V3 671B Public Cloud Validation</summary>
-      <div class="cv-project-body">
-        <p>Prepared and executed public-cloud validation for DeepSeek V3 across native and Orion cross-node setups, covering image and environment preparation, monitoring, vLLM-based benchmarking, 2-node 16-GPU tests, and feasibility analysis under A100 constraints such as FP8 kernel limitations, memory pressure, and long model load times.</p>
-      </div>
-    </details>
-
-    <details class="cv-project">
-      <summary>LLM Adaptation and Optimization</summary>
-      <div class="cv-project-body">
-        <p>Tracked major LLM projects and evaluated how virtualization products interact with training and inference stacks, including tensor parallelism, pipeline parallelism, operator optimization, and graph-level optimization.</p>
-      </div>
-    </details>
-
-    <details class="cv-project">
-      <summary>Distributed Training Stack Adaptation</summary>
-      <div class="cv-project-body">
-        <p>Implemented NCCL-based adaptation strategies for distributed workloads across Horovod, torch.DP, torch.DDP, tf.dist.MirroredStrategy, Ray, DeepSpeed, Megatron, and FSDP-related scenarios.</p>
-      </div>
-    </details>
-
-    <details class="cv-project">
-      <summary>SF Express GPU Pooling and 25G Data Center PoC</summary>
-      <div class="cv-project-body">
-        <p>Designed and executed validation scenarios across A100, V100, and CPU nodes, covering local baselines, remote single-GPU and multi-GPU access, and cross-node aggregation for OrionX on 25Gb RoCE.</p>
-      </div>
-    </details>
-
-    <details class="cv-project">
-      <summary>Guangdong Power Grid AI Image Analysis Pooling Assessment</summary>
-      <div class="cv-project-body">
-        <p>Assessed compute and deployment challenges for drone inspection image processing workloads involving roughly 50 million archived images, around 60 servers, and about 90 GPUs, with focus on multi-GPU execution efficiency and resource utilization.</p>
-      </div>
-    </details>
-
-    <details class="cv-project">
-      <summary>Framework and Open-Source Stack Adaptation</summary>
-      <div class="cv-project-body">
-        <p>Adapted and analyzed TensorFlow Serving, fairseq, horovod, mmcv, transformers, bitsandbytes, TensorRT-LLM, Ray, vLLM, and DeepSeek-related workloads, with emphasis on correctness, compatibility, and performance bottlenecks under virtualization scenarios.</p>
-      </div>
-    </details>
-
-    <details class="cv-project">
-      <summary>Elastic Training and Training Robustness Research</summary>
-      <div class="cv-project-body">
-        <p>Researched product-aligned solutions for long-running large-model training robustness, with focus on stability risks and recovery strategies in large-scale LLM cluster training.</p>
-      </div>
-    </details>
-  </section>
-
   <div class="cv-grid">
     <section class="cv-card">
       <h2>Strengths</h2>
@@ -167,9 +107,5 @@ hide_sidebar: true
       </ul>
     </section>
 
-    <section class="cv-card">
-      <h2>Profile</h2>
-      <p class="cv-note">Critical thinker with strong curiosity for new technologies, fast learning ability, and solid execution in cross-team engineering environments. Comfortable operating across research, product design, implementation, and customer-facing technical support.</p>
-    </section>
   </div>
 </div>
