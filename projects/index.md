@@ -5,8 +5,6 @@ permalink: /projects/
 
 Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w).
 
-Generated: 2026-04-08 15:27 UTC
-
 ## Snapshot
 
 - Total repositories tracked: 73
@@ -94,4 +92,5 @@ Generated: 2026-04-08 15:27 UTC
 ## Notes
 
 - This page is generated automatically; avoid manual edits.
+- The page updates only when repository/event data changes, reducing noisy commits.
 - For private repositories, GitHub API may not expose details without token-based auth.

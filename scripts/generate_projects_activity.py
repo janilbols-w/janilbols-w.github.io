@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from urllib import error, request
@@ -61,7 +61,6 @@ def summarize_event(event: dict[str, Any]) -> str:
 
 
 def build_projects_page(repos: list[dict[str, Any]], repo_events: dict[str, dict[str, str]]) -> str:
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines: list[str] = [
         "---",
         "title: GitHub Projects Tracker",
@@ -69,8 +68,6 @@ def build_projects_page(repos: list[dict[str, Any]], repo_events: dict[str, dict
         "---",
         "",
         f"Auto-tracked updates for [github.com/{OWNER}](https://github.com/{OWNER}).",
-        "",
-        f"Generated: {generated_at}",
         "",
         "## Snapshot",
         "",
@@ -112,6 +109,7 @@ def build_projects_page(repos: list[dict[str, Any]], repo_events: dict[str, dict
             "## Notes",
             "",
             "- This page is generated automatically; avoid manual edits.",
+            "- The page updates only when repository/event data changes, reducing noisy commits.",
             "- For private repositories, GitHub API may not expose details without token-based auth.",
         ]
     )

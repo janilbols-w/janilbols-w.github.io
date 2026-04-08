@@ -7,7 +7,7 @@ hide_sidebar: true
 <div class="cv-page">
   <section class="cv-hero">
     <p class="page-kicker">One-Page Resume</p>
-    <h1>Wuichak Wong</h1>
+    <h1>janilbols</h1>
     <p class="cv-role">Senior LLM Inference Engineer | AI Platform ｜ GPU Platform </p>
     <p class="cv-summary">LLM inference engineer focused on vLLM production serving, GPU efficiency, and service reliability. Experienced in building multi-tenant inference platforms with strong observability, SLO-driven operations, and continuous latency/throughput optimization.</p>
     <div class="cv-meta">

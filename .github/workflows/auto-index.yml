@@ -1,25 +1,14 @@
 name: Auto Generate Index Pages
 
 on:
-  push:
-    branches:
-      - master
-      - main
-    paths:
-      - "garage/**"
-      - "reading_room/**"
-      - "projects/**"
-      - "cv/**"
-      - "index.md"
-      - "navigator.md"
-      - "scripts/generate_indexes.py"
-      - "scripts/generate_page_dates.py"
-      - "scripts/generate_sidebar.py"
-      - "!**/index.md"
   schedule:
-    # Run daily at 02:00 UTC as a safety net for any missed triggers
+    # Run daily as a safety net to keep generated pages synced.
     - cron: "0 2 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: auto-index-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write

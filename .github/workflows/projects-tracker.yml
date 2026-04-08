@@ -2,15 +2,12 @@ name: Track GitHub Projects
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */12 * * *"
   workflow_dispatch:
-  push:
-    branches:
-      - master
-      - main
-    paths:
-      - "scripts/generate_projects_activity.py"
-      - ".github/workflows/projects-tracker.yml"
+
+concurrency:
+  group: projects-tracker-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
