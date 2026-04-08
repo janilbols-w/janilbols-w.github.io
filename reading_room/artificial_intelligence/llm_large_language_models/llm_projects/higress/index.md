@@ -6,6 +6,10 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 <!-- AUTO-GENERATED:START -->
 
+## Sections
+
+- [Wasm Plugins]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/wasm-plugins/' | relative_url }})
+
 ## Pages
 
 - [README]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/README/' | relative_url }})

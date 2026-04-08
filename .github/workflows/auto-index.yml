@@ -8,8 +8,7 @@ on:
     paths:
       - "**/*.md"
       - "**/*.drawio"
-    paths-ignore:
-      - "**/index.md"
+      - "!**/index.md"
   workflow_dispatch:
 
 permissions:
