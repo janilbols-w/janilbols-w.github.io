@@ -43,11 +43,19 @@ jobs:
         run: |
           # List directories under garage/ and reading_room/ that have no index.md.
           # This step is informational only and must not fail the workflow.
-          MISSING=$(find garage reading_room -type d | while IFS= read -r d; do
-            if [ ! -f "$d/index.md" ]; then
-              echo "$d"
-            fi
-          done || true)
+          MISSING=$(
+            {
+              for base in garage reading_room; do
+                if [ -d "$base" ]; then
+                  find "$base" -type d
+                fi
+              done
+            } | while IFS= read -r d; do
+              if [ ! -f "$d/index.md" ]; then
+                echo "$d"
+              fi
+            done
+          ) || true
           if [ -n "$MISSING" ]; then
             echo "Found directories without index.md:"
             echo "$MISSING"
