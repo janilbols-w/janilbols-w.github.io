@@ -12,6 +12,6 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Pages
 
-- [README]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/README/' | relative_url }})
+- [Higress Overview]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/higress-overview/' | relative_url }})
 
 <!-- AUTO-GENERATED:END -->

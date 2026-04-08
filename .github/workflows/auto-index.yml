@@ -9,6 +9,7 @@ on:
       - "garage/**"
       - "reading_room/**"
       - "scripts/generate_indexes.py"
+      - "scripts/generate_sidebar.py"
       - "!**/index.md"
   schedule:
     # Run daily at 02:00 UTC as a safety net for any missed triggers
@@ -36,13 +37,18 @@ jobs:
       - name: Detect new directories
         id: new-dirs
         run: |
-          # List directories under garage/ and reading_room/ that have no index.md
-          MISSING=$(find garage reading_room -type d | while read d; do
-            [ ! -f "$d/index.md" ] && echo "$d"
-          done)
+          # List directories under garage/ and reading_room/ that have no index.md.
+          # This step is informational only and must not fail the workflow.
+          MISSING=$(find garage reading_room -type d | while IFS= read -r d; do
+            if [ ! -f "$d/index.md" ]; then
+              echo "$d"
+            fi
+          done || true)
           if [ -n "$MISSING" ]; then
             echo "Found directories without index.md:"
             echo "$MISSING"
+          else
+            echo "No directories without index.md found."
           fi
 
       - name: Generate index pages
