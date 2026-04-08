@@ -1,6 +1,6 @@
 | name                                                                                                                                     | keyword | notes |
 | ---------------------------------------------------------------------------------------------------------------------------------------- | ------- | ----- |
-| [A Framework For Intelligent Multi-Agent System Based Neural Networks](https://arxiv.org/pdf/0910.2029)                                     |         |       |
+| [A Framework For Intelligent Multi-Agent System Based Neural Networks](https://arxiv.org/abs/0910.2029)                                     |         |       |
 | [A Survey on Context-Aware Multi-Agent Systems](https://arxiv.org/abs/2402.01968)                                                           |         |       |
 | [Visibility into AI Agents](https://arxiv.org/abs/2401.13138)                                                                               |         |       |
 | [LLM Multi-Agent Systems - Challenges and Open Problems](https://arxiv.org/abs/2402.03578)                                                 |         |       |

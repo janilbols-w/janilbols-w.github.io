@@ -4,7 +4,7 @@
 
 # 1 Flash Attention
 
-https://arxiv.org/pdf/2205.14135
+https://arxiv.org/abs/2205.14135
 
 ![1718850667200](image/flash_attention/1718850667200.png)
 
@@ -59,4 +59,4 @@ https://arxiv.org/pdf/2205.14135
 
 FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning
 
-https://arxiv.org/pdf/2307.08691
+https://arxiv.org/abs/2307.08691

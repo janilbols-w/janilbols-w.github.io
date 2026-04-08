@@ -1,6 +1,6 @@
 # **[General] Large Language Models: A Survey**
 
-* **source**: https://arxiv.org/pdf/2402.06196
+* **source**: https://arxiv.org/abs/2402.06196
 
 ![1717749148835](image/large_language_models_A_Survey/1717749148835.png)
 

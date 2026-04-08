@@ -1,6 +1,41 @@
+# Keep PDFs local but do not commit new PDF files by default.
 *.pdf
+.DS_Store
+__pycache__/
 _site/
 .jekyll-cache/
 .sass-cache/
 .bundle/
 vendor/bundle/
+.jekyll-metadata
+.jekyll/
+/.ruby-lsp/
+
+# Python caches and virtual environments
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE/editor and OS temp files
+.idea/
+.vscode-test/
+Thumbs.db
+
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.swn

@@ -11,6 +11,7 @@ Behavior:
 from __future__ import annotations
 
 import argparse
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -28,7 +29,28 @@ class DirEntry:
 
 
 def title_from_name(name: str) -> str:
-    return name.replace("_", " ").replace("-", " ").strip().title() or "Index"
+    normalized = name.replace("_", " ").replace("-", " ").strip()
+    if not normalized:
+        return "Index"
+
+    token_map = {
+        "ai": "AI",
+        "llm": "LLM",
+        "latex": "LaTeX",
+        "readme": "README",
+        "api": "API",
+        "gpu": "GPU",
+        "kvcache": "KVCache",
+        "vllm": "vLLM",
+        "deepseek": "DeepSeek",
+    }
+
+    words = []
+    for token in normalized.split():
+        lower = token.lower()
+        words.append(token_map.get(lower, token.title()))
+
+    return " ".join(words)
 
 
 def is_markdown_file(path: Path) -> bool:
@@ -136,7 +158,22 @@ def update_existing_index(existing: str, auto_block: str) -> str:
     if start == -1 or end == -1 or end < start:
         return existing
     end += len(END_MARKER)
-    return f"{existing[:start]}{auto_block}{existing[end:]}"
+    suffix = existing[end:].lstrip("\n")
+    return f"{existing[:start]}{auto_block}{suffix}"
+
+
+def refresh_frontmatter_title(existing: str, title: str) -> str:
+    match = re.match(r"^(---\n.*?\n---\n)", existing, flags=re.DOTALL)
+    if not match:
+        return existing
+
+    frontmatter = match.group(1)
+    if re.search(r"^title:\s*.*$", frontmatter, flags=re.MULTILINE):
+        new_frontmatter = re.sub(r"^title:\s*.*$", f"title: {title}", frontmatter, count=1, flags=re.MULTILINE)
+    else:
+        new_frontmatter = frontmatter.replace("---\n", f"---\ntitle: {title}\n", 1)
+
+    return f"{new_frontmatter}{existing[match.end():]}"
 
 
 def iter_target_dirs(roots: Iterable[Path]) -> Iterable[Path]:
@@ -156,6 +193,8 @@ def iter_target_dirs(roots: Iterable[Path]) -> Iterable[Path]:
 
 def process_dir(current_dir: Path, root_dir: Path, force: bool, dry_run: bool) -> tuple[bool, str]:
     index_path = current_dir / "index.md"
+    rel = current_dir.relative_to(root_dir)
+    title = title_from_name(current_dir.name) if rel.as_posix() != "." else "Home"
 
     # Only create/update index for directories that have useful note content.
     if not has_note_content(current_dir):
@@ -171,7 +210,7 @@ def process_dir(current_dir: Path, root_dir: Path, force: bool, dry_run: bool) -
     auto_block = render_auto_block(current_dir, root_dir)
 
     if START_MARKER in existing and END_MARKER in existing:
-        updated = update_existing_index(existing, auto_block)
+        updated = refresh_frontmatter_title(update_existing_index(existing, auto_block), title)
         if updated != existing:
             if not dry_run:
                 index_path.write_text(updated, encoding="utf-8")
