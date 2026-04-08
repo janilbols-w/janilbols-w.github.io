@@ -1,1 +1,6 @@
 *.pdf
+_site/
+.jekyll-cache/
+.sass-cache/
+.bundle/
+vendor/bundle/

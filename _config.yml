@@ -1,0 +1,38 @@
+title: Janilbols Home Page
+description: Personal notes on Kubernetes, LLM systems, and engineering topics.
+url: "https://janilbols-w.github.io"
+baseurl: ""
+lang: zh-CN
+timezone: Asia/Shanghai
+markdown: kramdown
+kramdown:
+  input: GFM
+highlighter: rouge
+permalink: pretty
+
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-relative-links
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+readme_index:
+  enabled: true
+  remove_originals: false
+
+relative_links:
+  enabled: true
+  collections: true
+
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+exclude:
+  - Gemfile.lock
+  - vendor/
+  - node_modules/

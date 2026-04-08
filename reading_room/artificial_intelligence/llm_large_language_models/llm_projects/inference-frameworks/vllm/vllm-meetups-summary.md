@@ -1,4 +1,3 @@
-
 # Reference
 
 * [The eighth vLLM meetup](https://lu.ma/zep56hui), with Google Cloud, January 22nd 2025. [[Slides]](https://docs.google.com/presentation/d/1epVkt4Zu8Jz_S5OhEHPc798emsYh2BwYfRuDDVEF7u4/edit?usp=sharing)
@@ -33,3 +32,32 @@
 | overview  | Features<br />  - wide range models<br />  - wide range hardware supports<br />  - ⭐coverage of inference optimizations<br />    - Quantization<br />    - Prefix Caching<br />    - Multi-LoRA<br />    - Tensor Parallism                                                                                                       |
 | update    | 1. model support<br />  - support llava, vision language models<br />2. hardware support<br />3. features<br />4. ⭐performance optimization<br />  - MoE kernels<br />  - Marlin Kernel for quantization<br />  - Spectulative decoding<br />5. ⭐refactoring<br />  - attention backend<br />  - model executor<br />6. oss community |
 | roadmap   |                                                                                                                                                                                                                                                                                                                                               |
+
+# 04 Fourth Meetup [[Slides]](https://docs.google.com/presentation/d/1iJ8o7V2bQEi0BFEljLTwc5G1S10_Rhv3beed5oB0NJ4/edit?usp=sharing)
+
+| components            | notes                                                        |
+| --------------------- | ------------------------------------------------------------ |
+| vllm intro            | ![1741001785525](image/vllm-meetups-summary/1741001785525.png) |
+| update                | ![1741002404217](image/vllm-meetups-summary/1741002404217.png) |
+| roadmap               | ![1741002386303](image/vllm-meetups-summary/1741002386303.png) |
+| spec decode deep dive | ![1741002877354](image/vllm-meetups-summary/1741002877354.png) |
+
+# 05 Fifth Meetup
+
+| component         | notes                                                                                                                                                                                                                      |  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | - |
+| vllm intro        |                                                                                                                                                                                                                            |  |
+| update            | 1. more models: llama3.1<br />2. diverse quant<br />3. ⭐cpu offloading<br />4. ⭐pipeline parallel<br />5. spec decoding<br />6. TPU support<br />7. performance benchmark<br />8. new cli (vllm {serve, chat, complete}) |  |
+| roadmap           | ![1741003265139](image/vllm-meetups-summary/1741003265139.png)                                                                                                                                                               |  |
+| pipeline parallel | no slide?                                                                                                                                                                                                                  |  |
+
+# 06 Sixth Meetup
+
+| components        | notes                                                                                                                          | col3 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---- |
+| vllm intro        |                                                                                                                                |      |
+| update            | ![1741003732441](image/vllm-meetups-summary/1741003732441.png)<br />![1741003741641](image/vllm-meetups-summary/1741003741641.png) |      |
+| roadmap           | ![1741003757819](image/vllm-meetups-summary/1741003757819.png)                                                                   |      |
+| pipeline parallel | ![1741003979430](image/vllm-meetups-summary/1741003979430.png)                                                                   |      |
+
+# 07 Seventh Meetup
