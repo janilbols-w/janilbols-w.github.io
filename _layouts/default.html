@@ -22,16 +22,69 @@
 
     <main class="shell page-shell">
       <aside class="page-sidebar">
-        <p class="sidebar-label">Sections</p>
-        <a href="{{ '/navigator/' | relative_url }}">Global Navigator</a>
-        <a href="{{ '/garage/' | relative_url }}">Garage</a>
-        <a href="{{ '/garage/kubernetes/' | relative_url }}">Kubernetes</a>
-        <a href="{{ '/garage/latex-usage/' | relative_url }}">LaTeX Usage</a>
-        <a href="{{ '/reading_room/' | relative_url }}">Reading Room</a>
-        <a href="{{ '/reading_room/artificial_intelligence/' | relative_url }}">Artificial Intelligence</a>
-        <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/' | relative_url }}">LLM Zone</a>
-        <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/' | relative_url }}">LLM Projects</a>
-        <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/' | relative_url }}">LLM Readings</a>
+        <p class="sidebar-label">Navigator Tree</p>
+        <div class="sidebar-toolbar">
+          <input
+            id="sidebar-nav-search"
+            class="sidebar-search"
+            type="search"
+            placeholder="Search in docs..."
+            autocomplete="off"
+            aria-label="Search sidebar navigator"
+          >
+          <div class="sidebar-actions" role="group" aria-label="Tree controls">
+            <button type="button" data-tree-expand>Expand</button>
+            <button type="button" data-tree-collapse>Collapse</button>
+          </div>
+        </div>
+        <nav class="sidebar-tree" aria-label="Site tree navigator">
+          <a class="tree-root" href="{{ '/navigator/' | relative_url }}">Global Navigator</a>
+
+          <details class="tree-group">
+            <summary>Garage</summary>
+            <div class="tree-children">
+              <a href="{{ '/garage/' | relative_url }}">Overview</a>
+              <a href="{{ '/garage/kubernetes/' | relative_url }}">Kubernetes</a>
+              <a href="{{ '/garage/latex-usage/' | relative_url }}">LaTeX Usage</a>
+            </div>
+          </details>
+
+          <details class="tree-group">
+            <summary>Reading Room</summary>
+            <div class="tree-children">
+              <a href="{{ '/reading_room/' | relative_url }}">Overview</a>
+              <a href="{{ '/reading_room/artificial_intelligence/' | relative_url }}">Artificial Intelligence</a>
+
+              <details class="tree-group tree-group-sub">
+                <summary>LLM Zone</summary>
+                <div class="tree-children">
+                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/' | relative_url }}">Overview</a>
+
+                  <details class="tree-group tree-group-sub">
+                    <summary>LLM Projects</summary>
+                    <div class="tree-children">
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/' | relative_url }}">Overview</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/' | relative_url }}">Inference Frameworks</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/Deepseek-v3/' | relative_url }}">DeepSeek V3</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/' | relative_url }}">vLLM</a>
+                    </div>
+                  </details>
+
+                  <details class="tree-group tree-group-sub">
+                    <summary>LLM Readings</summary>
+                    <div class="tree-children">
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/' | relative_url }}">Overview</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/' | relative_url }}">Inference</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/' | relative_url }}">Model</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/' | relative_url }}">Survey</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/' | relative_url }}">Train</a>
+                    </div>
+                  </details>
+                </div>
+              </details>
+            </div>
+          </details>
+        </nav>
       </aside>
 
       <article class="page-content">
@@ -152,6 +205,96 @@
         });
 
         quickNav.hidden = false;
+      }
+
+      const normalizePath = (path) => {
+        if (!path) return '/';
+        const normalized = path.replace(/\/+$|\/+$/g, '');
+        return normalized ? `${normalized}/` : '/';
+      };
+
+      const currentPath = normalizePath(window.location.pathname);
+      const treeLinks = Array.from(document.querySelectorAll('.sidebar-tree a[href]'));
+
+      let bestLink = null;
+      let bestLen = 0;
+      treeLinks.forEach((link) => {
+        const targetPath = normalizePath(new URL(link.getAttribute('href'), window.location.origin).pathname);
+        if (currentPath === targetPath || (targetPath !== '/' && currentPath.startsWith(targetPath))) {
+          if (targetPath.length >= bestLen) {
+            bestLink = link;
+            bestLen = targetPath.length;
+          }
+        }
+      });
+
+      if (bestLink) {
+        bestLink.classList.add('is-current');
+        let node = bestLink.parentElement;
+        while (node) {
+          if (node.tagName && node.tagName.toLowerCase() === 'details') {
+            node.open = true;
+          }
+          node = node.parentElement;
+        }
+      }
+
+      const searchInput = document.getElementById('sidebar-nav-search');
+      const treeDetails = Array.from(document.querySelectorAll('.sidebar-tree details.tree-group'));
+      const expandBtn = document.querySelector('[data-tree-expand]');
+      const collapseBtn = document.querySelector('[data-tree-collapse]');
+
+      const applyTreeFilter = () => {
+        if (!searchInput) return;
+        const keyword = searchInput.value.trim().toLowerCase();
+
+        const treeLinks = Array.from(document.querySelectorAll('.sidebar-tree a'));
+        treeLinks.forEach((link) => {
+          const text = (link.textContent || '').toLowerCase();
+          link.hidden = Boolean(keyword) && !text.includes(keyword);
+        });
+
+        const detailsDesc = Array.from(document.querySelectorAll('.sidebar-tree details.tree-group')).reverse();
+        detailsDesc.forEach((details) => {
+          const summary = details.querySelector(':scope > summary');
+          const summaryMatched = summary && (summary.textContent || '').toLowerCase().includes(keyword);
+          const hasVisibleContent = Array.from(details.querySelectorAll(':scope > .tree-children a, :scope > .tree-children details'))
+            .some((node) => !node.hidden);
+
+          details.hidden = Boolean(keyword) && !summaryMatched && !hasVisibleContent;
+          if (keyword && !details.hidden && hasVisibleContent) {
+            details.open = true;
+          }
+        });
+      };
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyTreeFilter);
+      }
+
+      if (expandBtn) {
+        expandBtn.addEventListener('click', () => {
+          treeDetails.forEach((node) => {
+            if (!node.hidden) node.open = true;
+          });
+        });
+      }
+
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', () => {
+          treeDetails.forEach((node) => {
+            node.open = false;
+          });
+          if (bestLink) {
+            let node = bestLink.parentElement;
+            while (node) {
+              if (node.tagName && node.tagName.toLowerCase() === 'details') {
+                node.open = true;
+              }
+              node = node.parentElement;
+            }
+          }
+        });
       }
     </script>
   </body>

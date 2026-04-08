@@ -113,6 +113,8 @@ a:hover {
   align-self: start;
   padding: 20px;
   border-radius: 20px;
+  max-height: calc(100vh - 112px);
+  overflow: hidden;
 }
 
 .sidebar-label {
@@ -127,6 +129,121 @@ a:hover {
 .page-sidebar a {
   display: block;
   padding: 8px 0;
+}
+
+.sidebar-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: calc(100vh - 230px);
+  overflow: auto;
+  padding-right: 6px;
+}
+
+.sidebar-toolbar {
+  margin-bottom: 10px;
+}
+
+.sidebar-search {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font: inherit;
+  background: #fff;
+  margin-bottom: 8px;
+}
+
+.sidebar-search:focus {
+  outline: 2px solid rgba(15, 118, 110, 0.2);
+  border-color: var(--accent);
+}
+
+.sidebar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.sidebar-actions button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-strong);
+  color: var(--muted);
+  padding: 3px 10px;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.sidebar-actions button:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.tree-root {
+  font-weight: 700;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: var(--paper-strong);
+}
+
+.tree-group {
+  margin: 0;
+  padding: 0 0 0 10px;
+  border-left: 2px solid var(--line);
+}
+
+.tree-group > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 4px 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tree-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.tree-group > summary::before {
+  content: "▸";
+  display: inline-block;
+  width: 1em;
+  color: var(--muted);
+  transform-origin: 0.3em 50%;
+  transition: transform 120ms ease;
+}
+
+.tree-group[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.tree-group-sub {
+  margin-top: 2px;
+}
+
+.tree-children {
+  margin: 2px 0 6px 4px;
+}
+
+.tree-children a {
+  border-radius: 8px;
+  padding: 5px 8px;
+  color: var(--muted);
+}
+
+.tree-children a:hover,
+.tree-root:hover {
+  text-decoration: none;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.sidebar-tree a.is-current {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  font-weight: 700;
 }
 
 .page-content {
@@ -417,6 +534,11 @@ img {
 
   .page-sidebar {
     position: static;
+    max-height: none;
+  }
+
+  .sidebar-tree {
+    max-height: 360px;
   }
 
   .section-grid {
