@@ -48,6 +48,9 @@ jobs:
       - name: Generate index pages
         run: python scripts/generate_indexes.py --roots garage reading_room
 
+      - name: Generate sidebar tree
+        run: python scripts/generate_sidebar.py --roots garage reading_room
+
       - name: Commit and push changes
         run: |
           if [ -n "$(git status --porcelain)" ]; then

@@ -40,12 +40,29 @@
         <nav class="sidebar-tree" aria-label="Site tree navigator">
           <a class="tree-root" href="{{ '/navigator/' | relative_url }}">Global Navigator</a>
 
+          <!-- SIDEBAR-TREE:START -->
+
           <details class="tree-group">
             <summary>Garage</summary>
             <div class="tree-children">
               <a href="{{ '/garage/' | relative_url }}">Overview</a>
-              <a href="{{ '/garage/kubernetes/' | relative_url }}">Kubernetes</a>
-              <a href="{{ '/garage/latex-usage/' | relative_url }}">LaTeX Usage</a>
+
+              <details class="tree-group tree-group-sub">
+                <summary>Kubernetes</summary>
+                <div class="tree-children">
+                  <a href="{{ '/garage/kubernetes/' | relative_url }}">Overview</a>
+                  <a href="{{ '/garage/kubernetes/overview' | relative_url }}">Overview</a>
+                  <a href="{{ '/garage/kubernetes/quickstart' | relative_url }}">Quickstart</a>
+                </div>
+              </details>
+
+              <details class="tree-group tree-group-sub">
+                <summary>LaTeX Usage</summary>
+                <div class="tree-children">
+                  <a href="{{ '/garage/latex-usage/' | relative_url }}">Overview</a>
+                  <a href="{{ '/garage/latex-usage/quickstart_latex_on_win' | relative_url }}">Quickstart LaTeX On Win</a>
+                </div>
+              </details>
             </div>
           </details>
 
@@ -53,58 +70,145 @@
             <summary>Reading Room</summary>
             <div class="tree-children">
               <a href="{{ '/reading_room/' | relative_url }}">Overview</a>
-              <a href="{{ '/reading_room/artificial_intelligence/' | relative_url }}">Artificial Intelligence</a>
 
               <details class="tree-group tree-group-sub">
-                <summary>LLM Zone</summary>
+                <summary>Artificial Intelligence</summary>
                 <div class="tree-children">
-                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/' | relative_url }}">Overview</a>
+                  <a href="{{ '/reading_room/artificial_intelligence/' | relative_url }}">Overview</a>
 
                   <details class="tree-group tree-group-sub">
-                    <summary>LLM Projects</summary>
+                    <summary>LLM Large Language Models</summary>
                     <div class="tree-children">
-                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/' | relative_url }}">Overview</a>
+                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/' | relative_url }}">Overview</a>
 
                       <details class="tree-group tree-group-sub">
-                        <summary>Inference Frameworks</summary>
+                        <summary>LLM Projects</summary>
                         <div class="tree-children">
-                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/' | relative_url }}">Overview</a>
-                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/Deepseek-v3/' | relative_url }}">DeepSeek V3</a>
-                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/' | relative_url }}">vLLM</a>
+                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/' | relative_url }}">Overview</a>
+
+                          <details class="tree-group tree-group-sub">
+                            <summary>Higress</summary>
+                            <div class="tree-children">
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/' | relative_url }}">Overview</a>
+
+                              <details class="tree-group tree-group-sub">
+                                <summary>Wasm Plugins</summary>
+                                <div class="tree-children">
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/wasm-plugins/' | relative_url }}">Overview</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/wasm-plugins/ai-proxy' | relative_url }}">AI Proxy</a>
+                                </div>
+                              </details>
+                            </div>
+                          </details>
+
+                          <details class="tree-group tree-group-sub">
+                            <summary>Inference Frameworks</summary>
+                            <div class="tree-children">
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/' | relative_url }}">Overview</a>
+
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/Deepseek-v3/' | relative_url }}">DeepSeek V3</a>
+
+                              <details class="tree-group tree-group-sub">
+                                <summary>vLLM</summary>
+                                <div class="tree-children">
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/' | relative_url }}">Overview</a>
+
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/continuous-batching/' | relative_url }}">Continuous Batching</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/vllm-meetups-summary' | relative_url }}">vLLM Meetups Summary</a>
+                                </div>
+                              </details>
+                            </div>
+                          </details>
+                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/deepseek-projects' | relative_url }}">DeepSeek Projects</a>
+                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/llm_implementation' | relative_url }}">LLM Implementation</a>
                         </div>
                       </details>
 
                       <details class="tree-group tree-group-sub">
-                        <summary>Higress</summary>
+                        <summary>LLM Readings</summary>
                         <div class="tree-children">
-                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/' | relative_url }}">Overview</a>
+                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/' | relative_url }}">Overview</a>
 
                           <details class="tree-group tree-group-sub">
-                            <summary>Wasm Plugins</summary>
+                            <summary>Inference</summary>
                             <div class="tree-children">
-                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/wasm-plugins/' | relative_url }}">Overview</a>
-                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/wasm-plugins/ai-proxy' | relative_url }}">AI Proxy</a>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/' | relative_url }}">Overview</a>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities' | relative_url }}">LLM Inference Serving Survey Of Recent Advances And Opportunities</a>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/SpecEE' | relative_url }}">Specee</a>
+                            </div>
+                          </details>
+
+                          <details class="tree-group tree-group-sub">
+                            <summary>Model</summary>
+                            <div class="tree-children">
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/' | relative_url }}">Overview</a>
+
+                              <details class="tree-group tree-group-sub">
+                                <summary>DeepSeek Paper</summary>
+                                <div class="tree-children">
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/' | relative_url }}">Overview</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/01-DeepSeekLLM.2401.02954v1' | relative_url }}">01 Deepseekllm.2401.02954V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/02-DeepSeekMoE.2401.06066v1' | relative_url }}">02 Deepseekmoe.2401.06066V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/03-DeepSeek-Coder.2401.14196v2' | relative_url }}">03 DeepSeek Coder.2401.14196V2</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/04-Deepseek-vl.2403.05525v2' | relative_url }}">04 DeepSeek Vl.2403.05525V2</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/05-DeepSeek-Prover.2405.14333v1' | relative_url }}">05 DeepSeek Prover.2405.14333V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/06-DeepSeek-Coder-V2.2406.11931v1' | relative_url }}">06 DeepSeek Coder V2.2406.11931V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/07-DeepSeek-V2.2405.04434v5' | relative_url }}">07 DeepSeek V2.2405.04434V5</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/08-DeepSeek-Prover-V1.5.2408.08152v1' | relative_url }}">08 DeepSeek Prover V1.5.2408.08152V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/09-Deepseek-vl2.2412.10302v1' | relative_url }}">09 DeepSeek Vl2.2412.10302V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/10-DeepSeek-V3.2412.19437v1' | relative_url }}">10 DeepSeek V3.2412.19437V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/11-DeepSeek-R1.2501.12948v1' | relative_url }}">11 DeepSeek R1.2501.12948V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/12-Janus-Pro.2501.17811v1' | relative_url }}">12 Janus Pro.2501.17811V1</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/13-Native_Sparse_Attention-Hardware-Aligned_and_Natively_Trainable_Sparse_Attention' | relative_url }}">13 Native Sparse Attention Hardware Aligned And Natively Trainable Sparse Attention</a>
+                                </div>
+                              </details>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek' | relative_url }}">DeepSeek</a>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/flash_attention' | relative_url }}">Flash Attention</a>
+                            </div>
+                          </details>
+
+                          <details class="tree-group tree-group-sub">
+                            <summary>Survey</summary>
+                            <div class="tree-children">
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/' | relative_url }}">Overview</a>
+
+                              <details class="tree-group tree-group-sub">
+                                <summary>AI Agent</summary>
+                                <div class="tree-children">
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/ai_agent/' | relative_url }}">Overview</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/ai_agent/summary' | relative_url }}">Summary</a>
+                                </div>
+                              </details>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/large_language_models_a_survey' | relative_url }}">Large Language Models A Survey</a>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/llm_serving_a_survey' | relative_url }}">LLM Serving A Survey</a>
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/parameter-efficient_fine-tuning-for-large-models_a-comprehensive-survey' | relative_url }}">Parameter Efficient Fine Tuning For Large Models A Comprehensive Survey</a>
+                            </div>
+                          </details>
+
+                          <details class="tree-group tree-group-sub">
+                            <summary>Train</summary>
+                            <div class="tree-children">
+                              <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/' | relative_url }}">Overview</a>
+
+                              <details class="tree-group tree-group-sub">
+                                <summary>Test Time Scaling</summary>
+                                <div class="tree-children">
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/test-time scaling/' | relative_url }}">Overview</a>
+                                  <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/test-time scaling/s1.Simple_test-time_scaling' | relative_url }}">S1.Simple Test Time Scaling</a>
+                                </div>
+                              </details>
                             </div>
                           </details>
                         </div>
                       </details>
                     </div>
                   </details>
-
-                  <details class="tree-group tree-group-sub">
-                    <summary>LLM Readings</summary>
-                    <div class="tree-children">
-                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/' | relative_url }}">Overview</a>
-                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/' | relative_url }}">Inference</a>
-                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/' | relative_url }}">Model</a>
-                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/' | relative_url }}">Survey</a>
-                      <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/' | relative_url }}">Train</a>
-                    </div>
-                  </details>
                 </div>
               </details>
             </div>
           </details>
+
+          <!-- SIDEBAR-TREE:END -->
         </nav>
       </aside>
 
