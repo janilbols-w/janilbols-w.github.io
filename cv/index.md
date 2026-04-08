@@ -12,7 +12,6 @@ hide_sidebar: true
     <p class="cv-summary">Software engineer specializing in AI infrastructure, GPU virtualization, distributed training, and inference optimization. Proven ability to translate research directions, fast-moving open-source ecosystems, and customer requirements into product capabilities, PoCs, and production-oriented engineering solutions.</p>
     <div class="cv-meta">
       <span>Email: janilbols@outlook.com</span>
-      <span>Phone: +86-18811747446</span>
       <span>Location: Shanghai, China</span>
       <span>Website: janilbols-w.github.io</span>
       <span>Languages: Chinese / English</span>
