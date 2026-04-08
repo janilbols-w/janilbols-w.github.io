@@ -35,10 +35,6 @@
     "created": "2025-02-06",
     "updated": "2025-02-21"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/README.md": {
-    "created": "2025-02-06",
-    "updated": "2026-04-08"
-  },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities.md": {
     "created": "2025-02-21",
     "updated": "2025-02-21"
@@ -105,6 +101,10 @@
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/flash_attention.md": {
     "created": "2025-02-06",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/old-version-summary.md": {
+    "created": "2026-04-08",
     "updated": "2026-04-08"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/ai_agent/summary.md": {
