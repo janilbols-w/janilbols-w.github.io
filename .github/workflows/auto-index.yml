@@ -6,9 +6,13 @@ on:
       - master
       - main
     paths:
-      - "**/*.md"
-      - "**/*.drawio"
+      - "garage/**"
+      - "reading_room/**"
+      - "scripts/generate_indexes.py"
       - "!**/index.md"
+  schedule:
+    # Run daily at 02:00 UTC as a safety net for any missed triggers
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +32,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Detect new directories
+        id: new-dirs
+        run: |
+          # List directories under garage/ and reading_room/ that have no index.md
+          MISSING=$(find garage reading_room -type d | while read d; do
+            [ ! -f "$d/index.md" ] && echo "$d"
+          done)
+          if [ -n "$MISSING" ]; then
+            echo "Found directories without index.md:"
+            echo "$MISSING"
+          fi
 
       - name: Generate index pages
         run: python scripts/generate_indexes.py --roots garage reading_room
