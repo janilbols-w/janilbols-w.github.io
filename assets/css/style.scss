@@ -141,6 +141,53 @@ a:hover {
   border-bottom: 1px solid var(--line);
 }
 
+.quick-nav {
+  margin: 0 0 22px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper-strong);
+}
+
+.quick-nav-label {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.quick-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-nav-tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  background: var(--paper);
+  color: var(--accent-strong);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.quick-nav-tag.is-sub {
+  background: transparent;
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.quick-nav-tag:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
 .page-kicker {
   margin: 0 0 8px;
   font-size: 0.82rem;
@@ -259,6 +306,62 @@ th {
   margin-top: 0;
 }
 
+.nav-hero h2 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.nav-search-label {
+  display: block;
+  margin: 10px 0 6px;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.nav-search {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font: inherit;
+  background: #fff;
+}
+
+.nav-search:focus {
+  outline: 2px solid rgba(15, 118, 110, 0.2);
+  border-color: var(--accent);
+}
+
+.nav-section {
+  margin-top: 16px;
+}
+
+.nav-link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.nav-link-card {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.nav-link-card:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.nav-empty {
+  margin: 18px 0 0;
+  color: var(--muted);
+}
+
 .site-footer {
   border-top: 1px solid rgba(221, 211, 195, 0.9);
   padding: 24px 0 44px;
@@ -318,6 +421,19 @@ img {
 
   .section-grid {
     grid-template-columns: 1fr;
+  }
+
+  .nav-link-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-nav {
+    padding: 12px;
+  }
+
+  .quick-nav-tag {
+    font-size: 0.85rem;
+    padding: 5px 10px;
   }
 
   .drawio-embed iframe {

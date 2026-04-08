@@ -33,6 +33,7 @@ title: Home
 
 ## Quick Entry
 
+- [Global Navigator]({{ '/navigator/' | relative_url }})
 - [Kubernetes 概念概览]({{ '/garage/kubernetes/overview/' | relative_url }})
 - [Kubernetes 终端交互常用命令]({{ '/garage/kubernetes/quickstart/' | relative_url }})
 - [LaTeX Usage]({{ '/garage/latex-usage/' | relative_url }})

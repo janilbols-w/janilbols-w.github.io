@@ -13,6 +13,7 @@
         <a class="site-brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
         <nav class="site-nav">
           <a href="{{ '/' | relative_url }}">Home</a>
+          <a href="{{ '/navigator/' | relative_url }}">Navigator</a>
           <a href="{{ '/garage/' | relative_url }}">Garage</a>
           <a href="{{ '/reading_room/' | relative_url }}">Reading Room</a>
         </nav>
@@ -22,6 +23,7 @@
     <main class="shell page-shell">
       <aside class="page-sidebar">
         <p class="sidebar-label">Sections</p>
+        <a href="{{ '/navigator/' | relative_url }}">Global Navigator</a>
         <a href="{{ '/garage/' | relative_url }}">Garage</a>
         <a href="{{ '/garage/kubernetes/' | relative_url }}">Kubernetes</a>
         <a href="{{ '/garage/latex-usage/' | relative_url }}">LaTeX Usage</a>
@@ -39,6 +41,10 @@
             <h1>{{ page.title }}</h1>
           </div>
         {% endif %}
+        <nav class="quick-nav" data-quick-nav hidden>
+          <p class="quick-nav-label">Quick Jump</p>
+          <div class="quick-nav-list" data-quick-nav-list></div>
+        </nav>
         {{ content }}
       </article>
     </main>
@@ -110,6 +116,43 @@
         wrapper.append(frame, meta);
         link.insertAdjacentElement('afterend', wrapper);
       });
+
+      const quickNav = document.querySelector('[data-quick-nav]');
+      const quickNavList = document.querySelector('[data-quick-nav-list]');
+      const headingNodes = Array.from(document.querySelectorAll('.page-content h2, .page-content h3'));
+
+      const slugify = (text, index) => {
+        const base = text
+          .toLowerCase()
+          .trim()
+          .replace(/[^\p{Letter}\p{Number}\s-]/gu, '')
+          .replace(/\s+/g, '-');
+        return base || `section-${index + 1}`;
+      };
+
+      if (quickNav && quickNavList && headingNodes.length > 0) {
+        const usedIds = new Set();
+        headingNodes.forEach((heading, index) => {
+          if (!heading.id) {
+            let candidate = slugify(heading.textContent || '', index);
+            let count = 2;
+            while (usedIds.has(candidate) || document.getElementById(candidate)) {
+              candidate = `${slugify(heading.textContent || '', index)}-${count}`;
+              count += 1;
+            }
+            heading.id = candidate;
+          }
+          usedIds.add(heading.id);
+
+          const link = document.createElement('a');
+          link.className = `quick-nav-tag ${heading.tagName.toLowerCase() === 'h3' ? 'is-sub' : ''}`;
+          link.href = `#${heading.id}`;
+          link.textContent = heading.textContent?.trim() || heading.id;
+          quickNavList.append(link);
+        });
+
+        quickNav.hidden = false;
+      }
     </script>
   </body>
 </html>
