@@ -227,6 +227,15 @@
           <!-- SIDEBAR-TREE:END -->
         </nav>
       </aside>
+      <div
+        class="sidebar-resizer"
+        role="separator"
+        tabindex="0"
+        aria-orientation="vertical"
+        aria-label="Resize navigator sidebar"
+        aria-valuemin="300"
+        aria-valuemax="760"
+      ></div>
       {% endunless %}
 
       <article class="page-content">
@@ -381,6 +390,14 @@
 
       const currentPath = normalizePath(window.location.pathname);
       const treeLinks = Array.from(document.querySelectorAll('.sidebar-tree a[href]'));
+      const treeLabels = Array.from(document.querySelectorAll('.sidebar-tree a, .sidebar-tree summary'));
+
+      treeLabels.forEach((node) => {
+        const text = (node.textContent || '').trim().replace(/\s+/g, ' ');
+        if (text) {
+          node.setAttribute('title', text);
+        }
+      });
 
       let bestLink = null;
       let bestLen = 0;
@@ -461,6 +478,90 @@
             }
           }
         });
+      }
+
+      const pageShell = document.querySelector('.page-shell');
+      const sidebarResizer = document.querySelector('.sidebar-resizer');
+      const SIDEBAR_MIN = 300;
+      const SIDEBAR_MAX = 760;
+      const SIDEBAR_DEFAULT = 420;
+      const SIDEBAR_WIDTH_KEY = 'nav-sidebar-width';
+
+      if (pageShell && sidebarResizer && !pageShell.classList.contains('is-full')) {
+        let dragging = false;
+
+        const normalizeWidth = (value) => Math.max(SIDEBAR_MIN, Math.min(SIDEBAR_MAX, Math.round(value)));
+
+        const setSidebarWidth = (value) => {
+          const nextWidth = normalizeWidth(value);
+          pageShell.style.setProperty('--sidebar-width', `${nextWidth}px`);
+          sidebarResizer.setAttribute('aria-valuenow', `${nextWidth}`);
+          sidebarResizer.setAttribute('aria-valuetext', `${nextWidth}px`);
+          try {
+            localStorage.setItem(SIDEBAR_WIDTH_KEY, `${nextWidth}`);
+          } catch (error) {
+            // Ignore storage errors in private mode or restricted contexts.
+          }
+        };
+
+        const setSidebarWidthByPointer = (clientX) => {
+          const shellRect = pageShell.getBoundingClientRect();
+          setSidebarWidth(clientX - shellRect.left);
+        };
+
+        const stopDragging = () => {
+          if (!dragging) return;
+          dragging = false;
+          document.body.classList.remove('is-resizing');
+          pageShell.classList.remove('is-resizing-sidebar');
+        };
+
+        const storedWidth = (() => {
+          try {
+            return Number(localStorage.getItem(SIDEBAR_WIDTH_KEY));
+          } catch (error) {
+            return NaN;
+          }
+        })();
+
+        setSidebarWidth(Number.isFinite(storedWidth) ? storedWidth : SIDEBAR_DEFAULT);
+
+        sidebarResizer.addEventListener('pointerdown', (event) => {
+          dragging = true;
+          sidebarResizer.setPointerCapture(event.pointerId);
+          document.body.classList.add('is-resizing');
+          pageShell.classList.add('is-resizing-sidebar');
+          setSidebarWidthByPointer(event.clientX);
+        });
+
+        sidebarResizer.addEventListener('pointermove', (event) => {
+          if (!dragging) return;
+          setSidebarWidthByPointer(event.clientX);
+        });
+
+        sidebarResizer.addEventListener('dblclick', () => {
+          setSidebarWidth(SIDEBAR_DEFAULT);
+        });
+
+        sidebarResizer.addEventListener('keydown', (event) => {
+          const current = Number(sidebarResizer.getAttribute('aria-valuenow')) || SIDEBAR_DEFAULT;
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            setSidebarWidth(current - 20);
+          } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            setSidebarWidth(current + 20);
+          } else if (event.key === 'Home') {
+            event.preventDefault();
+            setSidebarWidth(SIDEBAR_MIN);
+          } else if (event.key === 'End') {
+            event.preventDefault();
+            setSidebarWidth(SIDEBAR_MAX);
+          }
+        });
+
+        sidebarResizer.addEventListener('pointerup', stopDragging);
+        sidebarResizer.addEventListener('pointercancel', stopDragging);
       }
     </script>
   </body>

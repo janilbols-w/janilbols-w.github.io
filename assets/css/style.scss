@@ -43,7 +43,7 @@ a:hover {
 }
 
 .shell {
-  width: min(1120px, calc(100% - 32px));
+  width: min(1500px, calc(100% - 32px));
   margin: 0 auto;
 }
 
@@ -93,13 +93,18 @@ a:hover {
 
 .page-shell {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: clamp(300px, var(--sidebar-width, 34vw), 560px) 10px minmax(0, 1fr);
   gap: 28px;
   padding: 36px 0 56px;
+  transition: grid-template-columns 120ms ease;
 }
 
 .page-shell.is-full {
   grid-template-columns: minmax(0, 1fr);
+}
+
+.page-shell.is-resizing-sidebar {
+  transition: none;
 }
 
 .page-sidebar,
@@ -121,6 +126,30 @@ a:hover {
   overflow: hidden;
 }
 
+.sidebar-resizer {
+  width: 10px;
+  border-radius: 999px;
+  align-self: stretch;
+  cursor: col-resize;
+  background: linear-gradient(180deg, rgba(15, 118, 110, 0.12), rgba(15, 118, 110, 0.26));
+  border: 1px solid rgba(15, 118, 110, 0.22);
+  transition: background 120ms ease;
+}
+
+.sidebar-resizer:hover {
+  background: linear-gradient(180deg, rgba(15, 118, 110, 0.2), rgba(15, 118, 110, 0.35));
+}
+
+.sidebar-resizer:focus-visible {
+  outline: 2px solid rgba(15, 118, 110, 0.6);
+  outline-offset: 2px;
+}
+
+body.is-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
 .sidebar-label {
   margin: 0 0 12px;
   font-size: 0.78rem;
@@ -133,6 +162,7 @@ a:hover {
 .page-sidebar a {
   display: block;
   padding: 8px 0;
+  line-height: 1.4;
 }
 
 .sidebar-tree {
@@ -142,6 +172,7 @@ a:hover {
   max-height: calc(100vh - 230px);
   overflow: auto;
   padding-right: 6px;
+  min-width: max-content;
 }
 
 .sidebar-toolbar {
@@ -190,6 +221,7 @@ a:hover {
   border-radius: 10px;
   padding: 8px 10px;
   background: var(--paper-strong);
+  white-space: nowrap;
 }
 
 .tree-group {
@@ -200,10 +232,14 @@ a:hover {
 
 .tree-group > summary {
   list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   cursor: pointer;
   padding: 4px 0;
   font-weight: 600;
   color: var(--ink);
+  white-space: nowrap;
 }
 
 .tree-group > summary::-webkit-details-marker {
@@ -213,6 +249,7 @@ a:hover {
 .tree-group > summary::before {
   content: "▸";
   display: inline-block;
+  flex: 0 0 auto;
   width: 1em;
   color: var(--muted);
   transform-origin: 0.3em 50%;
@@ -235,6 +272,7 @@ a:hover {
   border-radius: 8px;
   padding: 5px 8px;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .tree-children a:hover,
@@ -766,6 +804,10 @@ img {
 @media (max-width: 900px) {
   .page-shell {
     grid-template-columns: 1fr;
+  }
+
+  .sidebar-resizer {
+    display: none;
   }
 
   .page-sidebar {
