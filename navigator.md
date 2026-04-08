@@ -15,6 +15,7 @@ title: Global Navigator
   <h3>Core Entry</h3>
   <div class="nav-link-grid">
     <a class="nav-link-card" data-nav-title="home" href="{{ '/' | relative_url }}">Home</a>
+    <a class="nav-link-card" data-nav-title="projects github tracker" href="{{ '/projects/' | relative_url }}">Projects</a>
     <a class="nav-link-card" data-nav-title="garage" href="{{ '/garage/' | relative_url }}">Garage</a>
     <a class="nav-link-card" data-nav-title="reading room" href="{{ '/reading_room/' | relative_url }}">Reading Room</a>
     <a class="nav-link-card" data-nav-title="llm zone" href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/' | relative_url }}">LLM Zone</a>

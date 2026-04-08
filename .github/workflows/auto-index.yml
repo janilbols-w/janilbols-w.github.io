@@ -8,6 +8,7 @@ on:
     paths:
       - "garage/**"
       - "reading_room/**"
+      - "projects/**"
       - "cv/**"
       - "index.md"
       - "navigator.md"
@@ -45,7 +46,7 @@ jobs:
           # This step is informational only and must not fail the workflow.
           MISSING=$(
             {
-              for base in garage reading_room; do
+              for base in garage reading_room projects; do
                 if [ -d "$base" ]; then
                   find "$base" -type d
                 fi
@@ -64,10 +65,10 @@ jobs:
           fi
 
       - name: Generate index pages
-        run: python scripts/generate_indexes.py --roots garage reading_room
+        run: python scripts/generate_indexes.py --roots garage reading_room projects
 
       - name: Generate sidebar tree
-        run: python scripts/generate_sidebar.py --roots garage reading_room
+        run: python scripts/generate_sidebar.py --roots garage reading_room projects
 
       - name: Generate page creation dates
         run: python scripts/generate_page_dates.py

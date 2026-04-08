@@ -10,6 +10,16 @@ title: Home
 
 <div class="section-grid">
   <section class="section-card">
+    <h2><a href="{{ '/projects/' | relative_url }}">Projects</a></h2>
+    <p>Auto-tracked updates for repositories under <code>github.com/janilbols-w</code>, including recent push activity and event summary.</p>
+    <ul>
+      <li><a href="{{ '/projects/' | relative_url }}">GitHub Projects Tracker</a></li>
+      <li>Last push date and latest public activity per repository</li>
+      <li>Scheduled refresh every 6 hours</li>
+    </ul>
+  </section>
+
+  <section class="section-card">
     <h2><a href="{{ '/garage/' | relative_url }}">Garage</a></h2>
     <p>Hands-on notes, operational guides, and quick references for topics that are directly used in daily work.</p>
     <ul>
@@ -34,6 +44,7 @@ title: Home
 ## Quick Entry
 
 - [Global Navigator]({{ '/navigator/' | relative_url }})
+- [Projects Tracker]({{ '/projects/' | relative_url }})
 - [Kubernetes 概念概览]({{ '/garage/kubernetes/overview/' | relative_url }})
 - [Kubernetes 终端交互常用命令]({{ '/garage/kubernetes/quickstart/' | relative_url }})
 - [LaTeX Usage]({{ '/garage/latex-usage/' | relative_url }})
