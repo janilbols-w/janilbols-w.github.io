@@ -322,6 +322,22 @@ a:hover {
   color: var(--muted);
 }
 
+.page-created {
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-created span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 h1,
 h2,
 h3,
@@ -492,6 +508,40 @@ th {
   border-top: 1px solid rgba(221, 211, 195, 0.9);
   padding: 24px 0 44px;
   color: var(--muted);
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.footer-inner p {
+  margin: 0;
+}
+
+.visitor-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px 16px;
+  font-size: 0.92rem;
+}
+
+.visitor-stats span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-strong);
+}
+
+.visitor-stats strong {
+  color: var(--accent-strong);
+  font-variant-numeric: tabular-nums;
 }
 
 .mermaid {
@@ -721,6 +771,15 @@ img {
   .page-sidebar {
     position: static;
     max-height: none;
+  }
+
+  .footer-inner,
+  .footer-meta {
+    align-items: flex-start;
+  }
+
+  .visitor-stats {
+    justify-content: flex-start;
   }
 
   .sidebar-tree {

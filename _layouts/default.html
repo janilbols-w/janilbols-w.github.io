@@ -202,6 +202,7 @@
                               </details>
                             </div>
                           </details>
+                          <a href="{{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/old-version-summary' | relative_url }}">Old Version Summary</a>
                         </div>
                       </details>
                     </div>
@@ -227,9 +228,18 @@
 
       <article class="page-content">
         {% if page.title %}
+          {% assign page_date_meta = site.data.page_dates[page.path] %}
           <div class="page-heading">
             <p class="page-kicker">{{ page.url | replace: '/', ' / ' | replace: '  ', ' ' }}</p>
             <h1>{{ page.title }}</h1>
+            {% if page_date_meta and page_date_meta.created %}
+              <p class="page-created">
+                <span>Source created {{ page_date_meta.created }}</span>
+                {% if page_date_meta.updated %}
+                  <span>Last updated {{ page_date_meta.updated }}</span>
+                {% endif %}
+              </p>
+            {% endif %}
           </div>
         {% endif %}
         <nav class="quick-nav" data-quick-nav hidden>
@@ -243,9 +253,24 @@
     <footer class="site-footer">
       <div class="shell footer-inner">
         <p>{{ site.description }}</p>
-        <p>Built with Jekyll for GitHub Pages.</p>
+        <div class="footer-meta">
+          <p>Built with Jekyll for GitHub Pages.</p>
+          <p class="visitor-stats" aria-label="Visitor statistics">
+            <span id="busuanzi_container_site_pv" style="display: none;">
+              Site views <strong id="busuanzi_value_site_pv"></strong>
+            </span>
+            <span id="busuanzi_container_site_uv" style="display: none;">
+              Visitors <strong id="busuanzi_value_site_uv"></strong>
+            </span>
+            <span id="busuanzi_container_page_pv" style="display: none;">
+              This page <strong id="busuanzi_value_page_pv"></strong>
+            </span>
+          </p>
+        </div>
       </div>
     </footer>
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
     <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';

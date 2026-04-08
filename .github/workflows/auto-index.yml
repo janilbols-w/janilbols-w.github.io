@@ -8,7 +8,11 @@ on:
     paths:
       - "garage/**"
       - "reading_room/**"
+      - "cv/**"
+      - "index.md"
+      - "navigator.md"
       - "scripts/generate_indexes.py"
+      - "scripts/generate_page_dates.py"
       - "scripts/generate_sidebar.py"
       - "!**/index.md"
   schedule:
@@ -56,6 +60,9 @@ jobs:
 
       - name: Generate sidebar tree
         run: python scripts/generate_sidebar.py --roots garage reading_room
+
+      - name: Generate page creation dates
+        run: python scripts/generate_page_dates.py
 
       - name: Commit and push changes
         run: |

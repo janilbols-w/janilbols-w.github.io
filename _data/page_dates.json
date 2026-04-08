@@ -1,0 +1,146 @@
+{
+  "garage/kubernetes/overview.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  },
+  "garage/kubernetes/quickstart.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  },
+  "garage/latex-usage/quickstart_latex_on_win.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/README.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/deepseek-projects.md": {
+    "created": "2025-02-21",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/higress-overview.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/wasm-plugins/ai-proxy.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/vllm-meetups-summary.md": {
+    "created": "2025-03-03",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/llm_implementation.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/README.md": {
+    "created": "2025-02-06",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities.md": {
+    "created": "2025-02-21",
+    "updated": "2025-02-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/SpecEE.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/01-DeepSeekLLM.2401.02954v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-07"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/02-DeepSeekMoE.2401.06066v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-07"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/03-DeepSeek-Coder.2401.14196v2.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/04-Deepseek-vl.2403.05525v2.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/05-DeepSeek-Prover.2405.14333v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/06-DeepSeek-Coder-V2.2406.11931v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/07-DeepSeek-V2.2405.04434v5.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/08-DeepSeek-Prover-V1.5.2408.08152v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/09-Deepseek-vl2.2412.10302v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/10-DeepSeek-V3.2412.19437v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-10"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/11-DeepSeek-R1.2501.12948v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-10"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/12-Janus-Pro.2501.17811v1.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/13-Native_Sparse_Attention-Hardware-Aligned_and_Natively_Trainable_Sparse_Attention.md": {
+    "created": "2025-03-03",
+    "updated": "2025-03-03"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek.md": {
+    "created": "2025-02-06",
+    "updated": "2025-03-03"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/flash_attention.md": {
+    "created": "2025-02-06",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/ai_agent/summary.md": {
+    "created": "2025-02-06",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/large_language_models_a_survey.md": {
+    "created": "2025-02-06",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/llm_serving_a_survey.md": {
+    "created": "2025-02-06",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/parameter-efficient_fine-tuning-for-large-models_a-comprehensive-survey.md": {
+    "created": "2025-02-06",
+    "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/README.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/test-time scaling/s1.Simple_test-time_scaling.md": {
+    "created": "2025-02-21",
+    "updated": "2026-04-08"
+  },
+  "reading_room/private-room/study_catalog.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  },
+  "reading_room/private-room/study_keywords.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  },
+  "navigator.md": {
+    "created": "2026-04-08",
+    "updated": "2026-04-08"
+  }
+}

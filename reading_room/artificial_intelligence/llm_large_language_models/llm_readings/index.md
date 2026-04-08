@@ -15,6 +15,6 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Pages
 
-- [README]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/README/' | relative_url }})
+- [Old Version Summary]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/old-version-summary/' | relative_url }})
 
 <!-- AUTO-GENERATED:END -->
