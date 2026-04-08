@@ -1,5 +1,5 @@
 ---
-title: CV
+title: CV - by codegen, not proof-read yet
 permalink: /cv/
 hide_sidebar: true
 ---
