@@ -78,6 +78,38 @@
       if (mermaidBlocks.length > 0) {
         await mermaid.run({ querySelector: '.mermaid' });
       }
+
+      const drawioLinks = document.querySelectorAll('.page-content a[href$=".drawio"]');
+      drawioLinks.forEach((link) => {
+        const sourceUrl = new URL(link.getAttribute('href'), window.location.href).href;
+        const viewerUrl = `https://viewer.diagrams.net/?url=${encodeURIComponent(sourceUrl)}&layers=1&nav=1&edit=_blank`;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'drawio-embed';
+
+        const frame = document.createElement('iframe');
+        frame.src = viewerUrl;
+        frame.loading = 'lazy';
+        frame.referrerPolicy = 'no-referrer';
+        frame.title = `Draw.io diagram: ${link.textContent.trim() || sourceUrl}`;
+
+        const meta = document.createElement('p');
+        meta.className = 'drawio-meta';
+
+        const open = document.createElement('a');
+        open.href = sourceUrl;
+        open.textContent = 'Open source .drawio file';
+
+        const openViewer = document.createElement('a');
+        openViewer.href = viewerUrl;
+        openViewer.target = '_blank';
+        openViewer.rel = 'noopener noreferrer';
+        openViewer.textContent = 'Open in viewer';
+
+        meta.append(open, document.createTextNode(' | '), openViewer);
+        wrapper.append(frame, meta);
+        link.insertAdjacentElement('afterend', wrapper);
+      });
     </script>
   </body>
 </html>

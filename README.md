@@ -22,9 +22,9 @@ If your network cannot access `rubygems.org`, switch bundler to a mirror before 
 bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems/
 ```
 
-## Auto index template (write markdown only)
+## Auto index template (write markdown and drawio)
 
-You can keep writing `.md` files only. This repo includes an auto-index template:
+You can keep writing `.md` and `.drawio` files. This repo includes an auto-index template:
 
 - Script: `scripts/generate_indexes.py`
 - Workflow: `.github/workflows/auto-index.yml`
@@ -32,9 +32,10 @@ You can keep writing `.md` files only. This repo includes an auto-index template
 
 How it works:
 
-- If a directory has markdown notes and no `index.md`, it will create one.
+- If a directory has markdown notes or drawio diagrams and no `index.md`, it will create one.
 - If `index.md` contains AUTO-GENERATED markers, only that block is refreshed.
 - Manual `index.md` without markers is kept as-is by default.
+- Drawio links shown on pages are embedded automatically via diagrams.net viewer.
 
 Run locally:
 
@@ -68,5 +69,5 @@ After you push to GitHub, check the **Actions** tab and wait for **Build and Dep
 Auto index workflow:
 
 - Workflow file: `.github/workflows/auto-index.yml`
-- Trigger: markdown changes (`**/*.md`, except `**/index.md`)
+- Trigger: markdown or drawio changes (`**/*.md` and `**/*.drawio`, except `**/index.md`)
 - Action: generate missing/managed `index.md` pages and auto-commit changes

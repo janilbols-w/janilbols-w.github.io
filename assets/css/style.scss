@@ -274,6 +274,34 @@ th {
   margin-bottom: 1rem;
 }
 
+.drawio-embed {
+  margin: 12px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--paper-strong);
+}
+
+.drawio-embed iframe {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  border: 0;
+  background: #ffffff;
+}
+
+.drawio-meta {
+  margin: 0;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.drawio-meta a {
+  color: var(--accent-strong);
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -290,6 +318,10 @@ img {
 
   .section-grid {
     grid-template-columns: 1fr;
+  }
+
+  .drawio-embed iframe {
+    min-height: 420px;
   }
 }
 

@@ -6,6 +6,10 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 <!-- AUTO-GENERATED:START -->
 
+## Sections
+
+- [Continuous Batching]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/continuous-batching/' | relative_url }})
+
 ## Pages
 
 - [vLLM Meetups Summary]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/vllm-meetups-summary/' | relative_url }})
