@@ -3,29 +3,29 @@
 
 :root {
   /* Content area */
-  --bg: #ffffff;
-  --paper: #ffffff;
-  --paper-strong: #f5f5f5;
-  --ink: #212121;
-  --muted: #607d8b;
-  --line: #e0e0e0;
-  --accent: #00897b;
-  --accent-soft: #e0f2f1;
-  --accent-strong: #00695c;
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --bg: #09090b;
+  --paper: #111111;
+  --paper-strong: #18181b;
+  --ink: #e4e4e7;
+  --muted: #71717a;
+  --line: #27272a;
+  --accent: #14b8a6;
+  --accent-soft: rgba(20, 184, 166, 0.1);
+  --accent-strong: #5eead4;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 
-  /* Sidebar (dark panel) */
-  --sidebar-bg: #263238;
-  --sidebar-fg: #eceff1;
-  --sidebar-muted: #90a4ae;
-  --sidebar-active-bg: #37474f;
-  --sidebar-active-fg: #80cbc4;
-  --sidebar-hover-bg: #2e3c43;
-  --sidebar-border: #37474f;
+  /* Sidebar */
+  --sidebar-bg: #111111;
+  --sidebar-fg: #a1a1aa;
+  --sidebar-muted: #52525b;
+  --sidebar-active-bg: #1c1c1f;
+  --sidebar-active-fg: #5eead4;
+  --sidebar-hover-bg: #1c1c1f;
+  --sidebar-border: #27272a;
 
-  /* Header (dark bar) */
-  --header-bg: #00695c;
-  --header-fg: #ffffff;
+  /* Header */
+  --header-bg: #09090b;
+  --header-fg: #e4e4e7;
 }
 
 * {
@@ -41,7 +41,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: var(--ink);
-  background: #fafafa;
+  background: var(--bg);
   line-height: 1.7;
 }
 
@@ -53,6 +53,7 @@ a {
 a:hover {
   text-decoration: underline;
   color: var(--accent);
+  opacity: 0.85;
 }
 
 .shell {
@@ -68,7 +69,7 @@ a:hover {
   top: 0;
   z-index: 100;
   background: var(--header-bg);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--line);
 }
 
 .site-header .shell,
@@ -88,12 +89,12 @@ a:hover {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--header-fg);
+  color: var(--ink);
 }
 
 .site-brand:hover {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--accent-strong);
 }
 
 .site-nav {
@@ -103,15 +104,15 @@ a:hover {
 }
 
 .site-nav a {
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--muted);
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 0.9rem;
 }
 
 .site-nav a:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
+  color: var(--ink);
+  background: var(--paper-strong);
   text-decoration: none;
 }
 
@@ -495,20 +496,20 @@ pre {
   overflow-x: auto;
   padding: 16px 20px;
   border-radius: 6px;
-  background: #263238;
-  color: #eceff1;
+  background: #18181b;
+  color: #e2e8f0;
   font-size: 0.9rem;
   line-height: 1.6;
-  border: 1px solid #37474f;
+  border: 1px solid #3f3f46;
 }
 
 code {
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
-  background: #f5f5f5;
-  color: #d32f2f;
+  background: #18181b;
+  color: #f87171;
   font-size: 0.88em;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #3f3f46;
 }
 
 pre code {
@@ -524,7 +525,7 @@ blockquote {
   border-left: 4px solid var(--accent);
   background: var(--accent-soft);
   border-radius: 0 4px 4px 0;
-  color: #004d40;
+  color: var(--ink);
 }
 
 table {
@@ -546,7 +547,7 @@ th {
 }
 
 tr:nth-child(even) td {
-  background: #fafafa;
+  background: #161618;
 }
 
 /* ── Hero / section cards ────────────────────────────────── */
@@ -602,11 +603,16 @@ tr:nth-child(even) td {
   border-radius: 4px;
   padding: 9px 12px;
   font: inherit;
-  background: #fff;
+  background: var(--paper-strong);
+  color: var(--ink);
+}
+
+.nav-search::placeholder {
+  color: var(--muted);
 }
 
 .nav-search:focus {
-  outline: 2px solid var(--accent-soft);
+  outline: none;
   border-color: var(--accent);
 }
 
@@ -646,7 +652,7 @@ tr:nth-child(even) td {
 .site-footer {
   border-top: 1px solid var(--line);
   padding: 20px 0 32px;
-  background: #fafafa;
+  background: var(--bg);
   color: var(--muted);
   font-size: 0.88rem;
 }
@@ -709,7 +715,8 @@ tr:nth-child(even) td {
   width: 100%;
   min-height: 520px;
   border: 0;
-  background: #ffffff;
+  background: #18181b;
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .drawio-meta {
