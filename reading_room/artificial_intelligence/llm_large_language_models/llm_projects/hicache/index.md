@@ -10,6 +10,7 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 - [Hicache Overview]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/hicache_overview/' | relative_url }})
 - [Hicache Vs vLLM]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/hicache_vs_vllm/' | relative_url }})
+- [Lmcache Sglang Vs vLLM]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/lmcache_sglang_vs_vllm/' | relative_url }})
 
 ## Diagrams
 

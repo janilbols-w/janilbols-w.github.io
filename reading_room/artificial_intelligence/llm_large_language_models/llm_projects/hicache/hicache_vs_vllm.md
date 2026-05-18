@@ -10,6 +10,7 @@
 
 - **HiCache**：把框架内 KV 复用从 GPU 扩展到 DRAM/外部存储，核心是“单实例内分层管理 + 可插拔后端”。
 - **vLLM KV Connector**：把 KV 在 Prefill/Decode 等实例间传输，核心是“分离式部署中的跨实例 KV 通道与协议层”。
+- **LMCache 专项定位分析**：见独立文档 [lmcache_sglang_vs_vllm.md](lmcache_sglang_vs_vllm.md)。
 
 如果你关注的是：
 - 单实例容量扩展、层级预取与写回策略：更接近 HiCache。
