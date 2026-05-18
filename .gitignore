@@ -32,6 +32,7 @@ env/
 .idea/
 .vscode-test/
 Thumbs.db
+.DS_Store
 
 *.log
 *.tmp

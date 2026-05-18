@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-05-18T00:00:00.000Z" version="21.0.8">
+  <diagram id="maas-feature-landscape" name="MaaS功能全景">
+    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1700" pageHeight="1010" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="2" value="MaaS 功能全景图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="0" y="10" width="1700" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════ Application Layer ═══════════ -->
+        <mxCell id="3" value="应用层  (Application Layer)" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="10" y="55" width="1530" height="250" as="geometry" />
+        </mxCell>
+
+        <mxCell id="11" value="&lt;b&gt;8. RAG &amp; 知识库&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;文档解析 · 向量检索 · 混合检索 · Reranking · 引用溯源&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;RAGFlow · FastGPT · Dify · AnythingLLM&lt;br&gt;LlamaIndex · LangChain&lt;br&gt;Milvus · Qdrant · Chroma" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
+          <mxGeometry x="20" y="40" width="455" height="195" as="geometry" />
+        </mxCell>
+
+        <mxCell id="12" value="&lt;b&gt;9. Agent &amp; 工作流&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Tool Use · MCP · 多Agent协作 · 可视化编排 · 记忆管理&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;AutoGen · CrewAI · LangGraph&lt;br&gt;Dify · Flowise · Langflow&lt;br&gt;Coze · n8n · OpenAI Agents SDK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
+          <mxGeometry x="495" y="40" width="455" height="195" as="geometry" />
+        </mxCell>
+
+        <mxCell id="13" value="&lt;b&gt;10. 多模态&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Vision · TTS · STT · 文生图 · 视频理解 · 文档OCR&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;GPT-4o · Gemini 2.5 · Claude 3.5&lt;br&gt;Whisper · CosyVoice · ElevenLabs&lt;br&gt;Stable Diffusion · Flux · Qwen-VL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
+          <mxGeometry x="970" y="40" width="545" height="195" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════ Platform Layer ═══════════ -->
+        <mxCell id="4" value="平台层  (Platform Layer)" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="10" y="315" width="1530" height="280" as="geometry" />
+        </mxCell>
+
+        <mxCell id="14" value="&lt;b&gt;1. API 统一化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;OpenAI兼容 · Streaming&lt;br&gt;Function Call · 多提供商透传&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM&lt;br&gt;One API&lt;br&gt;Portkey Gateway&lt;br&gt;OpenRouter&lt;br&gt;Ollama" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+          <mxGeometry x="20" y="42" width="228" height="222" as="geometry" />
+        </mxCell>
+
+        <mxCell id="15" value="&lt;b&gt;3. 路由&amp;可靠性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;负载均衡 · 自动重试&lt;br&gt;故障转移 · 条件路由&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM Proxy&lt;br&gt;Portkey&lt;br&gt;One API&lt;br&gt;New API&lt;br&gt;Higress" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+          <mxGeometry x="258" y="42" width="228" height="222" as="geometry" />
+        </mxCell>
+
+        <mxCell id="16" value="&lt;b&gt;4. 安全&amp;合规&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Guardrails · PII脱敏&lt;br&gt;Prompt注入防护 · SOC2/HIPAA&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LlamaGuard&lt;br&gt;NeMo Guardrails&lt;br&gt;Bedrock Guardrails&lt;br&gt;Azure Content Safety" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+          <mxGeometry x="496" y="42" width="228" height="222" as="geometry" />
+        </mxCell>
+
+        <mxCell id="17" value="&lt;b&gt;5. 可观测性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;请求日志 · 链路追踪&lt;br&gt;指标监控 · 成本追踪&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Langfuse&lt;br&gt;Helicone&lt;br&gt;Phoenix (Arize)&lt;br&gt;Datadog LLM&lt;br&gt;MLflow Tracing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+          <mxGeometry x="734" y="42" width="228" height="222" as="geometry" />
+        </mxCell>
+
+        <mxCell id="18" value="&lt;b&gt;6. 成本&amp;缓存&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;语义缓存 · Token预算&lt;br&gt;Prompt压缩 · Batch推理&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;GPTCache&lt;br&gt;LLMLingua&lt;br&gt;LiteLLM Caching&lt;br&gt;Batch API&lt;br&gt;One API倍率" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+          <mxGeometry x="972" y="42" width="228" height="222" as="geometry" />
+        </mxCell>
+
+        <mxCell id="19" value="&lt;b&gt;7. 模型微调&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Full FT / LoRA · RLHF / DPO&lt;br&gt;数据管理 · 微调评估&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LLaMA-Factory&lt;br&gt;Unsloth · Axolotl&lt;br&gt;Swift (ModelScope)&lt;br&gt;OpenAI FT API&lt;br&gt;Vertex AI Tuning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+          <mxGeometry x="1210" y="42" width="300" height="222" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════ Inference Layer ═══════════ -->
+        <mxCell id="5" value="推理层  (Inference Layer)" style="swimlane;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="10" y="605" width="1530" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="20" value="&lt;b&gt;2. 推理性能优化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;连续批处理 · KV Cache优化 · 投机解码 · 量化(INT4/INT8/GPTQ/AWQ) · 张量并行 · 前缀缓存&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;vLLM (PagedAttention) · SGLang (RadixAttention) · TGI · TensorRT-LLM&lt;br&gt;LMDeploy · llama.cpp · MLC LLM · PowerInfer · Triton · Xinference · DeepSpeed-MII" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#d6b656;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="5">
+          <mxGeometry x="20" y="42" width="730" height="142" as="geometry" />
+        </mxCell>
+
+        <mxCell id="21" value="&lt;b&gt;本地运行工具 (Local Tools)&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;面向开发者/个人用户，封装推理引擎，提供本地运行能力&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Ollama · LM Studio · Jan · GPT4All · llamafile · koboldcpp&lt;br&gt;text-generation-webui · Lemonade (AMD) · MS Foundry Local" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#d6b656;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="5">
+          <mxGeometry x="770" y="42" width="740" height="142" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════ Infrastructure Layer ═══════════ -->
+        <mxCell id="6" value="基础设施层  (Infrastructure Layer)" style="swimlane;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=13;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="10" y="815" width="1530" height="165" as="geometry" />
+        </mxCell>
+
+        <mxCell id="22" value="&lt;b&gt;模型市场 / Hub&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;模型存储、发现、下载和托管&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;HuggingFace Hub · ModelScope (魔搭) · Ollama Library · GitHub Models · NVIDIA NGC · OpenCSG · 魔乐社区" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#9673a6;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="6">
+          <mxGeometry x="20" y="42" width="730" height="108" as="geometry" />
+        </mxCell>
+
+        <mxCell id="23" value="&lt;b&gt;GPU / 专用硬件 &amp; 算力平台&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;推理芯片与弹性算力&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;NVIDIA A100/H100/H200 · AMD MI300X · Groq LPU · Cerebras WSE&lt;br&gt;RunPod · Modal · Lambda Labs · Vast.ai · SambaNova Cloud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#9673a6;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="6">
+          <mxGeometry x="770" y="42" width="740" height="108" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════ Deployment Flexibility (Right Sidebar) ═══════════ -->
+        <mxCell id="24" value="&lt;b&gt;11. 部署灵活性&lt;/b&gt;&lt;br&gt;&lt;br&gt;公有云 API&lt;br&gt;私有化部署&lt;br&gt;混合云&lt;br&gt;边缘推理&lt;br&gt;Serverless&lt;br&gt;K8s 编排&lt;br&gt;&lt;br&gt;— 典型项目 —&lt;br&gt;&lt;br&gt;Ollama&lt;br&gt;vLLM + K8s&lt;br&gt;NVIDIA NIM&lt;br&gt;MLC LLM&lt;br&gt;HF Endpoints&lt;br&gt;Replicate&lt;br&gt;Modal&lt;br&gt;RunPod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1555" y="55" width="130" height="925" as="geometry" />
+        </mxCell>
+
+        <!-- Footer -->
+        <mxCell id="25" value="MaaS 功能全景图 | 参考: maas_projects.md · maas_features.md | 2026-05" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="10" y="988" width="900" height="18" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -4,10 +4,10 @@ title: Global Navigator
 
 <section class="hero-card nav-hero">
   <p class="page-kicker">Site Jump Hub</p>
-  <h2>全局跳转导航</h2>
-  <p>输入关键词快速筛选页面，或直接从分区入口跳转到目标内容。</p>
+  <h2>GLOBAL NAVIGATOR</h2>
+  <p>Input Keywords to search your target Page or Section. </p>
 
-  <label class="nav-search-label" for="nav-search">搜索页面</label>
+  <label class="nav-search-label" for="nav-search">Search Page</label>
   <input id="nav-search" class="nav-search" type="search" placeholder="例如: deepseek / inference / kubernetes / survey" autocomplete="off">
 </section>
 
