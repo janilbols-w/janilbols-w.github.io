@@ -1,0 +1,90 @@
+<mxfile host="app.diagrams.net" modified="2026-05-18T00:00:00.000Z" agent="Mozilla/5.0" version="24.7.17" editor="draw.io">
+  <diagram id="hicache-vs-vllm" name="HiCache vs vLLM">
+    <mxGraphModel dx="1366" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="HiCache vs vLLM KV Connector" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="520" y="20" width="560" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="left_header" value="HiCache (SGLang)&#xa;A x C" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="120" y="100" width="360" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="left_gpu" value="L1: GPU KV Cache (Hot)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="150" y="220" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="left_dram" value="L2: DRAM KV Cache (Warm)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="150" y="310" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="left_store" value="L3: External Store / NVMe (Cold)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="150" y="400" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="left_policy" value="Unified Index + Tiering Policy&#xa;(Prefetch / Writeback / Eviction)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="130" y="500" width="340" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="right_header" value="vLLM KV Connector&#xa;B" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="860" y="100" width="360" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="prefill" value="Prefill Instance&#xa;(kv_producer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="860" y="230" width="160" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="connector" value="KV Connector Layer&#xa;(LMCache / NIXL / Mooncake / Offloading / MultiConnector)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="360" width="440" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="decode" value="Decode Instance&#xa;(kv_consumer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="230" width="160" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="right_store" value="Optional Shared KV Store&#xa;(e.g. Mooncake Store, Remote Backend)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="900" y="500" width="280" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="middle_note" value="Composable, not replacement&#xa;HiCache (in-engine tiering) + vLLM Connector (cross-instance transfer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="540" y="300" width="260" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="left_gpu" target="left_dram">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e2" value="" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="left_dram" target="left_store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" value="" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="left_store" target="left_policy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e4" value="KV transfer" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="prefill" target="connector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e5" value="KV transfer" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="connector" target="decode">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e6" value="load / store" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="connector" target="right_store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e7" value="can be combined" style="dashed=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9673a6;" edge="1" parent="1" source="left_policy" target="middle_note">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e8" value="can be combined" style="dashed=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9673a6;" edge="1" parent="1" source="middle_note" target="connector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

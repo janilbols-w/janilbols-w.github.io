@@ -1,0 +1,62 @@
+<mxfile host="app.diagrams.net" modified="2026-05-18T00:00:00.000Z" agent="Mozilla/5.0" version="24.7.17" editor="draw.io">
+  <diagram id="hicache-positioning-map" name="HiCache Positioning Map">
+    <mxGraphModel dx="1366" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="2D Positioning: In-engine Tiering vs Cross-instance KV Transfer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="320" y="30" width="760" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="x_axis" value="" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="origin" target="x_end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="y_axis" value="" style="endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="origin" target="y_end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="origin" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="640" width="8" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="x_end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="640" width="8" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="y_end" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="120" width="8" height="8" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="x_label" value="Single-instance Tiering Capability (Low -> High)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="470" y="670" width="420" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="y_label" value="Cross-instance KV Transfer Capability (Low -> High)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rotation=270;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="110" y="240" width="30" height="360" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="quad1" value="Q1&#xa;HiCache-like target zone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="180" width="360" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p_hicache" value="HiCache" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="410" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p_offload" value="OffloadingConnector&#xa;SimpleCpuOffload" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="640" y="470" width="170" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p_store" value="MooncakeStoreConnector" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="720" y="300" width="190" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p_transfer" value="LMCache/NIXL/Mooncake/P2P&#xa;(Connector Transfer Path)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="210" width="250" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note" value="No single vLLM object equals HiCache 1:1;&#xa;closest practical path is Offloading + Store + policy layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="620" y="90" width="460" height="70" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

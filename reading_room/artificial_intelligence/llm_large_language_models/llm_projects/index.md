@@ -8,6 +8,7 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Sections
 
+- [Hicache]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/' | relative_url }})
 - [Higress]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/' | relative_url }})
 - [Inference Frameworks]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/' | relative_url }})
 - [Maas]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/' | relative_url }})
