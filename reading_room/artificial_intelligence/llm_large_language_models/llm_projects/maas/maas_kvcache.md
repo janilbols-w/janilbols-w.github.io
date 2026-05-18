@@ -93,6 +93,66 @@ KV Cache 优化技术栈
 
 ---
 
+## A+C. 分层缓存管理（SGLang HiCache）
+
+### SGLang HiCache
+- **来源**：SGLang 团队（Zhiqiang Xie），Sep 2025；多方贡献：Mooncake 社区、阿里云 Tair KVCache 团队、Ant Group、NVIDIA Dynamo / NIXL 团队
+- **博客**：[SGLang HiCache: Fast Hierarchical KV Caching with Your Favorite Storage Backends](https://lmsys.org/blog/2025-09-10-sglang-hicache/)（Sep 10, 2025）
+
+**归类定位**：A（框架内置 RadixAttention）× C（分级存储）的融合，工作在**单推理实例内**，核心目标是把 RadixAttention 的前缀复用能力从 GPU HBM 扩展到 CPU DRAM、SSD/Flash、远程内存（RDMA）等更大容量的存储层。
+
+```
+与 Mooncake / MemServe（B类）的区别：
+  B类：在集群层面解耦 Prefill/Decode，引入独立 KV pool 节点
+  HiCache：在单实例内将 RadixTree 延伸到多层存储，不改变 P-D 部署拓扑
+  → 两者可以叠加：HiCache 作为 SGLang 单实例的 KV 存储层，
+              Mooncake 作为其 storage backend 之一
+```
+
+**核心架构**：
+
+```
+        RadixAttention (GPU HBM)
+               ↕ HiRadixTree（统一跨层索引）
+        CPU Memory Pool (page-first layout, 高 IO 效率)
+               ↕ 层次式 prefetch + write policy
+        External Storage Backend（可插拔）
+          ├── Mooncake（RDMA 远程内存）
+          ├── DeepSeek 3FS（分布式高性能文件系统）
+          ├── NIXL / GPU Direct Storage（NVIDIA Dynamo）
+          └── 本地文件系统（参考实现）
+```
+
+**关键技术**：
+- **HiRadixTree**：在 RadixAttention 的 Radix Tree 基础上增加多层 page table，跨 GPU/CPU/SSD 统一索引 KV cache token
+- **GPU-assisted I/O kernels**：自研 CPU-GPU 传输 kernel，比 `cudaMemcpyAsync` 快 **3×**
+- **Page-first 布局**：CPU 侧与 Storage 侧使用 page-first（token 优先）内存布局，相比 GPU 侧的 layer-first 布局，IO 传输效率提升 **2×**
+- **Layer-wise overlapping**：从 CPU 恢复 KV 时，layer N 传输与 layer N+1 计算并发流水
+- **可配置 Prefetch 策略**：
+  - `wait_complete`：等待 prefetch 完成再调度（最大化命中率）
+  - `timeout`：超时后放弃 prefetch，优先保证 TTFT
+  - 最佳努力模式
+- **写回策略**：write-through（强一致）/ write-through-selective（热点追踪节省 IO）/ write-back（容量受限时）
+- **后端可插拔**：接口极简（`get/exist/set`），已集成 Mooncake / 3FS / NIXL，欢迎社区贡献
+
+**效果**（来自 SGLang 官方测试 + 社区反馈）：
+
+| 场景 | 测试方 | TTFT 改善 | 吞吐改善 |
+|------|--------|---------|--------|
+| 长上下文 / 多轮对话（通用 QA，DeepSeek-R1-671B + Mooncake）| Ant Group | **-84%** | — |
+| 多轮编程 Agent（Qwen3-Coder-480B + 3FS）| Novita AI | **-56%** | **+2×** |
+| 内部 benchmark（长上下文 / 多轮）| SGLang 团队 | **-80%** | **+6×** |
+
+**致谢中揭示的合作关系**（per 官方博客）：
+- **Mooncake 社区**（Zuoyuan Zhang, Mingxing Zhang）：Mooncake 后端集成
+- **阿里云 Tair KVCache 团队**（Sicheng Pan 等）：3FS 后端集成
+- **NVIDIA Dynamo 团队**：NIXL 后端集成
+- **LMCache / AIBrix / PrisDB / ByteDance EIC 团队**：生态接入
+
+**侧重点**：单实例内将 RadixAttention 无缝扩展到多层存储；存储后端生态开放；对 Agent / 多轮对话 / 长上下文场景提升最大
+
+---
+
 ## B. Disaggregated KV Cache 架构
 
 ### Mooncake（Moonshot AI / Kimi）
@@ -295,20 +355,21 @@ Mooncake 架构：
 
 ## 功能对比矩阵
 
-| 项目 | 单机内存管理 | P-D 分离 | 分层存储 | KV 压缩 | RAG 融合 | 跨实例共享 | API 层产品 |
-|------|:-----------:|:-------:|:-------:|:-------:|:-------:|:---------:|:---------:|
-| **vLLM PagedAttention** | ★★★ | — | — | ★（FP8）| — | ★（prefix）| — |
-| **SGLang RadixAttention** | ★★★ | — | — | ★（FP8）| — | ★（prefix）| — |
-| **Mooncake** | ★ | ★★★ | ★★★ | — | — | ★★★ | — |
-| **MemServe** | ★★ | ★★★ | ★★ | — | — | ★★★ | — |
-| **Tair KVCache** | — | ★★ | ★★★ | — | — | ★★★ | ★★（云产品）|
-| **FlexGen** | ★★ | — | ★★★ | — | — | — | — |
-| **HCache** | ★★ | — | ★★★ | ★★★（激活）| — | — | — |
-| **LMCache** | ★★ | — | ★★ | ★★（CacheGen）| ★★★（CacheBlend）| ★★★ | — |
-| **CacheBlend** | — | — | — | — | ★★★ | ★★ | — |
-| **MLA（DeepSeek）** | ★★★ | — | — | ★★★（结构）| — | — | — |
-| **H2O / SnapKV** | ★★★（裁剪）| — | — | ★★★（驱逐）| — | — | — |
-| **趋境科技** | — | ★★★ | ★★★ | — | — | ★★★ | ★★ |
+| 项目 | 框架内 GPU 管理 | 分层存储扩展 | P-D 分离 | 跨实例共享 | KV 压缩 | RAG 融合 | API 产品 |
+|------|:--------------:|:----------:|:-------:|:---------:|:-------:|:-------:|:-------:|
+| **vLLM PagedAttention** | ★★★ | — | — | ★（prefix）| ★（FP8）| — | — |
+| **SGLang RadixAttention** | ★★★ | — | — | ★（prefix）| ★（FP8）| — | — |
+| **SGLang HiCache** | ★★★ | ★★★ | — | ★★（跨节点存储）| — | — | — |
+| **Mooncake** | ★ | ★★★ | ★★★ | ★★★ | — | — | — |
+| **MemServe** | ★★ | ★★ | ★★★ | ★★★ | — | — | — |
+| **Tair KVCache** | — | ★★★ | ★★ | ★★★ | — | — | ★★（云产品）|
+| **FlexGen** | ★★ | ★★★ | — | — | — | — | — |
+| **HCache** | ★★ | ★★★（激活）| — | — | ★★★ | — | — |
+| **LMCache** | ★★ | ★★ | — | ★★★ | ★★（CacheGen）| ★★★ | — |
+| **CacheBlend** | — | — | — | ★★ | — | ★★★ | — |
+| **MLA（DeepSeek）** | ★★★ | — | — | — | ★★★（结构）| — | — |
+| **H2O / SnapKV** | ★★★（裁剪）| — | — | — | ★★★（驱逐）| — | — |
+| **趋境科技** | — | ★★★ | ★★★ | ★★★ | — | — | ★★ |
 | **OpenAI Prompt Cache** | — | — | — | — | — | — | ★★★ |
 | **Anthropic Prompt Cache** | — | — | — | — | — | — | ★★★ |
 
@@ -319,14 +380,17 @@ Mooncake 架构：
 ## 各项目侧重点总结
 
 ```
-专注 GPU 内部效率     → PagedAttention（vLLM） / RadixAttention（SGLang）
-专注 P-D 分离 + 大规模 → Mooncake（工程）/ MemServe（学术）
-专注 分层存储后端      → Tair KVCache（云产品）/ FlexGen（单机 offload）
-专注 快速恢复         → HCache（激活值恢复）
-专注 RAG + 多知识融合  → CacheBlend / LMCache
-专注 KV 体积压缩      → MLA / CacheGen / H2O / SnapKV
-专注 API 产品化       → OpenAI/Anthropic/Google Prompt Caching
-专注 KV Cache 服务化   → 趋境科技 / LMCache
+专注 GPU 内部效率          → PagedAttention（vLLM）/ RadixAttention（SGLang）
+专注 单实例分层存储扩展     → SGLang HiCache（RadixAttention → GPU/DRAM/SSD）
+专注 P-D 分离 + 集群规模   → Mooncake（工程）/ MemServe（学术）
+专注 分层存储后端服务       → Tair KVCache（云产品）/ FlexGen（单机 offload）
+专注 快速 KV 状态恢复       → HCache（中间激活值恢复，EuroSys 2025）
+专注 RAG + 多知识融合       → CacheBlend / LMCache
+专注 KV 体积压缩            → MLA / CacheGen / H2O / SnapKV
+专注 API 产品化             → OpenAI/Anthropic/Google Prompt Caching
+专注 KV Cache 服务化        → 趋境科技 / LMCache
+
+注：HiCache 的 Mooncake 后端 + SGLang HiCache 组合，代表了一种典型的「单实例分层管理（HiCache）+ 集群级 KV pool（Mooncake）」的两层叠加架构。
 ```
 
 ---
@@ -340,6 +404,8 @@ Mooncake 架构：
 | [Fast State Restoration in LLM Serving with HCache](https://arxiv.org/abs/2410.05004)（Gao et al., 清华, EuroSys 2025） | 论文 | §C HCache |
 | [CacheBlend: Fast LLM Serving for RAG with Cached Knowledge Fusion](https://arxiv.org/abs/2405.16444)（Yao et al., UChicago, MLSys 2025） | 论文 | §E CacheBlend |
 | [CacheGen: KV Cache Compression and Streaming](https://arxiv.org/abs/2310.07240)（Liu et al., UChicago） | 论文 | §D CacheGen |
+| [SGLang HiCache blog](https://lmsys.org/blog/2025-09-10-sglang-hicache/)（Zhiqiang Xie, SGLang Team, Sep 2025） | 官方博客 | §A+C HiCache |
+| [SGLang HiCache blog](https://lmsys.org/blog/2025-09-10-sglang-hicache/)（Zhiqiang Xie, SGLang Team, Sep 2025） | 官方博客 | §A+C HiCache |
 | [LMCache Tech Report](https://lmcache.ai/tech_report.pdf)（Cheng et al., UChicago） | 技术报告 | §创业公司 LMCache |
 | [Efficient Memory Management for LLM Serving with PagedAttention](https://arxiv.org/abs/2309.06180)（Kwon et al., Berkeley, SOSP 2023） | 论文 | §A PagedAttention |
 | [LLM Inference Serving: Survey of Recent Advances](../../../llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities.md)（Li et al., 2024） | 综述 | 全文 |
