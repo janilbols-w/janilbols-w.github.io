@@ -31,6 +31,18 @@
     "created": "2025-02-21",
     "updated": "2026-04-08"
   },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/hicache_overview.md": {
+    "created": "2026-05-18",
+    "updated": "2026-05-18"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/hicache_vs_vllm.md": {
+    "created": "2026-05-18",
+    "updated": "2026-05-18"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/lmcache_sglang_vs_vllm.md": {
+    "created": "2026-05-18",
+    "updated": "2026-05-18"
+  },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/higress-overview.md": {
     "created": "2026-04-08",
     "updated": "2026-04-08"
@@ -46,6 +58,18 @@
   "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/llm_implementation.md": {
     "created": "2025-02-06",
     "updated": "2025-02-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_features.md": {
+    "created": "2026-05-18",
+    "updated": "2026-05-18"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_kvcache.md": {
+    "created": "2026-05-18",
+    "updated": "2026-05-18"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_projects.md": {
+    "created": "2026-05-18",
+    "updated": "2026-05-18"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities.md": {
     "created": "2025-02-21",
@@ -153,6 +177,6 @@
   },
   "navigator.md": {
     "created": "2026-04-08",
-    "updated": "2026-04-08"
+    "updated": "2026-05-18"
   }
 }
