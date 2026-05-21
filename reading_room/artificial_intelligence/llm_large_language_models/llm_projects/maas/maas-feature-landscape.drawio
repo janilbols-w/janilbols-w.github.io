@@ -7,25 +7,33 @@
         <mxCell id="1" parent="0" />
 
         <!-- Title -->
-        <mxCell id="2" value="MaaS 功能全景图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="2" value="MaaS 上下游功能全景图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="0" y="10" width="1700" height="40" as="geometry" />
         </mxCell>
 
+        <mxCell id="26" value="上游应用（IDE/Agent/业务系统） → MaaS 平台能力 → 下游模型与算力基础设施" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="42" width="1600" height="20" as="geometry" />
+        </mxCell>
+
         <!-- ═══════════ Application Layer ═══════════ -->
-        <mxCell id="3" value="应用层  (Application Layer)" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;startSize=30;" vertex="1" parent="1">
+        <mxCell id="3" value="应用层（上游）  (Application Layer)" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;startSize=30;" vertex="1" parent="1">
           <mxGeometry x="10" y="55" width="1530" height="250" as="geometry" />
         </mxCell>
 
-        <mxCell id="11" value="&lt;b&gt;8. RAG &amp; 知识库&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;文档解析 · 向量检索 · 混合检索 · Reranking · 引用溯源&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;RAGFlow · FastGPT · Dify · AnythingLLM&lt;br&gt;LlamaIndex · LangChain&lt;br&gt;Milvus · Qdrant · Chroma" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
-          <mxGeometry x="20" y="40" width="455" height="195" as="geometry" />
+        <mxCell id="11" value="&lt;b&gt;8. RAG &amp; 知识库&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;文档解析 · 向量检索 · 混合检索 · Reranking · 引用溯源&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;RAGFlow · FastGPT · Dify&lt;br&gt;AnythingLLM · LlamaIndex&lt;br&gt;LangChain · Milvus · Qdrant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
+          <mxGeometry x="20" y="40" width="365" height="195" as="geometry" />
         </mxCell>
 
-        <mxCell id="12" value="&lt;b&gt;9. Agent &amp; 工作流&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Tool Use · MCP · 多Agent协作 · 可视化编排 · 记忆管理&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;AutoGen · CrewAI · LangGraph&lt;br&gt;Dify · Flowise · Langflow&lt;br&gt;Coze · n8n · OpenAI Agents SDK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
-          <mxGeometry x="495" y="40" width="455" height="195" as="geometry" />
+        <mxCell id="12" value="&lt;b&gt;9. AI 编程助手（上游）&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Code Agent · IDE Copilot · Repo 问答 · 自动修复&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Claude Code · Codex · GitHub Copilot&lt;br&gt;Cursor · Trae · WorkBuddy&lt;br&gt;通义灵码 · CodeGeeX · Comate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
+          <mxGeometry x="395" y="40" width="365" height="195" as="geometry" />
         </mxCell>
 
-        <mxCell id="13" value="&lt;b&gt;10. 多模态&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Vision · TTS · STT · 文生图 · 视频理解 · 文档OCR&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;GPT-4o · Gemini 2.5 · Claude 3.5&lt;br&gt;Whisper · CosyVoice · ElevenLabs&lt;br&gt;Stable Diffusion · Flux · Qwen-VL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
-          <mxGeometry x="970" y="40" width="545" height="195" as="geometry" />
+        <mxCell id="27" value="&lt;b&gt;9b. Agent 平台与工作流&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Tool Use · MCP · 多Agent协作 · 可视化编排&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;AutoGen · CrewAI · LangGraph&lt;br&gt;Dify · Flowise · Langflow&lt;br&gt;Coze · n8n · OpenAI Agents SDK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
+          <mxGeometry x="770" y="40" width="365" height="195" as="geometry" />
+        </mxCell>
+
+        <mxCell id="13" value="&lt;b&gt;10. 多模态&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Vision · TTS · STT · 文生图 · 视频理解 · OCR&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;GPT-4o · Gemini 2.5 · Claude 3.5&lt;br&gt;Whisper · CosyVoice · ElevenLabs&lt;br&gt;Stable Diffusion · Flux · Qwen-VL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;" vertex="1" parent="3">
+          <mxGeometry x="1145" y="40" width="365" height="195" as="geometry" />
         </mxCell>
 
         <!-- ═══════════ Platform Layer ═══════════ -->
@@ -37,7 +45,7 @@
           <mxGeometry x="20" y="42" width="228" height="222" as="geometry" />
         </mxCell>
 
-        <mxCell id="15" value="&lt;b&gt;3. 路由&amp;可靠性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;负载均衡 · 自动重试&lt;br&gt;故障转移 · 条件路由&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM Proxy&lt;br&gt;Higress&lt;br&gt;kgateway&lt;br&gt;inference-gateway&lt;br&gt;vLLM Semantic Router" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+        <mxCell id="15" value="&lt;b&gt;3. 路由&amp;可靠性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;负载均衡 · 自动重试&lt;br&gt;故障转移 · 条件路由&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM Proxy&lt;br&gt;Higress&lt;br&gt;AIBrix&lt;br&gt;kgateway&lt;br&gt;inference-gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
           <mxGeometry x="258" y="42" width="228" height="222" as="geometry" />
         </mxCell>
 
@@ -62,7 +70,7 @@
           <mxGeometry x="10" y="605" width="1530" height="200" as="geometry" />
         </mxCell>
 
-        <mxCell id="20" value="&lt;b&gt;2. 推理性能优化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;连续批处理 · KV Cache优化 · 投机解码 · 量化(INT4/INT8/GPTQ/AWQ) · 张量并行 · 前缀缓存&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;vLLM (PagedAttention) · SGLang (RadixAttention) · TGI · TensorRT-LLM · AIBrix&lt;br&gt;LMCache · Mooncake · AIConfigurator&lt;br&gt;LMDeploy · llama.cpp · MLC LLM · PowerInfer · Triton · Xinference" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#d6b656;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="5">
+        <mxCell id="20" value="&lt;b&gt;2. 推理性能优化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;连续批处理 · KV Cache优化 · 投机解码 · 量化(INT4/INT8/GPTQ/AWQ) · 张量并行 · 前缀缓存&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;vLLM (PagedAttention) · SGLang (RadixAttention) · TGI · TensorRT-LLM&lt;br&gt;LMCache · Mooncake · AIConfigurator&lt;br&gt;LMDeploy · llama.cpp · MLC LLM · PowerInfer · Triton · Xinference" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#d6b656;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="5">
           <mxGeometry x="20" y="42" width="730" height="142" as="geometry" />
         </mxCell>
 

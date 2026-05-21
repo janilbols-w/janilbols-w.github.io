@@ -16,13 +16,28 @@
 
 ---
 
-## 2. 参考技术栈（全开源优先）
+## 2. 上下游视图（推荐）
+
+MaaS 在企业落地中通常位于中间层：
+
+- 上游应用（IDE 编程助手、业务 Agent、企业工作流）
+- MaaS 平台能力（网关、路由、推理、缓存、观测、安全）
+- 下游基础设施（模型仓库、向量库、GPU 与 K8s）
+
+典型上游应用示例：
+
+- AI 编程助手：Claude Code、Codex、GitHub Copilot、Cursor、Trae、WorkBuddy、通义灵码、CodeGeeX、Comate
+- Agent 平台与工作流：Dify、Flowise、Langflow、AutoGen、CrewAI、LangGraph、Coze、n8n
+
+---
+
+## 3. 参考技术栈（全开源优先）
 
 | 能力层 | 推荐组件 | 作用 |
 |---|---|---|
 | API 统一与路由 | LiteLLM Proxy 或 Higress AI Gateway | 统一协议、模型路由、失败重试、Fallback |
 | 推理引擎 | vLLM（主）、SGLang（可选） | 高吞吐推理、KV 管理、流式输出 |
-| 服务配置与控制平面 | AIConfigurator（ai-dynamo/aiconfigurator） | 离线优化分离式推理图和关键运行参数，降低调参与发布风险 |
+| 服务配置与控制平面 | AIConfigurator（ai-dynamo/aiconfigurator） + AIBrix | 离线优化推理图、控制面调度与治理，降低调参与发布风险 |
 | KV 存储优化 | LMCache / Mooncake（可选） | 跨实例 KV 复用、预填充结果复用、降低 TTFT |
 | 模型管理 | Hugging Face Hub + 本地模型仓库（MinIO/NAS） | 模型版本管理与分发 |
 | RAG 编排 | LlamaIndex 或 LangChain | 检索链路与业务编排 |
@@ -35,7 +50,7 @@
 
 ---
 
-## 3. 可部署架构图（逻辑）
+## 4. 可部署架构图（逻辑）
 
 ```mermaid
 flowchart LR
@@ -68,7 +83,7 @@ flowchart LR
 
 ---
 
-## 4. 部署拓扑（K8s 生产版）
+## 5. 部署拓扑（K8s 生产版）
 
 ### 4.1 命名空间建议
 
@@ -97,7 +112,7 @@ flowchart LR
 
 ---
 
-## 5. 请求路径（在线推理）
+## 6. 请求路径（在线推理）
 
 1. 客户端调用统一 API（`/v1/chat/completions`）。
 2. 网关完成认证、配额校验、限流。
@@ -109,25 +124,25 @@ flowchart LR
 
 ---
 
-## 6. 与 maas_features.md 的对应关系
+## 7. 与 maas_features.md 的对应关系
 
 | 功能分类 | 本架构实现 |
 |---|---|
 | 1 API 统一 | LiteLLM/Higress 提供统一 OpenAI 兼容入口 |
 | 2 推理优化 | vLLM/SGLang + GPU 节点池 + LMCache/Mooncake（跨实例 KV 复用与低 TTFT 优化） |
-| 3 路由可靠性 | 网关内置 fallback/retry/LB |
+| 3 路由可靠性 | 网关内置 fallback/retry/LB + AIBrix 控制面治理 |
 | 4 安全合规 | Keycloak + OPA + LlamaGuard |
 | 5 可观测性 | Prometheus/Grafana/Loki/Tempo/Langfuse |
 | 6 成本缓存 | Redis + GPTCache + 模型降级策略 |
 | 7 模型微调 | 外挂 LLaMA-Factory/Unsloth 流水线 |
 | 8 RAG | LlamaIndex/LangChain + Qdrant/Milvus |
-| 9 Agent 工作流 | Dify/Flowise（按需接入） |
+| 9 Agent 工作流 | Dify/Flowise/LangGraph（按需接入），上游可对接 Claude Code/Codex/Copilot 等助手 |
 | 10 多模态 | 升级到支持多模态模型的推理引擎实例 |
 | 11 部署灵活性 | 单机 Docker -> K8s 多环境 |
 
 ---
 
-## 7. 三阶段落地路线
+## 8. 三阶段落地路线
 
 ### Phase 1：MVP（1-2 周）
 
@@ -136,7 +151,7 @@ flowchart LR
 
 ### Phase 2：生产化（2-6 周）
 
-- 增加：Keycloak、Loki、Langfuse、Qdrant、RAG 服务、LMCache 或 Mooncake（旁路模式）、AIConfigurator（离线配置优化）。
+- 增加：Keycloak、Loki、Langfuse、Qdrant、RAG 服务、LMCache 或 Mooncake（旁路模式）、AIConfigurator（离线配置优化）、AIBrix（控制面治理）。
 - 目标：多租户、审计可追踪、知识库问答上线、热点请求 TTFT 下降。
 
 ### Phase 3：企业级（持续演进）
@@ -146,7 +161,7 @@ flowchart LR
 
 ---
 
-## 8. 最小可用部署清单（Checklist）
+## 9. 最小可用部署清单（Checklist）
 
 1. 网关：统一 API、鉴权、限流、fallback 已配置。
 2. 推理：至少 1 个主模型 + 1 个降级模型可用。
@@ -158,16 +173,17 @@ flowchart LR
 
 ---
 
-## 9. 组件替换建议
+## 10. 组件替换建议
 
 - 若已有 API 网关体系（Envoy/Nginx Ingress），可保留网关，仅接入 LiteLLM 作为 AI 路由层。
 - 若侧重中文生态与高吞吐，可将 SGLang 作为主引擎，vLLM 作为通用回退引擎。
 - 若团队偏低代码业务交付，可将 Dify 提前到 Phase 2。
 - 若需要系统化调参与发布前离线优化，可在推理层前引入 AIConfigurator 作为控制平面增强模块。
+- 若需要多实例/多集群的统一控制与治理，可将 AIBrix 作为平台层控制面能力接入。
 
 ---
 
-## 10. 风险与注意事项
+## 11. 风险与注意事项
 
 1. **不要一次性上全家桶**：优先保证推理主链路与观测闭环。
 2. **GPU 与缓存要协同压测**：仅看 QPS 不看 TTFT/ITL 会误判。
@@ -175,7 +191,7 @@ flowchart LR
 4. **路由策略要有灰度**：先做只读观测路由，再逐步切流。
 5. **KV 复用要做隔离策略**：至少按模型版本和租户隔离，避免脏读与数据泄露。
 
-## 11. LMCache/Mooncake 接入步骤（建议顺序）
+## 12. LMCache/Mooncake 接入步骤（建议顺序）
 
 1. 在 `maas-kvopt` 部署独立服务，先使用旁路只读模式，不阻塞主推理链路。
 2. 在 vLLM/SGLang 侧只打开读取插件与观测埋点，先不打开写回。
@@ -186,13 +202,14 @@ flowchart LR
 
 ---
 
-## 12. 参考
+## 13. 参考
 
 - [maas_features.md](maas_features.md)
 - [maas_projects.md](maas_projects.md)
 - [vLLM](https://github.com/vllm-project/vllm)
 - [SGLang](https://github.com/sgl-project/sglang)
 - [AIConfigurator](https://github.com/ai-dynamo/aiconfigurator)
+- [AIBrix](https://github.com/aibrix/aibrix)
 - [LMCache](https://github.com/LMCache/LMCache)
 - [Mooncake](https://github.com/kvcache-ai/mooncake)
 - [LiteLLM](https://github.com/BerriAI/litellm)

@@ -1,6 +1,6 @@
 # MaaS (Model as a Service) 产品与开源项目全景
 
-> 广度优先收录。按类别分层梳理，覆盖商业平台、推理框架、本地工具、API 网关、应用层及企业私有化方案。
+> 广度优先收录。按类别分层梳理，覆盖商业平台、推理框架、本地工具、API 网关、上层应用（AI 编程助手/Agent/RAG）及企业私有化方案。
 >
 > 最后更新：2026-05
 
@@ -14,7 +14,9 @@
 - [2. 开源推理框架](#2-开源推理框架)
 - [3. 本地运行工具](#3-本地运行工具)
 - [4. API 网关 / 代理层](#4-api-网关--代理层)
-- [5. 应用层 MaaS（Chat UI / RAG 平台）](#5-应用层-maaschat-ui--rag-平台)
+- [5. 应用层 MaaS（上游应用 / Chat UI / Agent 平台）](#5-应用层-maas上游应用--chat-ui--agent-平台)
+  - [5.1 AI 编程助手（上游）](#51-ai-编程助手上游)
+  - [5.2 Agent / Chat UI / RAG 平台](#52-agent--chat-ui--rag-平台)
 - [6. 企业级私有化平台](#6-企业级私有化平台)
 - [7. 模型市场 / Hub](#7-模型市场--hub)
 
@@ -150,9 +152,27 @@
 
 ---
 
-## 5. 应用层 MaaS（Chat UI / RAG 平台）
+## 5. 应用层 MaaS（上游应用 / Chat UI / Agent 平台）
 
-> 在推理层之上提供完整的对话、知识库、Agent 能力的应用平台。
+> 在推理层之上提供完整的对话、知识库、Agent 与开发者生产力能力。
+
+### 5.1 AI 编程助手（上游）
+
+| 项目 | 类型 | 特点 | Stars | 链接 |
+|------|------|------|-------|------|
+| **Claude Code** | IDE/CLI Coding Agent | Anthropic 编程助手，面向代码理解与生成 | - | https://www.anthropic.com/claude-code |
+| **Codex** | Coding Agent | OpenAI 编程助手体系 | - | https://openai.com/codex/ |
+| **GitHub Copilot** | IDE Copilot | 最广泛使用的 IDE 编程助手 | - | https://github.com/features/copilot |
+| **Cursor** | AI IDE | 面向代码生成与重构的 AI 原生 IDE | - | https://cursor.com |
+| **Trae** | AI IDE | 国产 AI 开发工具（非开源） | - | https://www.trae.ai |
+| **WorkBuddy** | AI Coding/Workspace Assistant | 国产开发协作助手（非开源） | - | https://www.codebuddy.cn/work/ |
+| **通义灵码** | IDE Copilot | 阿里系国产编程助手 | - | https://tongyi.aliyun.com/lingma |
+| **CodeGeeX** | IDE Copilot | 智谱系代码助手，支持多 IDE | - | https://github.com/THUDM/CodeGeeX |
+| **Comate** | IDE Copilot | 百度智能代码助手 | - | https://comate.baidu.com |
+
+### 5.2 Agent / Chat UI / RAG 平台
+
+> 偏业务应用交付，提供可视化编排、知识库问答与多 Agent 集成。
 
 | 项目 | 类型 | 特点 | Stars | 链接 |
 |------|------|------|-------|------|
