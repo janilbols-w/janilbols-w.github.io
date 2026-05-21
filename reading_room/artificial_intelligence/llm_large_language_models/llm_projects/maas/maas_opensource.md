@@ -22,6 +22,7 @@
 |---|---|---|
 | API 统一与路由 | LiteLLM Proxy 或 Higress AI Gateway | 统一协议、模型路由、失败重试、Fallback |
 | 推理引擎 | vLLM（主）、SGLang（可选） | 高吞吐推理、KV 管理、流式输出 |
+| 服务配置与控制平面 | AIConfigurator（ai-dynamo/aiconfigurator） | 离线优化分离式推理图和关键运行参数，降低调参与发布风险 |
 | KV 存储优化 | LMCache / Mooncake（可选） | 跨实例 KV 复用、预填充结果复用、降低 TTFT |
 | 模型管理 | Hugging Face Hub + 本地模型仓库（MinIO/NAS） | 模型版本管理与分发 |
 | RAG 编排 | LlamaIndex 或 LangChain | 检索链路与业务编排 |
@@ -135,7 +136,7 @@ flowchart LR
 
 ### Phase 2：生产化（2-6 周）
 
-- 增加：Keycloak、Loki、Langfuse、Qdrant、RAG 服务、LMCache 或 Mooncake（旁路模式）。
+- 增加：Keycloak、Loki、Langfuse、Qdrant、RAG 服务、LMCache 或 Mooncake（旁路模式）、AIConfigurator（离线配置优化）。
 - 目标：多租户、审计可追踪、知识库问答上线、热点请求 TTFT 下降。
 
 ### Phase 3：企业级（持续演进）
@@ -162,6 +163,7 @@ flowchart LR
 - 若已有 API 网关体系（Envoy/Nginx Ingress），可保留网关，仅接入 LiteLLM 作为 AI 路由层。
 - 若侧重中文生态与高吞吐，可将 SGLang 作为主引擎，vLLM 作为通用回退引擎。
 - 若团队偏低代码业务交付，可将 Dify 提前到 Phase 2。
+- 若需要系统化调参与发布前离线优化，可在推理层前引入 AIConfigurator 作为控制平面增强模块。
 
 ---
 
@@ -190,6 +192,7 @@ flowchart LR
 - [maas_projects.md](maas_projects.md)
 - [vLLM](https://github.com/vllm-project/vllm)
 - [SGLang](https://github.com/sgl-project/sglang)
+- [AIConfigurator](https://github.com/ai-dynamo/aiconfigurator)
 - [LMCache](https://github.com/LMCache/LMCache)
 - [Mooncake](https://github.com/kvcache-ai/mooncake)
 - [LiteLLM](https://github.com/BerriAI/litellm)

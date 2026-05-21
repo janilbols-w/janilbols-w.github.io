@@ -16,6 +16,7 @@ title: LLM Benchmark 项目整理（GuideLLM / genai-bench 扩展）
 |---|---|---|---|
 | GuideLLM | 面向线上推理部署的评估与压测框架 | vLLM/SGLang/TGI 等服务端延迟与吞吐评估 | https://github.com/vllm-project/guidellm |
 | genai-bench | SGLang 生态的 GenAI 基准测试 | SGLang 相关性能对比与回归 | https://github.com/sgl-project/genai-bench |
+| aiperf | 面向 LLM serving 的压测与性能分析工具 | 服务端吞吐/延迟评估，适合接入到持续性能回归 | https://github.com/ai-dynamo/aiperf |
 | inference-perf | Kubernetes 社区的 GenAI 推理性能基准工具 | K8s 集群上模型服务性能基准 | https://github.com/kubernetes-sigs/inference-perf |
 | InferenceX | 持续化跨硬件推理基准（含多卡平台） | 机型/卡型横向对比（H100/B200/MI 系） | https://github.com/SemiAnalysisAI/InferenceX |
 
@@ -29,6 +30,7 @@ title: LLM Benchmark 项目整理（GuideLLM / genai-bench 扩展）
 |---|---|---|---|
 | GuideLLM | TTFT、ITL、TPS、并发稳定性 | 最贴近生产服务压测 | https://github.com/vllm-project/guidellm |
 | genai-bench | 吞吐、延迟、场景化负载 | SGLang 生态优先 | https://github.com/sgl-project/genai-bench |
+| aiperf | 延迟、吞吐、并发稳定性 | 可用于服务基准与回归压测（goodput 需按 SLO 二次计算） | https://github.com/ai-dynamo/aiperf |
 | llm-inference-bench | decode 吞吐/并发对比 | 支持 vLLM 与 SGLang | https://github.com/local-inference-lab/llm-inference-bench |
 | LLM-Inference-Bench-Mac | Apple Silicon 推理对比 | 本地多 runtime 横评 | https://github.com/saciducak/LLM-Inference-Bench-Mac |
 | whichllm | 本地硬件下模型/运行时排序 | 偏本地选型辅助 | https://github.com/Andyyyy64/whichllm |
