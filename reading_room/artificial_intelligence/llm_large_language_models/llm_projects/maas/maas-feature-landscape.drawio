@@ -33,23 +33,23 @@
           <mxGeometry x="10" y="315" width="1530" height="280" as="geometry" />
         </mxCell>
 
-        <mxCell id="14" value="&lt;b&gt;1. API 统一化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;OpenAI兼容 · Streaming&lt;br&gt;Function Call · 多提供商透传&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM&lt;br&gt;One API&lt;br&gt;Portkey Gateway&lt;br&gt;OpenRouter&lt;br&gt;Ollama" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+        <mxCell id="14" value="&lt;b&gt;1. API 统一化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;OpenAI兼容 · Streaming&lt;br&gt;Function Call · 多提供商透传&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM&lt;br&gt;Higress AI Gateway&lt;br&gt;Envoy AI Gateway&lt;br&gt;Apache APISIX&lt;br&gt;One API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
           <mxGeometry x="20" y="42" width="228" height="222" as="geometry" />
         </mxCell>
 
-        <mxCell id="15" value="&lt;b&gt;3. 路由&amp;可靠性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;负载均衡 · 自动重试&lt;br&gt;故障转移 · 条件路由&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM Proxy&lt;br&gt;Portkey&lt;br&gt;One API&lt;br&gt;New API&lt;br&gt;Higress" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+        <mxCell id="15" value="&lt;b&gt;3. 路由&amp;可靠性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;负载均衡 · 自动重试&lt;br&gt;故障转移 · 条件路由&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LiteLLM Proxy&lt;br&gt;Higress&lt;br&gt;kgateway&lt;br&gt;inference-gateway&lt;br&gt;vLLM Semantic Router" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
           <mxGeometry x="258" y="42" width="228" height="222" as="geometry" />
         </mxCell>
 
-        <mxCell id="16" value="&lt;b&gt;4. 安全&amp;合规&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Guardrails · PII脱敏&lt;br&gt;Prompt注入防护 · SOC2/HIPAA&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;LlamaGuard&lt;br&gt;NeMo Guardrails&lt;br&gt;Bedrock Guardrails&lt;br&gt;Azure Content Safety" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+        <mxCell id="16" value="&lt;b&gt;4. 安全&amp;合规&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;Guardrails · PII脱敏&lt;br&gt;Prompt注入防护 · SOC2/HIPAA&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Keycloak&lt;br&gt;OPA&lt;br&gt;LlamaGuard&lt;br&gt;NeMo Guardrails&lt;br&gt;Azure Content Safety" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
           <mxGeometry x="496" y="42" width="228" height="222" as="geometry" />
         </mxCell>
 
-        <mxCell id="17" value="&lt;b&gt;5. 可观测性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;请求日志 · 链路追踪&lt;br&gt;指标监控 · 成本追踪&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Langfuse&lt;br&gt;Helicone&lt;br&gt;Phoenix (Arize)&lt;br&gt;Datadog LLM&lt;br&gt;MLflow Tracing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+        <mxCell id="17" value="&lt;b&gt;5. 可观测性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;请求日志 · 链路追踪&lt;br&gt;指标监控 · 成本追踪&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Prometheus&lt;br&gt;Grafana&lt;br&gt;Loki · Tempo&lt;br&gt;Langfuse&lt;br&gt;Phoenix (Arize)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
           <mxGeometry x="734" y="42" width="228" height="222" as="geometry" />
         </mxCell>
 
-        <mxCell id="18" value="&lt;b&gt;6. 成本&amp;缓存&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;语义缓存 · Token预算&lt;br&gt;Prompt压缩 · Batch推理&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;GPTCache&lt;br&gt;LLMLingua&lt;br&gt;LiteLLM Caching&lt;br&gt;Batch API&lt;br&gt;One API倍率" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
+        <mxCell id="18" value="&lt;b&gt;6. 成本&amp;缓存&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;语义缓存 · Token预算&lt;br&gt;Prompt压缩 · Batch推理&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Redis&lt;br&gt;GPTCache&lt;br&gt;LiteLLM Caching&lt;br&gt;LLMLingua&lt;br&gt;Batch API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#82b366;verticalAlign=top;fontSize=11;" vertex="1" parent="4">
           <mxGeometry x="972" y="42" width="228" height="222" as="geometry" />
         </mxCell>
 
@@ -62,7 +62,7 @@
           <mxGeometry x="10" y="605" width="1530" height="200" as="geometry" />
         </mxCell>
 
-        <mxCell id="20" value="&lt;b&gt;2. 推理性能优化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;连续批处理 · KV Cache优化 · 投机解码 · 量化(INT4/INT8/GPTQ/AWQ) · 张量并行 · 前缀缓存&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;vLLM (PagedAttention) · SGLang (RadixAttention) · TGI · TensorRT-LLM&lt;br&gt;LMDeploy · llama.cpp · MLC LLM · PowerInfer · Triton · Xinference · DeepSpeed-MII" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#d6b656;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="5">
+        <mxCell id="20" value="&lt;b&gt;2. 推理性能优化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;i&gt;连续批处理 · KV Cache优化 · 投机解码 · 量化(INT4/INT8/GPTQ/AWQ) · 张量并行 · 前缀缓存&lt;/i&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;vLLM (PagedAttention) · SGLang (RadixAttention) · TGI · TensorRT-LLM · AIBrix&lt;br&gt;LMCache · Mooncake · AIConfigurator&lt;br&gt;LMDeploy · llama.cpp · MLC LLM · PowerInfer · Triton · Xinference" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#d6b656;verticalAlign=top;fontSize=11;align=left;" vertex="1" parent="5">
           <mxGeometry x="20" y="42" width="730" height="142" as="geometry" />
         </mxCell>
 
@@ -84,12 +84,12 @@
         </mxCell>
 
         <!-- ═══════════ Deployment Flexibility (Right Sidebar) ═══════════ -->
-        <mxCell id="24" value="&lt;b&gt;11. 部署灵活性&lt;/b&gt;&lt;br&gt;&lt;br&gt;公有云 API&lt;br&gt;私有化部署&lt;br&gt;混合云&lt;br&gt;边缘推理&lt;br&gt;Serverless&lt;br&gt;K8s 编排&lt;br&gt;&lt;br&gt;— 典型项目 —&lt;br&gt;&lt;br&gt;Ollama&lt;br&gt;vLLM + K8s&lt;br&gt;NVIDIA NIM&lt;br&gt;MLC LLM&lt;br&gt;HF Endpoints&lt;br&gt;Replicate&lt;br&gt;Modal&lt;br&gt;RunPod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;fontSize=10;align=center;" vertex="1" parent="1">
+        <mxCell id="24" value="&lt;b&gt;11. 部署灵活性&lt;/b&gt;&lt;br&gt;&lt;br&gt;公有云 API&lt;br&gt;私有化部署&lt;br&gt;混合云&lt;br&gt;边缘推理&lt;br&gt;Serverless&lt;br&gt;K8s 编排&lt;br&gt;&lt;br&gt;— 典型项目 —&lt;br&gt;&lt;br&gt;KServe&lt;br&gt;BentoML&lt;br&gt;Seldon Core&lt;br&gt;KubeRay&lt;br&gt;vLLM + K8s&lt;br&gt;NVIDIA NIM&lt;br&gt;HF Endpoints&lt;br&gt;RunPod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;fontSize=10;align=center;" vertex="1" parent="1">
           <mxGeometry x="1555" y="55" width="130" height="925" as="geometry" />
         </mxCell>
 
         <!-- Footer -->
-        <mxCell id="25" value="MaaS 功能全景图 | 参考: maas_projects.md · maas_features.md | 2026-05" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor=#999999;" vertex="1" parent="1">
+        <mxCell id="25" value="MaaS 功能全景图 | 参考: maas_projects.md · maas_features.md · maas_opensource.md | 2026-05" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor=#999999;" vertex="1" parent="1">
           <mxGeometry x="10" y="988" width="900" height="18" as="geometry" />
         </mxCell>
 
