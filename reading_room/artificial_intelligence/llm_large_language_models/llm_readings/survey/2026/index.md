@@ -1,5 +1,5 @@
 ---
-title: AI Agent
+title: 2026
 ---
 
 This page is generated automatically. Keep writing markdown files, then run the generator workflow.
@@ -8,6 +8,6 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Pages
 
-- [Summary]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2024-2025/ai_agent/summary/' | relative_url }})
+- [List]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2026/list/' | relative_url }})
 
 <!-- AUTO-GENERATED:END -->
