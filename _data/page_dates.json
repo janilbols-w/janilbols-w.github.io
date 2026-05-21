@@ -143,21 +143,25 @@
     "created": "2026-04-08",
     "updated": "2026-04-08"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/ai_agent/summary.md": {
-    "created": "2025-02-06",
-    "updated": "2026-04-08"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2024-2025/ai_agent/summary.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/large_language_models_a_survey.md": {
-    "created": "2025-02-06",
-    "updated": "2026-04-08"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2024-2025/large_language_models_a_survey.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/llm_serving_a_survey.md": {
-    "created": "2025-02-06",
-    "updated": "2026-04-08"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2024-2025/llm_serving_a_survey.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/parameter-efficient_fine-tuning-for-large-models_a-comprehensive-survey.md": {
-    "created": "2025-02-06",
-    "updated": "2026-04-08"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2024-2025/parameter-efficient_fine-tuning-for-large-models_a-comprehensive-survey.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2026/list.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/README.md": {
     "created": "2025-02-06",
