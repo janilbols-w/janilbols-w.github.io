@@ -98,6 +98,15 @@
 | **LocalAI** | Go | 本地 OpenAI 兼容 API | ~25k | https://github.com/mudler/LocalAI |
 | **TensorRT-LLM** | C++/Python | NVIDIA TensorRT 推理优化 | ~9k | https://github.com/NVIDIA/TensorRT-LLM |
 | **PowerInfer** | C++ | 稀疏激活，消费级 GPU 高效推理 | ~7k | https://github.com/SJTU-IPADS/PowerInfer |
+| **FlashInfer** | CUDA/C++ | 高性能 LLM Serving 内核库 | ~5k | https://github.com/flashinfer-ai/flashinfer |
+| **LMCache** | Python | KV Cache 复用与分层存储优化 | ~8k | https://github.com/LMCache/LMCache |
+| **Mooncake** | C++ | 分离式推理与 KV/内存优化平台 | ~5k | https://github.com/kvcache-ai/Mooncake |
+| **LightLLM** | Python | 轻量高性能推理服务框架 | ~4k | https://github.com/ModelTC/LightLLM |
+| **FastDeploy** | Python/C++ | 高性能推理部署工具链（含 LLM） | ~3k | https://github.com/PaddlePaddle/FastDeploy |
+| **CTranslate2** | C++ | Transformer 推理引擎，量化友好 | ~4k | https://github.com/OpenNMT/CTranslate2 |
+| **llm-d** | Shell/Python | K8s 分布式推理栈（路由/KV/PD 分离） | ~3k | https://github.com/llm-d/llm-d |
+| **vLLM Production Stack** | YAML/Helm | vLLM 官方 K8s 生产部署参考系统 | ~2k | https://github.com/vllm-project/production-stack |
+| **AIBrix** | Go/Python | 推理平台控制面（多集群/调度/治理） | - | https://github.com/aibrix/aibrix |
 
 ---
 
@@ -130,6 +139,11 @@
 | **New API** | Go | One API 分叉，更多功能 | ~10k | https://github.com/Calcium-Ion/new-api |
 | **Portkey Gateway** | TypeScript | 企业级，<1ms 延迟，Guardrails | ~12k | https://github.com/Portkey-AI/gateway |
 | **Higress AI Gateway** | Go | 阿里云开源，云原生 AI 网关 | ~5k | https://github.com/alibaba/higress |
+| **Envoy AI Gateway** | Go | 基于 Envoy Gateway 的 AI 统一入口 | ~1.6k | https://github.com/envoyproxy/ai-gateway |
+| **Apache APISIX** | Lua | 云原生 API/AI Gateway | ~16k | https://github.com/apache/apisix |
+| **kgateway** | Go | K8s 原生 AI 网关能力扩展 | ~5k | https://github.com/kgateway-dev/kgateway |
+| **inference-gateway** | Go | 统一多供应商模型接入层 | ~100 | https://github.com/inference-gateway/inference-gateway |
+| **vLLM Semantic Router** | Go/Rust | Mixture-of-Models 系统级语义路由 | ~4k | https://github.com/vllm-project/semantic-router |
 | **AI Gateway** (Cloudflare) | - | Cloudflare 托管，全球分布 | - | https://developers.cloudflare.com/ai-gateway |
 | **Kong AI Gateway** | Lua/Go | Kong 插件，企业级 | - | https://konghq.com/products/kong-ai-gateway |
 | **MLflow AI Gateway** | Python | MLflow 生态，模型路由 | - | https://mlflow.org/docs/latest/llms/gateway |

@@ -15,6 +15,7 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Pages
 
+- [Benchmarks]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/benchmarks/' | relative_url }})
 - [DeepSeek Projects]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/deepseek-projects/' | relative_url }})
 - [LLM Implementation]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/llm_implementation/' | relative_url }})
 
