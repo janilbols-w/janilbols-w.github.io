@@ -27,6 +27,10 @@
     "created": "2025-02-06",
     "updated": "2025-02-06"
   },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/benchmarks.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/deepseek-projects.md": {
     "created": "2025-02-21",
     "updated": "2026-04-08"
@@ -67,9 +71,17 @@
     "created": "2026-05-18",
     "updated": "2026-05-18"
   },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_opensource.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_perf_breadth_survey.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_projects.md": {
     "created": "2026-05-18",
-    "updated": "2026-05-18"
+    "updated": "2026-05-21"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities.md": {
     "created": "2025-02-21",
@@ -159,7 +171,23 @@
     "created": "2026-05-21",
     "updated": "2026-05-21"
   },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2026/fast26.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2026/list.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2026/taxonomy_of_efficient_inference_methods_2404_14294.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2026/taxonomy_of_kv_cache_management_2412_19442.md": {
+    "created": "2026-05-21",
+    "updated": "2026-05-21"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/survey/2026/taxonomy_of_llm_inference_advancements.md": {
     "created": "2026-05-21",
     "updated": "2026-05-21"
   },
