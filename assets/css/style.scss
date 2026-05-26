@@ -732,13 +732,13 @@ tr:nth-child(even) td {
   border: 1px solid var(--line);
   border-radius: 6px;
   overflow: hidden;
-  background: var(--paper-strong);
+  background: #ffffff;
 }
 
 .xmind-canvas {
   width: 100%;
   min-height: 560px;
-  background: #0f172a;
+  background: #ffffff;
 }
 
 .xmind-canvas.is-error {

@@ -463,6 +463,8 @@
 
             const open = document.createElement('a');
             open.href = sourceUrl;
+            open.target = '_blank';
+            open.rel = 'noopener noreferrer';
             open.textContent = 'Open source .xmind file';
 
             const note = document.createElement('span');
@@ -476,6 +478,21 @@
               el: mount,
               region: isLikelyCN ? 'cn' : 'global'
             });
+
+            const applyViewerDefaults = () => {
+              if (typeof viewer.setFitMap === 'function') {
+                viewer.setFitMap();
+              }
+
+              if (window.matchMedia('(max-width: 900px)').matches && typeof viewer.setZoomScale === 'function') {
+                viewer.setZoomScale(85);
+              }
+            };
+
+            if (typeof viewer.addEventListener === 'function') {
+              viewer.addEventListener('map-ready', applyViewerDefaults);
+            }
+
             fetch(sourceUrl)
               .then((response) => {
                 if (!response.ok) {
@@ -483,7 +500,16 @@
                 }
                 return response.arrayBuffer();
               })
-              .then((file) => viewer.load(file))
+              .then((file) => {
+                const result = viewer.load(file);
+                if (result && typeof result.then === 'function') {
+                  return result.then(() => {
+                    applyViewerDefaults();
+                  });
+                }
+                applyViewerDefaults();
+                return result;
+              })
               .catch((error) => {
                 const message = error && error.message ? error.message : 'Unknown error';
                 mount.textContent = `Failed to load this .xmind file in embedded mode (${message}). Please open the source file directly.`;
