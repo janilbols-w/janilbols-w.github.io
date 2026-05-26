@@ -12,6 +12,7 @@ This page is generated automatically. Keep writing markdown files, then run the 
 - [Higress]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/' | relative_url }})
 - [Inference Frameworks]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/' | relative_url }})
 - [Maas]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/' | relative_url }})
+- [vLLM Job Scheduler]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/vllm-job-scheduler/' | relative_url }})
 
 ## Pages
 
