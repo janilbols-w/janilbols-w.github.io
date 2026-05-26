@@ -405,6 +405,82 @@
         link.insertAdjacentElement('afterend', wrapper);
       });
 
+      const xmindLinks = document.querySelectorAll('.page-content a[href$=".xmind"]');
+      const loadXMindViewer = async () => {
+        if (window.XMindEmbedViewer) {
+          return window.XMindEmbedViewer;
+        }
+
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://unpkg.com/xmind-embed-viewer/dist/umd/xmind-embed-viewer.js';
+          script.async = true;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+
+        return window.XMindEmbedViewer;
+      };
+
+      if (xmindLinks.length > 0) {
+        try {
+          const XMindEmbedViewer = await loadXMindViewer();
+
+          xmindLinks.forEach((link, index) => {
+            const sourceUrl = new URL(link.getAttribute('href'), window.location.href).href;
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'xmind-embed';
+
+            const mount = document.createElement('div');
+            mount.className = 'xmind-canvas';
+            mount.id = `xmind-embed-${index}`;
+
+            const meta = document.createElement('p');
+            meta.className = 'xmind-meta';
+
+            const open = document.createElement('a');
+            open.href = sourceUrl;
+            open.textContent = 'Open source .xmind file';
+
+            const note = document.createElement('span');
+            note.textContent = 'Rendered by xmind-embed-viewer';
+
+            meta.append(open, document.createTextNode(' | '), note);
+            wrapper.append(mount, meta);
+            link.insertAdjacentElement('afterend', wrapper);
+
+            const viewer = new XMindEmbedViewer({ el: mount });
+            fetch(sourceUrl)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`Failed to fetch xmind file: ${response.status}`);
+                }
+                return response.arrayBuffer();
+              })
+              .then((file) => viewer.load(file))
+              .catch(() => {
+                mount.textContent = 'Failed to load this .xmind file in embedded mode. Please open the source file directly.';
+                mount.classList.add('is-error');
+              });
+          });
+        } catch {
+          xmindLinks.forEach((link) => {
+            const sourceUrl = new URL(link.getAttribute('href'), window.location.href).href;
+            const fallback = document.createElement('p');
+            fallback.className = 'xmind-meta';
+
+            const open = document.createElement('a');
+            open.href = sourceUrl;
+            open.textContent = 'Open source .xmind file';
+            fallback.append(open, document.createTextNode(' (viewer failed to initialize)'));
+
+            link.insertAdjacentElement('afterend', fallback);
+          });
+        }
+      }
+
       const quickNav = document.querySelector('[data-quick-nav]');
       const quickNavList = document.querySelector('[data-quick-nav-list]');
       const headingNodes = Array.from(document.querySelectorAll('.page-content h2, .page-content h3'));

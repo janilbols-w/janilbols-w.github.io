@@ -727,6 +727,38 @@ tr:nth-child(even) td {
   color: var(--muted);
 }
 
+.xmind-embed {
+  margin: 12px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--paper-strong);
+}
+
+.xmind-canvas {
+  width: 100%;
+  min-height: 560px;
+  background: #0f172a;
+}
+
+.xmind-canvas.is-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #fda4af;
+  background: #1f2937;
+}
+
+.xmind-meta {
+  margin: 0;
+  padding: 8px 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
 /* ── CV page ─────────────────────────────────────────────── */
 
 .cv-page {
@@ -911,6 +943,10 @@ tr:nth-child(even) td {
   color: var(--accent-strong);
 }
 
+.xmind-meta a {
+  color: var(--accent-strong);
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -964,6 +1000,10 @@ img {
   }
 
   .drawio-embed iframe {
+    min-height: 420px;
+  }
+
+  .xmind-canvas {
     min-height: 420px;
   }
 }

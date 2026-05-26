@@ -61,6 +61,10 @@ def is_drawio_file(path: Path) -> bool:
     return path.is_file() and path.suffix.lower() == ".drawio"
 
 
+def is_xmind_file(path: Path) -> bool:
+    return path.is_file() and path.suffix.lower() == ".xmind"
+
+
 def path_to_url(rel_path: Path, is_dir: bool) -> str:
     if is_dir:
         return f"/{rel_path.as_posix().strip('/')}/"
@@ -69,7 +73,7 @@ def path_to_url(rel_path: Path, is_dir: bool) -> str:
     return f"/{no_suffix.as_posix().strip('/')}/"
 
 
-def drawio_path_to_url(rel_path: Path) -> str:
+def diagram_path_to_url(rel_path: Path) -> str:
     # Keep source file extension so the frontend script can detect and embed it.
     return f"/{rel_path.as_posix().strip('/')}"
 
@@ -79,12 +83,12 @@ def has_note_content(dir_path: Path) -> bool:
         if child.name.startswith("."):
             continue
         if child.is_dir() and child.name not in EXCLUDED_DIRS:
-            # A child directory is considered note content if it has markdown or drawio files recursively.
-            if any(is_markdown_file(p) or is_drawio_file(p) for p in child.rglob("*")):
+            # A child directory is considered note content if it has markdown or diagram files recursively.
+            if any(is_markdown_file(p) or is_drawio_file(p) or is_xmind_file(p) for p in child.rglob("*")):
                 return True
         if is_markdown_file(child) and child.name.lower() != "index.md":
             return True
-        if is_drawio_file(child):
+        if is_drawio_file(child) or is_xmind_file(child):
             return True
     return False
 
@@ -114,12 +118,12 @@ def collect_markdown_files(base_dir: Path, root_dir: Path) -> list[DirEntry]:
     return result
 
 
-def collect_drawio_files(base_dir: Path, root_dir: Path) -> list[DirEntry]:
+def collect_diagram_files(base_dir: Path, root_dir: Path) -> list[DirEntry]:
     result: list[DirEntry] = []
     for child in sorted(base_dir.iterdir(), key=lambda p: p.name.lower()):
         if child.name.startswith("."):
             continue
-        if not is_drawio_file(child):
+        if not (is_drawio_file(child) or is_xmind_file(child)):
             continue
         rel = child.relative_to(root_dir)
         result.append(DirEntry(abs_path=child, rel_posix=rel.as_posix()))
@@ -129,7 +133,7 @@ def collect_drawio_files(base_dir: Path, root_dir: Path) -> list[DirEntry]:
 def render_auto_block(current_dir: Path, root_dir: Path) -> str:
     child_dirs = collect_child_dirs(current_dir, root_dir)
     md_files = collect_markdown_files(current_dir, root_dir)
-    drawio_files = collect_drawio_files(current_dir, root_dir)
+    diagram_files = collect_diagram_files(current_dir, root_dir)
 
     lines: list[str] = [START_MARKER, ""]
 
@@ -151,16 +155,16 @@ def render_auto_block(current_dir: Path, root_dir: Path) -> str:
             lines.append(f"- [{name}]({{{{ '{url}' | relative_url }}}})")
         lines.append("")
 
-    if drawio_files:
+    if diagram_files:
         lines.append("## Diagrams")
         lines.append("")
-        for entry in drawio_files:
+        for entry in diagram_files:
             name = title_from_name(entry.abs_path.stem)
-            url = drawio_path_to_url(Path(entry.rel_posix))
+            url = diagram_path_to_url(Path(entry.rel_posix))
             lines.append(f"- [{name}]({{{{ '{url}' | relative_url }}}})")
         lines.append("")
 
-    if not child_dirs and not md_files and not drawio_files:
+    if not child_dirs and not md_files and not diagram_files:
         lines.append("No markdown notes or diagrams found in this directory yet.")
         lines.append("")
 

@@ -45,17 +45,21 @@ def is_drawio(p: Path) -> bool:
     return p.is_file() and p.suffix.lower() == ".drawio"
 
 
+def is_xmind(p: Path) -> bool:
+    return p.is_file() and p.suffix.lower() == ".xmind"
+
+
 def has_note_content(d: Path) -> bool:
-    """True if the directory contains note content (md/drawio) recursively."""
+    """True if the directory contains note content (md/drawio/xmind) recursively."""
     for child in d.iterdir():
         if child.name.startswith("."):
             continue
         if child.is_dir() and child.name not in EXCLUDED_DIRS and child.name not in IMAGE_DIRS:
-            if any(is_md(p) or is_drawio(p) for p in child.rglob("*")):
+            if any(is_md(p) or is_drawio(p) or is_xmind(p) for p in child.rglob("*")):
                 return True
         if is_md(child) and child.name.lower() != "index.md":
             return True
-        if is_drawio(child):
+        if is_drawio(child) or is_xmind(child):
             return True
     return False
 
