@@ -1,5 +1,5 @@
-# CodeWhale + Deepseek
-self-host deepseek api for codewhale
+# ClaudeCode + Deepseek
+self-host deepseek api for Claude Code
 ## Trail-1
 ### 1.1 model api
 ```
@@ -12,7 +12,7 @@ self-host deepseek api for codewhale
         - H20-96G x 2
 ```
 
-### 1.2 deploy codewhale
+### 1.2 deploy Claude Code
 
 ```bash
 # based on https://github.com/anthropics/claude-code/blob/main/.devcontainer/Dockerfile
