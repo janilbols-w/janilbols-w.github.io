@@ -62,6 +62,7 @@ deepseek-tui
         - model weights: 148.66G 
         - --max-model-len 1048576
         - H20-96G x 4 -> 6x max concurrency
+        - H20-96G x 2
 ```
 ### 3.2 deploy codewhale
 - same to 1.2 codewhale

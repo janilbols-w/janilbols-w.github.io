@@ -9,6 +9,7 @@ This page is generated automatically. Keep writing markdown files, then run the 
 ## Sections
 
 - [Continuous Batching]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/continuous-batching/' | relative_url }})
+- [vLLM Job Scheduler]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/vllm-job-scheduler/' | relative_url }})
 
 ## Pages
 
