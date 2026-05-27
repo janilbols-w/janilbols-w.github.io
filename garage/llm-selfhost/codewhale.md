@@ -50,3 +50,21 @@ deepseek-tui
 ![alt text](images/7cb711d1c8908e4bfcc85dfaa283a6db.png)
 
 - test okay
+
+
+
+## Trail-3
+### 3.1 model api
+```
+- [] Deepseek-V4-Flash
+    - vllm ... --enable-auto-tool-choice --tool-call-parser deepseek_v4 --kv-cache-dtype fp8 
+    - resouce consumption: 
+        - model weights: 148.66G 
+        - --max-model-len 1048576
+        - H20-96G x 4 -> 6x max concurrency
+```
+### 3.2 deploy codewhale
+- same to 1.2 codewhale
+
+### 3.3 test record
+- test okay
