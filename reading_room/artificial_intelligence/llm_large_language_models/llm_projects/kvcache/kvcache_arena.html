@@ -57,6 +57,12 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     font-size: 1.05rem;
   }
 
+  .arena-card h3 {
+    margin: 10px 0 8px;
+    color: #ead8a4;
+    font-size: 0.92rem;
+  }
+
   .arena-muted { color: var(--muted); }
 
   .arena-pill {
@@ -81,6 +87,24 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   }
 
   .arena-layer b { display: inline-block; min-width: 124px; }
+
+  .arena-subgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .arena-sub {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper-strong);
+    padding: 8px 9px;
+    font-size: 0.84rem;
+    color: var(--ink);
+  }
+
+  .arena-sub b { color: #ead8a4; }
 
   .arena-table-wrap { overflow: auto; }
   .arena-table {
@@ -145,7 +169,8 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   @media (max-width: 980px) {
     .arena-g2,
     .arena-g3,
-    .arena-kv {
+    .arena-kv,
+    .arena-subgrid {
       grid-template-columns: 1fr;
     }
   }
@@ -159,24 +184,73 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
   <section class="arena-grid arena-g2">
     <article class="arena-card">
-      <h2>1) 架构层级归类</h2>
+      <h2>1) 主层级（A/B/C/D）</h2>
       <div class="arena-layer"><b>A 层 算法内核层</b>ShadowKV</div>
       <div class="arena-layer"><b>B 层 框架内缓存层</b>HiCache</div>
       <div class="arena-layer"><b>C 层 引擎外 KV 服务层</b>LMCache、Pegaflow</div>
       <div class="arena-layer"><b>D 层 分布式数据平面</b>Mooncake</div>
-      <p class="arena-muted">建议理解为可叠加能力栈，而不是单一替代关系。</p>
+      <p class="arena-muted">A/B/C/D 表示系统定位；L0-L4 表示能力落点。</p>
     </article>
 
     <article class="arena-card">
-      <h2>2) 一眼看侧重点</h2>
-      <div>
-        <span class="arena-pill">ShadowKV：decode 稀疏与显存外扩</span>
-        <span class="arena-pill">HiCache：框架内分层复用</span>
-        <span class="arena-pill">LMCache：多实例复用与分层存储</span>
-        <span class="arena-pill">Pegaflow：sidecar + RDMA + observability</span>
-        <span class="arena-pill">Mooncake：PD 解耦 + 分布式传输平面</span>
+      <h2>2) 次级分层（L0-L4）</h2>
+      <div class="arena-subgrid">
+        <div class="arena-sub"><b>L0 请求编排层</b><br>Router/Proxy、P/D 流程编排</div>
+        <div class="arena-sub"><b>L1 引擎连接层</b><br>vLLM/SGLang connector 适配</div>
+        <div class="arena-sub"><b>L2 传输执行层</b><br>NIXL/RDMA/IPC 数据通道</div>
+        <div class="arena-sub"><b>L3 存储与索引层</b><br>CPU/SSD/对象存储与命中管理</div>
+        <div class="arena-sub"><b>L4 控制与观测层</b><br>元数据、发现、监控与治理</div>
       </div>
+      <p class="arena-muted" style="margin-top:8px;">次级分层用于细化“同属 C 层但工程重心不同”的项目差异。</p>
     </article>
+  </section>
+
+  <section class="arena-card" style="margin-top:14px;">
+    <h2>2.1) 更新后的项目层次归属</h2>
+    <div class="arena-table-wrap">
+      <table class="arena-table">
+        <thead>
+          <tr>
+            <th>项目</th>
+            <th>主层级</th>
+            <th>次级分层归属</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ShadowKV</td>
+            <td class="arena-score s2">A</td>
+            <td>L1（弱） + L3（局部）</td>
+            <td>核心仍是算法/算子层优化</td>
+          </tr>
+          <tr>
+            <td>HiCache</td>
+            <td class="arena-score s3">B</td>
+            <td>L1 + L3</td>
+            <td>框架内缓存策略与分层复用</td>
+          </tr>
+          <tr>
+            <td>LMCache</td>
+            <td class="arena-score s4">C</td>
+            <td>L1 + L2 + L3（主），L0（次）</td>
+            <td>偏能力拼装与复用路径</td>
+          </tr>
+          <tr>
+            <td>Pegaflow</td>
+            <td class="arena-score s4">C</td>
+            <td>L1 + L2 + L3（主），L0 + L4（次）</td>
+            <td>服务化和控制面更突出</td>
+          </tr>
+          <tr>
+            <td>Mooncake</td>
+            <td class="arena-score s5">D</td>
+            <td>L0 + L2 + L4（主），L3（次）</td>
+            <td>分布式传输平面与 PD 解耦核心</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section class="arena-card" style="margin-top:14px;">

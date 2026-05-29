@@ -14,6 +14,7 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Pages
 
+- [KVCache Architecture]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/kvcache_architecture/' | relative_url }})
 - [KVCache Arena]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/kvcache_arena/' | relative_url }})
 - [Pegaflow]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/pegaflow/' | relative_url }})
 - [Shadowkv]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/shadowkv/' | relative_url }})

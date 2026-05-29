@@ -1,0 +1,374 @@
+---
+layout: default
+title: LMCache vs PegaFlow Visual Compare
+hide_sidebar: true
+permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/lmcache/lmcache_vs_pegaflow_visual.html
+---
+
+<style>
+  :root {
+    --bg0: #141a1f;
+    --bg1: #1d252d;
+    --bg2: #24303b;
+    --paper: #1f2832;
+    --paper-2: #24313d;
+    --line: #364454;
+    --ink: #eaf2fb;
+    --muted: #9fb0c3;
+    --teal: #68d6c8;
+    --amber: #f2c165;
+    --rose: #ff8f8f;
+    --ok: #8be2b9;
+    --shadow: 0 14px 34px rgba(6, 10, 14, 0.35);
+  }
+
+  .lmvp-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 8px 0 24px;
+    font-family: "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    color: var(--ink);
+  }
+
+  .lmvp-hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 24px;
+    background:
+      radial-gradient(1300px 500px at -20% -40%, rgba(104, 214, 200, 0.24), transparent 60%),
+      radial-gradient(1100px 380px at 120% -80%, rgba(242, 193, 101, 0.22), transparent 60%),
+      linear-gradient(140deg, var(--bg0), var(--bg1) 54%, var(--bg2));
+    box-shadow: var(--shadow);
+  }
+
+  .lmvp-hero h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .lmvp-hero p {
+    margin: 10px 0 0;
+    color: #c9d8e8;
+    max-width: 880px;
+  }
+
+  .lmvp-badges {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lmvp-badge {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    color: #d5e2f0;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    padding: 5px 10px;
+  }
+
+  .lmvp-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .lmvp-card {
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 14px 16px;
+    background: linear-gradient(180deg, var(--paper), var(--paper-2));
+    box-shadow: var(--shadow);
+  }
+
+  .lmvp-card h2 {
+    margin: 0 0 10px;
+    font-size: 1.02rem;
+    color: #f0f6fd;
+  }
+
+  .lmvp-card h3 {
+    margin: 0 0 7px;
+    font-size: 0.92rem;
+    color: #d8e8f8;
+  }
+
+  .muted { color: var(--muted); }
+
+  .kv {
+    font-size: 0.9rem;
+    border-left: 3px solid rgba(242, 193, 101, 0.8);
+    background: rgba(242, 193, 101, 0.08);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+  }
+
+  .stack-row {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .stack-title {
+    color: var(--amber);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .box {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .box b { color: #eff7ff; }
+  .tag-ok { color: var(--ok); font-weight: 700; }
+  .tag-mix { color: var(--amber); font-weight: 700; }
+
+  .lmvp-table-wrap { overflow: auto; }
+  .lmvp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  .lmvp-table th,
+  .lmvp-table td {
+    border: 1px solid var(--line);
+    padding: 8px;
+    vertical-align: top;
+  }
+
+  .lmvp-table th {
+    background: rgba(104, 214, 200, 0.09);
+    color: #def7f2;
+    white-space: nowrap;
+  }
+
+  .yes,
+  .no,
+  .partial {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .yes { color: var(--ok); }
+  .no { color: var(--rose); }
+  .partial { color: var(--amber); }
+
+  .bars {
+    display: grid;
+    gap: 10px;
+  }
+
+  .bar-row { font-size: 0.84rem; }
+
+  .bar-head {
+    display: flex;
+    justify-content: space-between;
+    color: #d9e5f2;
+    margin-bottom: 4px;
+  }
+
+  .bar-track {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #57d2c2, #f2c165);
+  }
+
+  .flow {
+    display: grid;
+    gap: 9px;
+  }
+
+  .step {
+    border: 1px dashed #4a5b6f;
+    border-radius: 10px;
+    padding: 9px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.86rem;
+  }
+
+  .step b { color: #f4d188; }
+
+  .foot {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 0.77rem;
+  }
+
+  @media (max-width: 980px) {
+    .g2,
+    .g3,
+    .compare {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="lmvp-wrap">
+  <section class="lmvp-hero">
+    <h1>LMCache vs PegaFlow</h1>
+    <p>面向 KV Cache 体系的分层对比页：从 PD disaggregation、XpYd、存储服务部署架构，到性能解读和选型路径，帮助你在同一视角下做工程决策。</p>
+    <div class="lmvp-badges">
+      <span class="lmvp-badge">PD Disagg: 两者均支持</span>
+      <span class="lmvp-badge">XpYd: LMCache 明确文档化</span>
+      <span class="lmvp-badge">Service化: PegaFlow 更强</span>
+      <span class="lmvp-badge">性能结论需同场景复核</span>
+    </div>
+  </section>
+
+  <section class="lmvp-grid g2">
+    <article class="lmvp-card">
+      <h2>结论速览</h2>
+      <div class="kv"><b>LMCache</b> 更偏向“库 + 连接器 + 多介质缓存能力”，接入路径短，适合先快速验证收益。</div>
+      <div class="kv"><b>PegaFlow</b> 更偏向“独立数据平面服务”，适合长期建设跨节点、可运维、可观测的 KV 基础设施。</div>
+      <p class="muted">建议避免只看单一指标。TTFT、TPOT、ITL、吞吐、命中率应联合评估。</p>
+    </article>
+
+    <article class="lmvp-card">
+      <h2>核心问答</h2>
+      <div class="compare">
+        <div class="box"><b>是否支持 PD disagg?</b><br><span class="tag-ok">支持</span>。LMCache 有完整 disaggregated prefill 文档与样例；PegaFlow 有 P/D 设计与运行路径。</div>
+        <div class="box"><b>是否支持 XpYd?</b><br>LMCache <span class="tag-ok">明确支持</span>（xP+yD 命名与示例）；PegaFlow <span class="tag-mix">语义支持</span>多 P 多 D，但不强调 XpYd 术语。</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="lmvp-card" style="margin-top:14px;">
+    <h2>分层对齐（L0-L4）</h2>
+    <div class="stack-row">
+      <div class="stack-title">L0 请求编排层</div>
+      <div class="compare">
+        <div class="box"><b>LMCache</b><br>以 proxy 协调 prefill/decode，请求路由逻辑清晰，快速启动成本低。</div>
+        <div class="box"><b>PegaFlow</b><br>router/proxy 组合更偏平台化治理，文档强调生产语义下 D 端触发 prefill。</div>
+      </div>
+    </div>
+
+    <div class="stack-row">
+      <div class="stack-title">L1 引擎连接层</div>
+      <div class="compare">
+        <div class="box"><b>LMCache</b><br>LMCacheConnector 与 vLLM 深集成，覆盖 hit/miss 与 store/retrieve 主路径。</div>
+        <div class="box"><b>PegaFlow</b><br>PegaKVConnector + PdConnector（实验）接入，拆分 scheduler/worker 角色明显。</div>
+      </div>
+    </div>
+
+    <div class="stack-row">
+      <div class="stack-title">L2 传输层</div>
+      <div class="compare">
+        <div class="box"><b>LMCache</b><br>PD 语境下主打 NIXL，sender/receiver、buffer 等参数文档完备。</div>
+        <div class="box"><b>PegaFlow</b><br>RDMA-first，强调 topology-aware 与尾延迟稳定，同时保留 NIXL 对照路径。</div>
+      </div>
+    </div>
+
+    <div class="stack-row">
+      <div class="stack-title">L3 存储与索引层</div>
+      <div class="compare">
+        <div class="box"><b>LMCache</b><br>多介质复用能力强（GPU/CPU/Disk 等），偏能力组件化。</div>
+        <div class="box"><b>PegaFlow</b><br>pegaflow-server 作为独立 KV 数据平面，便于单独扩缩容与故障域隔离。</div>
+      </div>
+    </div>
+
+    <div class="stack-row">
+      <div class="stack-title">L4 控制与观测层</div>
+      <div class="compare">
+        <div class="box"><b>LMCache</b><br>operator/MP/测试栈齐全，但中心化控制面的存在感不是主叙事。</div>
+        <div class="box"><b>PegaFlow</b><br>metaserver + metrics（Prometheus/OTLP）更强调服务化运维闭环。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lmvp-grid g2">
+    <article class="lmvp-card">
+      <h2>功能矩阵</h2>
+      <div class="lmvp-table-wrap">
+        <table class="lmvp-table">
+          <thead>
+            <tr>
+              <th>能力</th>
+              <th>LMCache</th>
+              <th>PegaFlow</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>PD disagg</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><td>XpYd 命名与教程</td><td class="yes">Yes</td><td class="partial">Semantic Yes</td></tr>
+            <tr><td>vLLM 集成</td><td class="yes">Strong</td><td class="yes">Strong</td></tr>
+            <tr><td>SGLang 集成</td><td class="partial">Available</td><td class="partial">Available</td></tr>
+            <tr><td>多节点元数据服务</td><td class="partial">Not central-first</td><td class="yes">MetaServer</td></tr>
+            <tr><td>独立存储 service 架构</td><td class="partial">Partial</td><td class="yes">Strong</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="lmvp-card">
+      <h2>性能解读（方向性）</h2>
+      <p class="muted">以下是工程倾向，不是同条件绝对数值排名。</p>
+      <div class="bars">
+        <div class="bar-row">
+          <div class="bar-head"><span>LMCache: 缓存复用与吞吐潜力</span><span>8.5 / 10</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-head"><span>PegaFlow: 尾延迟与链路可控性</span><span>8.7 / 10</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:87%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-head"><span>LMCache: 快速落地便利度</span><span>8.8 / 10</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-head"><span>PegaFlow: 基础设施可演进性</span><span>9.0 / 10</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="lmvp-grid g2">
+    <article class="lmvp-card">
+      <h2>部署架构差异</h2>
+      <div class="box"><b>LMCache 常见形态</b><br>Inference Engine + LMCache Connector + 传输/缓存后端。优先把“缓存复用能力”嵌进现有推理链路。</div>
+      <div class="box" style="margin-top:8px;"><b>PegaFlow 常见形态</b><br>Inference Engine + Connector + Pegaflow Server + MetaServer + Router。把 KV 能力抽为独立数据平面服务。</div>
+      <p class="muted">如果你重点问“存储 service 的部署架构是否有差异”，结论是有，而且差异显著。</p>
+    </article>
+
+    <article class="lmvp-card">
+      <h2>选型路径</h2>
+      <div class="flow">
+        <div class="step"><b>Step 1</b> 先跑 1P1D：验证链路正确性与最小收益。</div>
+        <div class="step"><b>Step 2</b> 再跑 2P2D：观察扩展效率和负载均衡行为。</div>
+        <div class="step"><b>Step 3</b> 做冷热负载分组：区分“高复用”与“低复用”下真实收益。</div>
+        <div class="step"><b>Step 4</b> 结合运维目标：若要独立演进数据平面，优先评估 PegaFlow；若要快上线，优先 LMCache。</div>
+      </div>
+    </article>
+  </section>
+
+  <div class="foot">该页面与 markdown 版本内容对齐，使用独立 permalink 防止与同名 markdown 路由冲突。</div>
+</div>

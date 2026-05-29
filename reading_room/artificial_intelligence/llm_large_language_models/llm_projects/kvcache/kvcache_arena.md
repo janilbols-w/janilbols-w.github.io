@@ -53,15 +53,39 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 4. D 层：分布式传输与解耦数据平面（PD Disagg / KV Pool）
 - 代表：Mooncake
 
-## 2.2 项目归类总表
+## 2.2 次级分层（L0-L4）
 
-| 项目 | 主层级 | 次层级 | 典型部署形态 | 是否强调跨节点 | 是否强调 PD 解耦 |
-|---|---|---|---|---|---|
-| ShadowKV | A | B | 运行时算法模块嵌入推理进程 | 弱 | 否 |
-| HiCache | B | C | SGLang 内部分层缓存 + 外部后端 | 中 | 否（可叠加） |
-| LMCache | C | D | vLLM/SGLang + Connector + KV 服务 | 强 | 中（有相关能力） |
-| Pegaflow | C | D | vLLM + Pegaflow sidecar/server | 强 | 中（支持相关文档路径） |
-| Mooncake | D | C | Prefill/Decode 解耦 + TE + Store | 很强 | 很强 |
+为提升跨项目对齐精度，在 A/B/C/D 主层之下引入次级分层：
+
+1. L0 请求编排层
+- Router/Proxy、请求路由、P/D 流程编排。
+
+2. L1 引擎连接层
+- vLLM/SGLang connector、调度器与 worker 侧 KV 对接。
+
+3. L2 传输执行层
+- NIXL/RDMA/IPC 等 KV 传输路径与握手执行。
+
+4. L3 存储与索引层
+- CPU/SSD/对象存储、KV 索引、命中与回收策略。
+
+5. L4 控制与观测层
+- 元数据注册、服务发现、监控指标与运维控制。
+
+## 2.3 项目归类总表（按 U/E/L 统一口径）
+
+| 项目 | 用户主目标（U） | 主作用阶段（E） | 主层级（L） | 次级分类 | 次作用阶段 | 典型部署形态 |
+|---|---|---|---|---|---|---|
+| ShadowKV | U1/U3 | E4 | A | A-1 Decode 访问优化型 | E5 | 运行时算法模块嵌入推理进程 |
+| HiCache | U1/U3 | E2 | B | B-1 框架内分层缓存型 | E5 | SGLang 内部分层缓存 + 外部后端 |
+| LMCache | U1/U3 | E5 | C | C-1 复用能力优先型 | E2/E3 | vLLM/SGLang + Connector + KV 服务 |
+| Pegaflow | U2/U4 | E5 | C | C-2 服务化治理优先型 | E3/E6 | vLLM + Pegaflow sidecar/server |
+| Mooncake | U2/U4 | E3 | D | D-1 数据平面解耦型 | E0/E6 | Prefill/Decode 解耦 + TE + Store |
+
+口径约束：
+1. U 表示用户交互主诉求，E 表示主作用流程阶段，L 表示系统主层级。
+2. 主层级 A/B/C/D 仅允许唯一归属；次级分类仅用于同层内部细分。
+3. 先判定 U，再判定 E，最后判定 L，避免技术关键词直接驱动跨层归类。
 
 ---
 
@@ -93,10 +117,14 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 3. LMCache / Pegaflow 的边界
 - 强在可插拔 KV 数据层，不替代推理引擎本体。
 - 需要与上层路由、鉴权、计费系统协同。
+- 两者同属 C 层，但次级分层不同：
+	- LMCache 偏 L1/L2/L3 的能力拼装与复用。
+	- Pegaflow 偏 L1/L2/L3 并向 L4 控制面延展。
 
 4. Mooncake 的边界
 - 强在分布式数据平面与解耦能力，但对网络/运维要求高。
 - 小规模场景可能“能力过剩”。
+- 在次级分层中，Mooncake 的核心落点是 L0/L2/L4 联动，而非单点缓存策略。
 
 ---
 
