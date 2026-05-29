@@ -9,6 +9,7 @@ markers in the layout file.
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 
@@ -108,7 +109,38 @@ def duplicate_stems(files: list[Path]) -> set[str]:
     return {s for s, c in stems.items() if c > 1}
 
 
+def front_matter_permalink(page: Path) -> str | None:
+    """Return front matter permalink if present, else None."""
+    try:
+        text = page.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return None
+
+    if not text.startswith("---\n"):
+        return None
+
+    end = text.find("\n---", 4)
+    if end == -1:
+        return None
+
+    head = text[4:end]
+    m = re.search(r"(?mi)^permalink:\s*(.+?)\s*$", head)
+    if not m:
+        return None
+
+    value = m.group(1).strip().strip('"\'')
+    if not value:
+        return None
+    if not value.startswith("/"):
+        value = "/" + value
+    return value
+
+
 def page_url(md_or_html: Path, repo_root: Path) -> str:
+    fm_permalink = front_matter_permalink(md_or_html)
+    if fm_permalink:
+        return fm_permalink
+
     rel = md_or_html.relative_to(repo_root)
     # Site uses permalink: pretty, so both markdown and html pages should
     # be linked without extension (resolved as /path/index.html on build).
