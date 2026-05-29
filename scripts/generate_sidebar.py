@@ -171,7 +171,7 @@ def render_node(d: Path, repo_root: Path, depth: int) -> list[str]:
     cont = " " * (10 + depth * 4 + 4)   # children indent
 
     rel = d.relative_to(repo_root)
-    url = f"/{rel.as_posix()}/"
+    dir_url = f"/{rel.as_posix()}/"
     title = title_from_name(d.name)
 
     dirs = interesting_child_dirs(d)
@@ -181,38 +181,38 @@ def render_node(d: Path, repo_root: Path, depth: int) -> list[str]:
     # foo.md and foo.html to coexist when their permalinks differ.
     selected_by_url: dict[str, Path] = {}
     for page in files:
-        url = page_url(page, repo_root)
-        if url not in selected_by_url:
-            selected_by_url[url] = page
+        page_link = page_url(page, repo_root)
+        if page_link not in selected_by_url:
+            selected_by_url[page_link] = page
             continue
 
         # Prefer markdown when two files resolve to the same URL.
-        old = selected_by_url[url]
+        old = selected_by_url[page_link]
         if old.suffix.lower() != ".md" and page.suffix.lower() == ".md":
-            selected_by_url[url] = page
+            selected_by_url[page_link] = page
 
     files = sorted(selected_by_url.values(), key=lambda p: p.name.lower())
     dupe_stems = duplicate_stems(files)
 
     # Leaf directory: no children to show, just a link
     if not dirs and not files:
-        return [f'{pad}<a href="{liq(url)}">{title}</a>']
+        return [f'{pad}<a href="{liq(dir_url)}">{title}</a>']
 
     css = "tree-group" if depth == 0 else "tree-group tree-group-sub"
     lines: list[str] = []
     lines.append(f'{pad}<details class="{css}">')
     lines.append(f'{inner}<summary>{title}</summary>')
     lines.append(f'{inner}<div class="tree-children">')
-    lines.append(f'{cont}<a href="{liq(url)}">Overview</a>')
+    lines.append(f'{cont}<a href="{liq(dir_url)}">Overview</a>')
 
     for sub in dirs:
         lines.append("")
         lines.extend(render_node(sub, repo_root, depth + 1))
 
     for page in files:
-        url = page_url(page, repo_root)
+        page_link = page_url(page, repo_root)
         label = page_label(page, dupe_stems)
-        lines.append(f'{cont}<a href="{liq(url)}">{label}</a>')
+        lines.append(f'{cont}<a href="{liq(page_link)}">{label}</a>')
 
     lines.append(f'{inner}</div>')
     lines.append(f'{pad}</details>')
