@@ -86,7 +86,6 @@ def interesting_child_dirs(d: Path) -> list[Path]:
 def child_page_files(d: Path) -> list[Path]:
     """Renderable page files directly in d (markdown/html, excluding index/README)."""
     result = []
-    seen_stems: set[str] = set()
     for child in sorted(d.iterdir(), key=lambda p: p.name.lower()):
         is_page = is_md(child) or is_html(child)
         if not is_page:
@@ -95,9 +94,6 @@ def child_page_files(d: Path) -> list[Path]:
             continue
         if child.stem == "":
             continue
-        if child.stem in seen_stems:
-            continue
-        seen_stems.add(child.stem)
         result.append(child)
     return result
 
@@ -180,6 +176,22 @@ def render_node(d: Path, repo_root: Path, depth: int) -> list[str]:
 
     dirs = interesting_child_dirs(d)
     files = child_page_files(d)
+
+    # Deduplicate by resolved URL, not stem. This allows sibling files like
+    # foo.md and foo.html to coexist when their permalinks differ.
+    selected_by_url: dict[str, Path] = {}
+    for page in files:
+        url = page_url(page, repo_root)
+        if url not in selected_by_url:
+            selected_by_url[url] = page
+            continue
+
+        # Prefer markdown when two files resolve to the same URL.
+        old = selected_by_url[url]
+        if old.suffix.lower() != ".md" and page.suffix.lower() == ".md":
+            selected_by_url[url] = page
+
+    files = sorted(selected_by_url.values(), key=lambda p: p.name.lower())
     dupe_stems = duplicate_stems(files)
 
     # Leaf directory: no children to show, just a link
