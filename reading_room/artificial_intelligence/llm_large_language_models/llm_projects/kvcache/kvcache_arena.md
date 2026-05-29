@@ -39,29 +39,41 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
 ## 2. 基于部署架构的分层级归类
 
-## 2.1 四层模型
+## 2.1 最终分层模型
 
-1. A 层：推理算法/内核层（Attention/KV 访问路径）
-- 代表：ShadowKV
+基于图中的关键路径与存储层次，采用如下 5 层模型：
 
-2. B 层：框架内 KV 管理层（Prefix/HiCache/分层策略）
-- 代表：HiCache
+1. L0 编排与 SLO 层（Orchestration）
+- 请求准入、SLO 目标（TTFT/TBT）、Prefill/Decoding 协同调度。
 
-3. C 层：引擎外 KV 服务层（Connector + Sidecar + Tiered KV）
-- 代表：LMCache、Pegaflow
+2. L1 Decode 关键路径层（Hot Path Compute）
+- Selection / Fetch / Computation 的关键路径优化。
 
-4. D 层：分布式传输与解耦数据平面（PD Disagg / KV Pool）
-- 代表：Mooncake
+3. L2 策略与索引层（Policy & Metadata）
+- Attention-Based Cache Management、Hierarchical Index、Top-K 关键块管理。
 
-## 2.2 项目归类总表
+4. L3 传输与流水层（Transfer Pipeline）
+- 异构层间拉取、异步流水、跨节点传输调度。
 
-| 项目 | 主层级 | 次层级 | 典型部署形态 | 是否强调跨节点 | 是否强调 PD 解耦 |
+5. L4 存储介质层（Storage Fabric）
+- HBM / DRAM / SSD 多层分工与冷热分层。
+
+## 2.2 与 A/B/C/D 的映射
+
+1. A 层（算法/内核）主要对应 L1。  
+2. B 层（框架内缓存管理）主要对应 L2（并部分涉及 L0）。  
+3. C 层（引擎外 KV 服务）主要对应 L3 + L4。  
+4. D 层（分布式数据平面）主要对应 L0 + L3 + L4。  
+
+## 2.3 项目归类总表
+
+| 项目 | 主层级（A/B/C/D） | 对应 L 层 | 典型部署形态 | 是否强调跨节点 | 是否强调 PD 解耦 |
 |---|---|---|---|---|---|
-| ShadowKV | A | B | 运行时算法模块嵌入推理进程 | 弱 | 否 |
-| HiCache | B | C | SGLang 内部分层缓存 + 外部后端 | 中 | 否（可叠加） |
-| LMCache | C | D | vLLM/SGLang + Connector + KV 服务 | 强 | 中（有相关能力） |
-| Pegaflow | C | D | vLLM + Pegaflow sidecar/server | 强 | 中（支持相关文档路径） |
-| Mooncake | D | C | Prefill/Decode 解耦 + TE + Store | 很强 | 很强 |
+| ShadowKV | A | L1（部分 L2） | 运行时算法模块嵌入推理进程 | 弱 | 否 |
+| HiCache | B | L2（部分 L0） | SGLang 内部分层缓存 + 外部后端 | 中 | 否（可叠加） |
+| LMCache | C | L3 + L4 | vLLM/SGLang + Connector + KV 服务 | 强 | 中 |
+| Pegaflow | C | L3 + L4 | vLLM + Pegaflow sidecar/server | 强 | 中 |
+| Mooncake | D | L0 + L3 + L4 | Prefill/Decode 解耦 + TE + Store | 很强 | 很强 |
 
 ---
 

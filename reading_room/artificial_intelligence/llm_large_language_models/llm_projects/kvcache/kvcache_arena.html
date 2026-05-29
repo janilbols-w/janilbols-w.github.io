@@ -82,6 +82,48 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
   .arena-layer b { display: inline-block; min-width: 124px; }
 
+  .arena-layer2 {
+    border: 1px solid #7c6a35;
+    background: linear-gradient(90deg, rgba(207, 188, 125, 0.2), rgba(207, 188, 125, 0.06));
+    border-radius: 9px;
+    padding: 9px 10px;
+    margin-bottom: 8px;
+    color: #f3e7c2;
+    font-size: 0.88rem;
+  }
+
+  .arena-layer2 b { color: #fff3cb; margin-right: 8px; }
+
+  .arena-legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .arena-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 7px 8px;
+    background: var(--paper-strong);
+  }
+
+  .arena-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    flex: 0 0 10px;
+  }
+
+  .dot-stage { background: #eab308; }
+  .dot-hotpath { background: #fb923c; }
+  .dot-policy { background: #facc15; }
+  .dot-transfer { background: #d4b96a; }
+  .dot-storage { background: #fde68a; }
+
   .arena-table-wrap { overflow: auto; }
   .arena-table {
     width: 100%;
@@ -145,7 +187,8 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   @media (max-width: 980px) {
     .arena-g2,
     .arena-g3,
-    .arena-kv {
+    .arena-kv,
+    .arena-legend-grid {
       grid-template-columns: 1fr;
     }
   }
@@ -159,16 +202,34 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
   <section class="arena-grid arena-g2">
     <article class="arena-card">
-      <h2>1) 架构层级归类</h2>
-      <div class="arena-layer"><b>A 层 算法内核层</b>ShadowKV</div>
-      <div class="arena-layer"><b>B 层 框架内缓存层</b>HiCache</div>
-      <div class="arena-layer"><b>C 层 引擎外 KV 服务层</b>LMCache、Pegaflow</div>
-      <div class="arena-layer"><b>D 层 分布式数据平面</b>Mooncake</div>
-      <p class="arena-muted">建议理解为可叠加能力栈，而不是单一替代关系。</p>
+      <h2>1) 最终架构分层（L0-L4）</h2>
+      <div class="arena-layer2"><b>L0 编排与 SLO 层</b>请求准入、TTFT/TBT 目标、Prefill/Decoding 协同</div>
+      <div class="arena-layer2"><b>L1 Decode 关键路径层</b>Selection / Fetch / Computation 热路径</div>
+      <div class="arena-layer2"><b>L2 策略与索引层</b>Attention-Based Cache Management + Hierarchical Index</div>
+      <div class="arena-layer2"><b>L3 传输与流水层</b>异步拉取、跨层重叠、跨节点传输</div>
+      <div class="arena-layer2"><b>L4 存储介质层</b>HBM / DRAM / SSD 多层协同</div>
+      <p class="arena-muted">映射关系：A->L1，B->L2，C->L3+L4，D->L0+L3+L4。</p>
+
+      <h2 style="margin-top:12px;">1.1) 项目层级落位</h2>
+      <div class="arena-layer"><b>ShadowKV</b>A 层，主落位 L1（部分触达 L2）</div>
+      <div class="arena-layer"><b>HiCache</b>B 层，主落位 L2（部分触达 L0）</div>
+      <div class="arena-layer"><b>LMCache / Pegaflow</b>C 层，主落位 L3 + L4</div>
+      <div class="arena-layer"><b>Mooncake</b>D 层，主落位 L0 + L3 + L4</div>
+      <p class="arena-muted">采用“可叠加能力栈”视角，不把项目视为单一替代关系。</p>
     </article>
 
     <article class="arena-card">
-      <h2>2) 一眼看侧重点</h2>
+      <h2>2) 图例（美化版）</h2>
+      <p class="arena-muted">读图顺序：先看阶段，再看关键 KV 热路径，最后看介质层级。</p>
+      <div class="arena-legend-grid">
+        <div class="arena-legend-item"><span class="arena-dot dot-stage"></span><span>阶段轴：Prefill / Decoding</span></div>
+        <div class="arena-legend-item"><span class="arena-dot dot-hotpath"></span><span>热路径：Selection / Fetch / Computation</span></div>
+        <div class="arena-legend-item"><span class="arena-dot dot-policy"></span><span>策略层：Attention Cache + 索引</span></div>
+        <div class="arena-legend-item"><span class="arena-dot dot-transfer"></span><span>传输层：异步流水与跨节点调度</span></div>
+        <div class="arena-legend-item"><span class="arena-dot dot-storage"></span><span>介质层：HBM / DRAM / SSD</span></div>
+      </div>
+
+      <h2 style="margin-top:12px;">2.1) 项目侧重点</h2>
       <div>
         <span class="arena-pill">ShadowKV：decode 稀疏与显存外扩</span>
         <span class="arena-pill">HiCache：框架内分层复用</span>
@@ -252,5 +313,5 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     </div>
   </section>
 
-  <div class="arena-footer">本页采用站点统一深色风格并替换为深灰强调色，部署到 GitHub Pages 后由 Jekyll 渲染，保持与项目整体视觉一致。</div>
+  <div class="arena-footer">最终交付版：分层模型、图例与能力矩阵已统一口径；页面由 Jekyll 渲染并与站点视觉保持一致。</div>
 </div>
