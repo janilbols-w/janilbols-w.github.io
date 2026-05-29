@@ -85,6 +85,7 @@ def interesting_child_dirs(d: Path) -> list[Path]:
 def child_page_files(d: Path) -> list[Path]:
     """Renderable page files directly in d (markdown/html, excluding index/README)."""
     result = []
+    seen_stems: set[str] = set()
     for child in sorted(d.iterdir(), key=lambda p: p.name.lower()):
         is_page = is_md(child) or is_html(child)
         if not is_page:
@@ -93,6 +94,9 @@ def child_page_files(d: Path) -> list[Path]:
             continue
         if child.stem == "":
             continue
+        if child.stem in seen_stems:
+            continue
+        seen_stems.add(child.stem)
         result.append(child)
     return result
 
@@ -106,9 +110,9 @@ def duplicate_stems(files: list[Path]) -> set[str]:
 
 def page_url(md_or_html: Path, repo_root: Path) -> str:
     rel = md_or_html.relative_to(repo_root)
-    if md_or_html.suffix.lower() == ".md":
-        return f"/{rel.with_suffix('').as_posix()}"
-    return f"/{rel.as_posix()}"
+    # Site uses permalink: pretty, so both markdown and html pages should
+    # be linked without extension (resolved as /path/index.html on build).
+    return f"/{rel.with_suffix('').as_posix()}"
 
 
 def page_label(md_or_html: Path, dupe_stems: set[str]) -> str:
