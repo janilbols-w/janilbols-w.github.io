@@ -41,6 +41,10 @@ def is_md(p: Path) -> bool:
     return p.is_file() and p.suffix.lower() == ".md"
 
 
+def is_html(p: Path) -> bool:
+    return p.is_file() and p.suffix.lower() == ".html"
+
+
 def is_drawio(p: Path) -> bool:
     return p.is_file() and p.suffix.lower() == ".drawio"
 
@@ -50,14 +54,16 @@ def is_xmind(p: Path) -> bool:
 
 
 def has_note_content(d: Path) -> bool:
-    """True if the directory contains note content (md/drawio/xmind) recursively."""
+    """True if the directory contains note content (md/html/drawio/xmind) recursively."""
     for child in d.iterdir():
         if child.name.startswith("."):
             continue
         if child.is_dir() and child.name not in EXCLUDED_DIRS and child.name not in IMAGE_DIRS:
-            if any(is_md(p) or is_drawio(p) or is_xmind(p) for p in child.rglob("*")):
+            if any(is_md(p) or is_html(p) or is_drawio(p) or is_xmind(p) for p in child.rglob("*")):
                 return True
         if is_md(child) and child.name.lower() != "index.md":
+            return True
+        if is_html(child) and child.name.lower() != "index.html":
             return True
         if is_drawio(child) or is_xmind(child):
             return True
@@ -76,11 +82,47 @@ def interesting_child_dirs(d: Path) -> list[Path]:
     return result
 
 
-def child_md_files(d: Path) -> list[Path]:
-    """Non-index, non-README markdown files directly in d."""
+def child_page_files(d: Path) -> list[Path]:
+    """Renderable page files directly in d (markdown/html, excluding index/README)."""
     result = []
     for child in sorted(d.iterdir(), key=lambda p: p.name.lower()):
-        if is_md(child) and child.name.lower() not in ("index.md", "readme.md"):
+        is_page = is_md(child) or is_html(child)
+        if not is_page:
+            continue
+        if child.name.lower() in ("index.md", "readme.md", "index.html", "readme.html"):
+            continue
+        if child.stem == "":
+            continue
+        result.append(child)
+    return result
+
+
+def duplicate_stems(files: list[Path]) -> set[str]:
+    stems: dict[str, int] = {}
+    for f in files:
+        stems[f.stem] = stems.get(f.stem, 0) + 1
+    return {s for s, c in stems.items() if c > 1}
+
+
+def page_url(md_or_html: Path, repo_root: Path) -> str:
+    rel = md_or_html.relative_to(repo_root)
+    if md_or_html.suffix.lower() == ".md":
+        return f"/{rel.with_suffix('').as_posix()}"
+    return f"/{rel.as_posix()}"
+
+
+def page_label(md_or_html: Path, dupe_stems: set[str]) -> str:
+    label = title_from_name(md_or_html.stem)
+    if md_or_html.suffix.lower() == ".html" and md_or_html.stem in dupe_stems:
+        return f"{label} (HTML)"
+    return label
+
+
+def child_md_files(d: Path) -> list[Path]:
+    """Backward-compatible wrapper (kept for minimal external impact)."""
+    result = []
+    for child in child_page_files(d):
+        if child.suffix.lower() == ".md":
             result.append(child)
     return result
 
@@ -101,7 +143,8 @@ def render_node(d: Path, repo_root: Path, depth: int) -> list[str]:
     title = title_from_name(d.name)
 
     dirs = interesting_child_dirs(d)
-    files = child_md_files(d)
+    files = child_page_files(d)
+    dupe_stems = duplicate_stems(files)
 
     # Leaf directory: no children to show, just a link
     if not dirs and not files:
@@ -118,10 +161,10 @@ def render_node(d: Path, repo_root: Path, depth: int) -> list[str]:
         lines.append("")
         lines.extend(render_node(sub, repo_root, depth + 1))
 
-    for md in files:
-        md_rel = md.relative_to(repo_root)
-        md_url = f"/{md_rel.with_suffix('').as_posix()}"
-        lines.append(f'{cont}<a href="{liq(md_url)}">{title_from_name(md.stem)}</a>')
+    for page in files:
+        url = page_url(page, repo_root)
+        label = page_label(page, dupe_stems)
+        lines.append(f'{cont}<a href="{liq(url)}">{label}</a>')
 
     lines.append(f'{inner}</div>')
     lines.append(f'{pad}</details>')
