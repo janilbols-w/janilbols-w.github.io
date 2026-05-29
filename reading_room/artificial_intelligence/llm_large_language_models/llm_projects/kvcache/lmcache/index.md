@@ -1,5 +1,5 @@
 ---
-title: Wasm Plugins
+title: Lmcache
 ---
 
 This page is generated automatically. Keep writing markdown files, then run the generator workflow.
@@ -8,6 +8,6 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Pages
 
-- [AI Proxy]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/gateway_router/higress/wasm-plugins/ai-proxy/' | relative_url }})
+- [Lmcache Overview]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/lmcache/lmcache_overview/' | relative_url }})
 
 <!-- AUTO-GENERATED:END -->

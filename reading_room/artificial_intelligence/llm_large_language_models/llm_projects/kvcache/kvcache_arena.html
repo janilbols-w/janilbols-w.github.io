@@ -1,0 +1,254 @@
+---
+layout: default
+title: KVCache Arena 可视化对比
+hide_sidebar: true
+---
+
+<style>
+  .arena-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 4px 0 20px;
+  }
+
+  .arena-hero {
+    background: linear-gradient(135deg, #111111 0%, #18181b 70%, #20252a 100%);
+    border: 1px solid var(--line);
+    border-left: 6px solid #3f3f46;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .arena-hero h1 {
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-size: 1.55rem;
+    line-height: 1.25;
+  }
+
+  .arena-hero p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .arena-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .arena-g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .arena-g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .arena-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .arena-card h2 {
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  .arena-muted { color: var(--muted); }
+
+  .arena-pill {
+    display: inline-block;
+    margin: 0 6px 6px 0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--paper-strong);
+    color: var(--ink);
+    font-size: 0.78rem;
+  }
+
+  .arena-layer {
+    border-left: 4px solid #52525b;
+    background: rgba(63, 63, 70, 0.2);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  .arena-layer b { display: inline-block; min-width: 124px; }
+
+  .arena-table-wrap { overflow: auto; }
+  .arena-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+
+  .arena-table th,
+  .arena-table td {
+    border: 1px solid var(--line);
+    padding: 8px;
+    vertical-align: top;
+  }
+
+  .arena-table th {
+    background: var(--paper-strong);
+    color: var(--ink);
+    position: sticky;
+    top: 0;
+  }
+
+  .arena-score { text-align: center; font-weight: 700; }
+
+  .s1 { background: #1a1a1e; color: #a1a1aa; }
+  .s2 { background: #232329; color: #b3b3bc; }
+  .s3 { background: #2d2d35; color: #c4c4ce; }
+  .s4 { background: #3a3a45; color: #d4d4dd; }
+  .s5 { background: #4a4a57; color: #f4f4f5; }
+
+  .arena-kv {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 0.88rem;
+  }
+
+  .txt-good { color: #d4d4d8; }
+  .txt-bad { color: #f87171; }
+
+  .arena-flow { display: grid; gap: 10px; }
+
+  .arena-step {
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    padding: 10px;
+    background: var(--paper-strong);
+  }
+
+  .arena-step .title {
+    color: #d4d4d8;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .arena-footer {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 980px) {
+    .arena-g2,
+    .arena-g3,
+    .arena-kv {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="arena-wrap">
+  <section class="arena-hero">
+    <h1>KVCache Arena 可视化对比</h1>
+    <p>对象：HiCache、LMCache、Mooncake、Pegaflow、ShadowKV。目标：按架构层级和能力边界快速选型。</p>
+  </section>
+
+  <section class="arena-grid arena-g2">
+    <article class="arena-card">
+      <h2>1) 架构层级归类</h2>
+      <div class="arena-layer"><b>A 层 算法内核层</b>ShadowKV</div>
+      <div class="arena-layer"><b>B 层 框架内缓存层</b>HiCache</div>
+      <div class="arena-layer"><b>C 层 引擎外 KV 服务层</b>LMCache、Pegaflow</div>
+      <div class="arena-layer"><b>D 层 分布式数据平面</b>Mooncake</div>
+      <p class="arena-muted">建议理解为可叠加能力栈，而不是单一替代关系。</p>
+    </article>
+
+    <article class="arena-card">
+      <h2>2) 一眼看侧重点</h2>
+      <div>
+        <span class="arena-pill">ShadowKV：decode 稀疏与显存外扩</span>
+        <span class="arena-pill">HiCache：框架内分层复用</span>
+        <span class="arena-pill">LMCache：多实例复用与分层存储</span>
+        <span class="arena-pill">Pegaflow：sidecar + RDMA + observability</span>
+        <span class="arena-pill">Mooncake：PD 解耦 + 分布式传输平面</span>
+      </div>
+    </article>
+  </section>
+
+  <section class="arena-card" style="margin-top:14px;">
+    <h2>3) 能力热力矩阵</h2>
+    <p class="arena-muted">评分说明：1=弱，5=很强。</p>
+    <div class="arena-table-wrap">
+      <table class="arena-table">
+        <thead>
+          <tr>
+            <th>能力项</th>
+            <th>ShadowKV</th>
+            <th>HiCache</th>
+            <th>LMCache</th>
+            <th>Pegaflow</th>
+            <th>Mooncake</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>长上下文 decode 优化</td><td class="arena-score s5">5</td><td class="arena-score s3">3</td><td class="arena-score s3">3</td><td class="arena-score s3">3</td><td class="arena-score s3">3</td></tr>
+          <tr><td>前缀复用增强</td><td class="arena-score s3">3</td><td class="arena-score s5">5</td><td class="arena-score s5">5</td><td class="arena-score s5">5</td><td class="arena-score s5">5</td></tr>
+          <tr><td>单实例分层缓存</td><td class="arena-score s3">3</td><td class="arena-score s5">5</td><td class="arena-score s5">5</td><td class="arena-score s5">5</td><td class="arena-score s3">3</td></tr>
+          <tr><td>多实例 KV 共享</td><td class="arena-score s1">1</td><td class="arena-score s2">2</td><td class="arena-score s5">5</td><td class="arena-score s5">5</td><td class="arena-score s5">5</td></tr>
+          <tr><td>跨节点高性能传输</td><td class="arena-score s1">1</td><td class="arena-score s1">1</td><td class="arena-score s4">4</td><td class="arena-score s4">4</td><td class="arena-score s5">5</td></tr>
+          <tr><td>PD/xPyD 解耦支撑</td><td class="arena-score s1">1</td><td class="arena-score s2">2</td><td class="arena-score s3">3</td><td class="arena-score s3">3</td><td class="arena-score s5">5</td></tr>
+          <tr><td>可观测与运维能力</td><td class="arena-score s2">2</td><td class="arena-score s3">3</td><td class="arena-score s4">4</td><td class="arena-score s4">4</td><td class="arena-score s4">4</td></tr>
+          <tr><td>规模化上限</td><td class="arena-score s2">2</td><td class="arena-score s3">3</td><td class="arena-score s4">4</td><td class="arena-score s4">4</td><td class="arena-score s5">5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="arena-grid arena-g3">
+    <article class="arena-card">
+      <h2>4) ShadowKV</h2>
+      <div class="arena-kv">
+        <div><b class="txt-good">优势</b><br>training-free；长上下文 decode 收益直接；可叠加 prefill 优化。</div>
+        <div><b class="txt-bad">短板</b><br>平台化能力弱；跨实例共享弱；参数与任务分布敏感。</div>
+      </div>
+    </article>
+
+    <article class="arena-card">
+      <h2>5) HiCache</h2>
+      <div class="arena-kv">
+        <div><b class="txt-good">优势</b><br>框架内协同自然；分层缓存直接；对对话/Agent 友好。</div>
+        <div><b class="txt-bad">短板</b><br>框架绑定明显；跨节点数据平面能力有限。</div>
+      </div>
+    </article>
+
+    <article class="arena-card">
+      <h2>6) LMCache / Pegaflow</h2>
+      <div class="arena-kv">
+        <div><b class="txt-good">优势</b><br>sidecar/connector 落地性强；多实例复用收益明显；可观测完善。</div>
+        <div><b class="txt-bad">短板</b><br>依赖版本治理；复用率低时收益打折；RDMA 运维门槛。</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="arena-card" style="margin-top:14px;">
+    <h2>7) Mooncake</h2>
+    <div class="arena-kv">
+      <div><b class="txt-good">优势</b><br>分布式数据平面最强；PD/xPyD 解耦完善；跨节点吞吐上限高。</div>
+      <div><b class="txt-bad">短板</b><br>系统复杂度最高；网络与存储基础差时难吃满收益。</div>
+    </div>
+  </section>
+
+  <section class="arena-card" style="margin-top:14px;">
+    <h2>8) 选型路径（决策流）</h2>
+    <div class="arena-flow">
+      <div class="arena-step"><div class="title">Step 1: 单机快速验证</div>长上下文且 decode 压力大：先评估 ShadowKV。SGLang 体系：先评估 HiCache。</div>
+      <div class="arena-step"><div class="title">Step 2: 多实例复用升级</div>若前缀复用率高且要降 TTFT：评估 LMCache 或 Pegaflow。</div>
+      <div class="arena-step"><div class="title">Step 3: 跨节点与解耦上限</div>若瓶颈转为跨节点传输或 PD 架构：引入 Mooncake 数据平面。</div>
+      <div class="arena-step"><div class="title">Step 4: 能力叠加</div>推荐按 A/B -> C -> D 渐进，而不是一次性全量引入复杂系统。</div>
+    </div>
+  </section>
+
+  <div class="arena-footer">本页采用站点统一深色风格并替换为深灰强调色，部署到 GitHub Pages 后由 Jekyll 渲染，保持与项目整体视觉一致。</div>
+</div>
