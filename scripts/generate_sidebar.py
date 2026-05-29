@@ -145,8 +145,11 @@ def page_url(md_or_html: Path, repo_root: Path) -> str:
 
 def page_label(md_or_html: Path, dupe_stems: set[str]) -> str:
     label = title_from_name(md_or_html.stem)
-    if md_or_html.suffix.lower() == ".html" and md_or_html.stem in dupe_stems:
-        return f"{label} (HTML)"
+    if md_or_html.stem in dupe_stems:
+        if md_or_html.suffix.lower() == ".html":
+            return f"{label} (HTML)"
+        if md_or_html.suffix.lower() == ".md":
+            return f"{label} (Markdown)"
     return label
 
 

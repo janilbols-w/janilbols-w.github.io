@@ -1,3 +1,8 @@
+---
+title: KVCache Arena 项目对比总结报告
+permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/kvcache_arena/
+---
+
 # KVCache Arena 项目对比总结报告
 
 > 对比对象：HiCache、LMCache、Mooncake、Pegaflow、ShadowKV  
