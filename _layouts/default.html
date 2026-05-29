@@ -414,23 +414,148 @@
       });
 
       const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
-      mermaidBlocks.forEach((block, index) => {
+      mermaidBlocks.forEach((block) => {
         const pre = block.parentElement;
         const wrapper = pre.parentElement && pre.parentElement.classList.contains('highlight')
           ? pre.parentElement.parentElement
           : pre;
+
+        const card = document.createElement('figure');
+        card.className = 'mermaid-card';
+
+        const toolbar = document.createElement('div');
+        toolbar.className = 'mermaid-toolbar';
+        toolbar.innerHTML = `
+          <button type="button" data-mermaid-action="zoom-in" aria-label="Zoom in">+</button>
+          <button type="button" data-mermaid-action="zoom-out" aria-label="Zoom out">-</button>
+          <button type="button" data-mermaid-action="reset" aria-label="Reset zoom">Reset</button>
+          <span class="mermaid-hint">Wheel: zoom · Drag: pan</span>
+        `;
+
+        const viewport = document.createElement('div');
+        viewport.className = 'mermaid-viewport';
+
         const container = document.createElement('div');
         container.className = 'mermaid';
         container.textContent = block.textContent;
+
+        viewport.append(container);
+        card.append(toolbar, viewport);
+
         if (wrapper) {
-          wrapper.replaceWith(container);
+          wrapper.replaceWith(card);
         } else {
-          pre.replaceWith(container);
+          pre.replaceWith(card);
         }
       });
 
       if (mermaidBlocks.length > 0) {
         await mermaid.run({ querySelector: '.mermaid' });
+
+        const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+        const installMermaidInteraction = (card) => {
+          const viewport = card.querySelector('.mermaid-viewport');
+          const svg = card.querySelector('.mermaid svg');
+          if (!viewport || !svg) {
+            return;
+          }
+
+          const state = {
+            scale: 1,
+            tx: 0,
+            ty: 0,
+            minScale: 0.35,
+            maxScale: 4
+          };
+
+          const apply = () => {
+            svg.style.transformOrigin = '0 0';
+            svg.style.transform = `translate(${state.tx}px, ${state.ty}px) scale(${state.scale})`;
+          };
+
+          const zoomAt = (clientX, clientY, deltaScale) => {
+            const rect = viewport.getBoundingClientRect();
+            const nx = clientX - rect.left;
+            const ny = clientY - rect.top;
+            const prev = state.scale;
+            const next = clamp(prev * deltaScale, state.minScale, state.maxScale);
+            if (next === prev) {
+              return;
+            }
+
+            const ratio = next / prev;
+            state.tx = nx - (nx - state.tx) * ratio;
+            state.ty = ny - (ny - state.ty) * ratio;
+            state.scale = next;
+            apply();
+          };
+
+          let dragging = false;
+          let lastX = 0;
+          let lastY = 0;
+
+          viewport.addEventListener('wheel', (event) => {
+            event.preventDefault();
+            const factor = event.deltaY < 0 ? 1.12 : 1 / 1.12;
+            zoomAt(event.clientX, event.clientY, factor);
+          }, { passive: false });
+
+          viewport.addEventListener('pointerdown', (event) => {
+            dragging = true;
+            lastX = event.clientX;
+            lastY = event.clientY;
+            viewport.classList.add('is-dragging');
+            viewport.setPointerCapture(event.pointerId);
+          });
+
+          viewport.addEventListener('pointermove', (event) => {
+            if (!dragging) {
+              return;
+            }
+            const dx = event.clientX - lastX;
+            const dy = event.clientY - lastY;
+            lastX = event.clientX;
+            lastY = event.clientY;
+            state.tx += dx;
+            state.ty += dy;
+            apply();
+          });
+
+          const stopDragging = () => {
+            dragging = false;
+            viewport.classList.remove('is-dragging');
+          };
+
+          viewport.addEventListener('pointerup', stopDragging);
+          viewport.addEventListener('pointercancel', stopDragging);
+          viewport.addEventListener('pointerleave', () => {
+            if (!dragging) {
+              viewport.classList.remove('is-dragging');
+            }
+          });
+
+          card.querySelector('[data-mermaid-action="zoom-in"]')?.addEventListener('click', () => {
+            const rect = viewport.getBoundingClientRect();
+            zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, 1.2);
+          });
+
+          card.querySelector('[data-mermaid-action="zoom-out"]')?.addEventListener('click', () => {
+            const rect = viewport.getBoundingClientRect();
+            zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, 1 / 1.2);
+          });
+
+          card.querySelector('[data-mermaid-action="reset"]')?.addEventListener('click', () => {
+            state.scale = 1;
+            state.tx = 0;
+            state.ty = 0;
+            apply();
+          });
+
+          apply();
+        };
+
+        document.querySelectorAll('.mermaid-card').forEach(installMermaidInteraction);
       }
 
       const drawioLinks = document.querySelectorAll('.page-content a[href$=".drawio"]');

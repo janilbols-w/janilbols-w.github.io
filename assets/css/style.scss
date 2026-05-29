@@ -694,12 +694,62 @@ tr:nth-child(even) td {
 /* ── Mermaid / drawio ────────────────────────────────────── */
 
 .mermaid {
-  overflow-x: auto;
+  overflow: visible;
   padding: 16px;
+  margin: 0;
+  min-width: max-content;
+}
+
+.mermaid svg {
+  display: block;
+  max-width: none;
+}
+
+.mermaid-card {
+  margin: 0 0 1rem;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--paper-strong);
-  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.mermaid-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
+}
+
+.mermaid-toolbar button {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.mermaid-toolbar button:hover {
+  border-color: var(--accent-strong);
+}
+
+.mermaid-hint {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.mermaid-viewport {
+  overflow: hidden;
+  min-height: 200px;
+  cursor: grab;
+}
+
+.mermaid-viewport.is-dragging {
+  cursor: grabbing;
 }
 
 .drawio-embed {
