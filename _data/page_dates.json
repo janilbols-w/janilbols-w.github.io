@@ -39,37 +39,61 @@
     "created": "2026-05-21",
     "updated": "2026-05-21"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/deepseek-projects.md": {
-    "created": "2025-02-21",
-    "updated": "2026-04-08"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/gateway_router/higress/higress-overview.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/hicache_overview.md": {
-    "created": "2026-05-18",
-    "updated": "2026-05-18"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/gateway_router/higress/wasm-plugins/ai-proxy.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/hicache_vs_vllm.md": {
-    "created": "2026-05-18",
-    "updated": "2026-05-18"
-  },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/hicache/lmcache_sglang_vs_vllm.md": {
-    "created": "2026-05-18",
-    "updated": "2026-05-18"
-  },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/higress-overview.md": {
-    "created": "2026-04-08",
-    "updated": "2026-04-08"
-  },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/higress/wasm-plugins/ai-proxy.md": {
-    "created": "2026-04-08",
-    "updated": "2026-04-08"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/llm_implementation.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/vllm-meetups-summary.md": {
     "created": "2025-03-03",
     "updated": "2026-04-08"
   },
-  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/llm_implementation.md": {
-    "created": "2025-02-06",
-    "updated": "2025-02-21"
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/hicache/hicache_overview.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/hicache/hicache_vs_vllm.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/hicache/lmcache_sglang_vs_vllm.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/kvcache_architecture.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/kvcache_arena.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/lmcache/lmcache_overview.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/lmcache/lmcache_vs_pegaflow.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/mooncake/mooncake_overview.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/pegaflow.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/kvcache/shadowkv.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_features.md": {
     "created": "2026-05-18",
@@ -91,6 +115,10 @@
     "created": "2026-05-18",
     "updated": "2026-05-21"
   },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/models/deepseek-ai/deepseek-projects.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities.md": {
     "created": "2025-02-21",
     "updated": "2025-02-21"
@@ -98,6 +126,22 @@
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/SpecEE.md": {
     "created": "2026-04-08",
     "updated": "2026-04-08"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/kvcache/HCache.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/kvcache/KVDrive.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/kvcache/mooncake.fast25.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
+  },
+  "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/kvcache/paper_vs_projects.md": {
+    "created": "2026-05-29",
+    "updated": "2026-05-29"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/deepseek-paper/01-DeepSeekLLM.2401.02954v1.md": {
     "created": "2025-02-06",
