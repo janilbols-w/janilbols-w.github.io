@@ -35,8 +35,12 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
   .calc-grid {
     display: grid;
-    grid-template-columns: 1.1fr 1.1fr 0.8fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
+  }
+
+  .calc-actions-row {
+    margin-top: 14px;
   }
 
   .calc-card {
@@ -288,6 +292,22 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     font: inherit;
   }
 
+  .decision-table input {
+    width: 130px;
+    border: 1px solid #3f3f46;
+    border-radius: 8px;
+    padding: 6px 8px;
+    background: #0f172a;
+    color: var(--ink);
+    font: inherit;
+  }
+
+  .decision-note {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
   .is-best {
     background: rgba(142, 202, 230, 0.12);
   }
@@ -397,7 +417,7 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     </article>
 
     <article class="calc-card">
-      <h2>Pricing And SLA</h2>
+      <h2>Pricing</h2>
       <div class="calc-fields">
         <div class="calc-field"><label for="margin">Target Margin <span class="symbol">m</span></label><input id="margin" type="number" step="0.01" value="0.55"><p class="calc-help">目标毛利率。0.55 表示希望保留 55% 毛利。</p></div>
         <div class="calc-field"><label for="paymentFee">Payment Fee <span class="symbol">f_pay</span></label><input id="paymentFee" type="number" step="0.01" value="0.03"><p class="calc-help">支付通道费率或交易手续费。</p></div>
@@ -411,12 +431,21 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
         <div class="calc-field"><label for="kLat">K_lat <span class="symbol">K_lat</span></label><input id="kLat" type="number" step="0.01" value="1.1"><p class="calc-help">低延迟溢价系数。SLA 越严格通常越高。</p></div>
         <div class="calc-field"><label for="kRel">K_rel <span class="symbol">K_rel</span></label><input id="kRel" type="number" step="0.01" value="1.05"><p class="calc-help">高可靠性溢价系数。</p></div>
         <div class="calc-field"><label for="kReserve">K_reserve <span class="symbol">K_reserve</span></label><input id="kReserve" type="number" step="0.01" value="1.05"><p class="calc-help">容量预留溢价系数，用来覆盖冗余成本。</p></div>
+      </div>
+    </article>
+
+    <article class="calc-card">
+      <h2>SLA Targets</h2>
+      <div class="calc-fields">
         <div class="calc-field"><label for="slaTtft">TTFT95 SLA <span class="symbol">T_sla</span></label><input id="slaTtft" type="number" step="0.01" value="2.0"><p class="calc-help">P95 首 token 最大允许延迟，单位秒。</p></div>
         <div class="calc-field"><label for="slaE2e">E2E95 SLA <span class="symbol">E_sla</span></label><input id="slaE2e" type="number" step="0.01" value="12.0"><p class="calc-help">P95 端到端最大允许耗时，单位秒。</p></div>
         <div class="calc-field"><label for="slaErr">ERR SLA <span class="symbol">e_sla</span></label><input id="slaErr" type="number" step="0.001" value="0.01"><p class="calc-help">允许的最大错误率。0.01 表示 1%。</p></div>
       </div>
     </article>
 
+  </section>
+
+  <section class="calc-actions-row">
     <article class="calc-card">
       <h2>Actions</h2>
       <div class="calc-actions">
@@ -478,6 +507,28 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
       </table>
     </div>
   </section>
+
+  <section class="calc-card">
+    <h2>Pricing Decision (Recommended + Manual Override)</h2>
+    <div class="calc-table-wrap">
+      <table class="calc-table decision-table" id="pricingDecisionTable">
+        <thead>
+          <tr>
+            <th><span class="th-main">Concurrency</span><span class="th-sub">并发档位 `c`</span></th>
+            <th><span class="th-main">SLA</span><span class="th-sub">SLA 是否通过</span></th>
+            <th><span class="th-main">Tokens/h</span><span class="th-sub">来自 benchmark 的可售卖 token</span></th>
+            <th><span class="th-main">Recommended Final/1M</span><span class="th-sub">系统根据成本与目标毛利推荐</span></th>
+            <th><span class="th-main">Manual Final/1M</span><span class="th-sub">手动改价输入（可编辑）</span></th>
+            <th><span class="th-main">Manual Cache/Input/Output</span><span class="th-sub">按 alpha/beta 自动拆分</span></th>
+            <th><span class="th-main">Revenue/h (Manual)</span><span class="th-sub">手动价格对应的小时收入</span></th>
+            <th><span class="th-main">Profit/h (Manual)</span><span class="th-sub">手动价格对应的小时利润</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="decision-note">使用方式：先点 `Calculate` 生成推荐价，再在 `Manual Final/1M` 修改后再次点 `Calculate`，系统会回算手动定价下的 Revenue/h 和 Profit/h。</p>
+  </section>
 </div>
 
 <script>
@@ -489,6 +540,7 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   ];
 
   const tbody = document.querySelector('#benchmarkTable tbody');
+  const pricingTbody = document.querySelector('#pricingDecisionTable tbody');
 
   function formatNumber(value, digits = 2) {
     if (!Number.isFinite(value)) return '-';
@@ -553,6 +605,74 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   function resetRows() {
     tbody.innerHTML = '';
     exampleRows.forEach(addRow);
+    pricingTbody.innerHTML = '';
+  }
+
+  function syncPricingDecisionTable(results, costHour, alpha, beta, denom) {
+    const manualByConcurrency = new Map();
+    Array.from(pricingTbody.querySelectorAll('tr')).forEach((tr) => {
+      const key = tr.dataset.concurrency;
+      const input = tr.querySelector('input[data-manual-price]');
+      if (key && input) {
+        manualByConcurrency.set(key, input.value);
+      }
+    });
+
+    pricingTbody.innerHTML = '';
+
+    results.forEach((item) => {
+      const tr = document.createElement('tr');
+      tr.dataset.concurrency = String(item.concurrency);
+
+      const tdConcurrency = document.createElement('td');
+      tdConcurrency.textContent = String(item.concurrency);
+      tr.appendChild(tdConcurrency);
+
+      const tdSla = document.createElement('td');
+      tdSla.innerHTML = `<span class="${item.slaPass ? 'badge-ok' : 'badge-bad'}">${item.slaPass ? 'PASS' : 'FAIL'}</span>`;
+      tr.appendChild(tdSla);
+
+      const tdTokens = document.createElement('td');
+      tdTokens.textContent = formatNumber(item.tokensPerHour, 0);
+      tr.appendChild(tdTokens);
+
+      const tdRecommended = document.createElement('td');
+      tdRecommended.textContent = formatNumber(item.recommendedFinalPricePer1M, 2);
+      tr.appendChild(tdRecommended);
+
+      const tdManualInput = document.createElement('td');
+      const manualInput = document.createElement('input');
+      manualInput.type = 'number';
+      manualInput.step = '0.01';
+      manualInput.dataset.manualPrice = '1';
+      const existing = manualByConcurrency.get(String(item.concurrency));
+      manualInput.value = existing === undefined ? String(Number.isFinite(item.recommendedFinalPricePer1M) ? item.recommendedFinalPricePer1M : 0) : existing;
+      tdManualInput.appendChild(manualInput);
+      tr.appendChild(tdManualInput);
+
+      for (let index = 0; index < 3; index += 1) {
+        const td = document.createElement('td');
+        td.dataset.decisionOutput = '1';
+        tr.appendChild(td);
+      }
+
+      pricingTbody.appendChild(tr);
+    });
+
+    Array.from(pricingTbody.querySelectorAll('tr')).forEach((tr, idx) => {
+      const item = results[idx];
+      const manualPrice = Number(tr.querySelector('input[data-manual-price]').value || 0);
+      const manualInputPrice = denom > 0 ? manualPrice / denom : Infinity;
+      const manualCachePrice = alpha * manualInputPrice;
+      const manualOutputPrice = beta * manualInputPrice;
+      const revenuePerHour = Number.isFinite(manualPrice) ? (manualPrice / 1_000_000) * item.tokensPerHour : Infinity;
+      const profitPerHour = Number.isFinite(revenuePerHour) ? revenuePerHour - costHour : -Infinity;
+      const outputs = Array.from(tr.querySelectorAll('td[data-decision-output]'));
+
+      outputs[0].textContent = `${formatNumber(manualCachePrice, 2)} / ${formatNumber(manualInputPrice, 2)} / ${formatNumber(manualOutputPrice, 2)}`;
+      outputs[1].textContent = formatNumber(revenuePerHour, 2);
+      outputs[2].textContent = formatNumber(profitPerHour, 2);
+    });
   }
 
   function calculate() {
@@ -585,6 +705,8 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
     const rows = Array.from(tbody.querySelectorAll('tr'));
     let bestRow = null;
+    const results = [];
+    const eps = 1e-9;
 
     rows.forEach((tr) => {
       tr.classList.remove('is-best');
@@ -612,6 +734,13 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
         ? (finalPricePer1M / 1_000_000) * tokensPerHour - costHour
         : -Infinity;
 
+      results.push({
+        concurrency,
+        slaPass,
+        tokensPerHour,
+        recommendedFinalPricePer1M: finalPricePer1M
+      });
+
       const outputs = Array.from(tr.querySelectorAll('td[data-output]'));
       outputs[0].innerHTML = `<span class="${slaPass ? 'badge-ok' : 'badge-bad'}">${slaPass ? 'PASS' : 'FAIL'}</span>`;
       outputs[1].textContent = formatNumber(goodput, 3);
@@ -622,8 +751,19 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
       outputs[6].textContent = `${formatNumber(cachePrice, 2)} / ${formatNumber(inputPrice, 2)} / ${formatNumber(outputPrice, 2)}`;
       outputs[7].textContent = formatNumber(profitPerHour, 2);
 
-      if (slaPass && Number.isFinite(profitPerHour) && (!bestRow || profitPerHour > bestRow.profitPerHour)) {
-        bestRow = { concurrency, profitPerHour, finalPricePer1M, tr };
+      if (slaPass && Number.isFinite(costPer1M)) {
+        const candidate = { concurrency, profitPerHour, finalPricePer1M, costPer1M, goodput, tr };
+        if (!bestRow) {
+          bestRow = candidate;
+        } else if (candidate.costPer1M + eps < bestRow.costPer1M) {
+          bestRow = candidate;
+        } else if (Math.abs(candidate.costPer1M - bestRow.costPer1M) <= eps) {
+          if (candidate.goodput > bestRow.goodput + eps) {
+            bestRow = candidate;
+          } else if (Math.abs(candidate.goodput - bestRow.goodput) <= eps && candidate.concurrency < bestRow.concurrency) {
+            bestRow = candidate;
+          }
+        }
       }
     });
 
@@ -639,6 +779,8 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
       document.getElementById('bestProfit').textContent = '-';
       document.getElementById('bestPrice').textContent = '-';
     }
+
+    syncPricingDecisionTable(results, costHour, alpha, beta, denom);
   }
 
   document.getElementById('calcBtn').addEventListener('click', calculate);
