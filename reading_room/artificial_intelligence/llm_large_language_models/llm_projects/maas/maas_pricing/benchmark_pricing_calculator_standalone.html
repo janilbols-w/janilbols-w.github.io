@@ -1,9 +1,60 @@
----
-layout: default
-title: Benchmark To Pricing Calculator
-hide_sidebar: true
-permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_pricing/benchmark_pricing_calculator.html
----
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benchmark To Pricing Calculator (Standalone)</title>
+  <style>
+    :root {
+      --paper: #0f172a;
+      --paper-strong: #111827;
+      --line: #263246;
+      --ink: #e5eefb;
+      --muted: #9fb3cc;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 12% 8%, #17233c 0, #0b1120 36%, #070b15 100%);
+      color: var(--ink);
+      font-family: "Avenir Next", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.45;
+    }
+
+    .standalone-shell {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 18px 14px 30px;
+    }
+
+    a { color: #93c5fd; }
+
+    mjx-container { overflow-x: auto; max-width: 100%; }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      chtml: {
+        scale: 0.96,
+        matchFontHeight: false
+      }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <div class="standalone-shell">
 
 <style>
   .calc-wrap {
@@ -513,6 +564,69 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     </article>
   </section>
 
+  <section class="calc-card">
+    <h2>参数定义总览（Standalone 完整版）</h2>
+    <div class="calc-guide" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+      <article class="calc-guide-card">
+        <h2>一、成本与定价参数（输入）</h2>
+        <ul>
+          <li>C_hour：每小时总成本（单位：CN¥/h），C_gpu + C_cpu + C_mem + C_storage + C_network + C_gateway + C_obs + C_ops + C_risk。</li>
+          <li>C_gpu / C_cpu / C_mem / C_storage / C_network / C_gateway / C_obs / C_ops / C_risk：各项小时成本输入（单位：CN¥/h）。</li>
+          <li>m：目标毛利率（Target Margin，单位：比例 0-1，无量纲）。</li>
+          <li>f_pay / f_bad / f_tax：支付费率、坏账损耗、税费比例（单位：比例 0-1，无量纲）。</li>
+          <li>r_net = 1 - m - f_pay - f_bad - f_tax：净可用收入比例（单位：比例 0-1，无量纲）。</li>
+          <li>alpha（α）：缓存 token 价格相对 input 价格的折扣系数（单位：比值，无量纲）。</li>
+          <li>beta（β）：output token 价格相对 input 价格的溢价系数（单位：比值，无量纲）。</li>
+          <li>w_cache / w_in / w_out：blended 价格权重（单位：权重比例，无量纲）；系统会归一化为 hat_w_cache / hat_w_in / hat_w_out。</li>
+          <li>K_lat / K_rel / K_reserve：低延迟、可靠性、容量预留三项溢价系数（单位：乘数，无量纲）。</li>
+          <li>P_base/1M：基础每百万 token 售价（单位：CN¥/1M token），P_base/1M = Cost_1M / r_net。</li>
+          <li>P_final/1M：最终每百万 token 售价（单位：CN¥/1M token），P_final/1M = P_base/1M × K_lat × K_rel × K_reserve。</li>
+          <li>P_in / P_cache / P_out：拆分后的 input、cache、output 价格（单位：CN¥/1M token）。</li>
+        </ul>
+      </article>
+
+      <article class="calc-guide-card">
+        <h2>二、Benchmark 与 SLA 参数（输入）</h2>
+        <ul>
+          <li>c：并发档位（Concurrency，单位：并发请求数）。</li>
+          <li>R_c：该并发下请求吞吐（单位：req/s）。</li>
+          <li>I_c / O_c：单请求平均 input/output token（单位：token/req）。</li>
+          <li>TTFT95_c / E2E95_c / ERR_c：该并发下 P95 首 token、P95 端到端、错误率（单位：s / s / 比例）。</li>
+          <li>T_sla / E_sla / e_sla：TTFT95、E2E95、错误率 SLA 阈值（单位：s / s / 比例）。</li>
+          <li>SLA_PASS_c：是否同时满足 TTFT95、E2E95、ERR 三项 SLA（单位：布尔值）。</li>
+          <li>S_c：可售卖比例（SLA Ratio，单位：比例 0-1）。若留空，则 PASS=1，FAIL=0；若填写则使用填写值。</li>
+          <li>Cache Hit：缓存命中比例输入（单位：比例 0-1；当前用于业务观察，不直接进入定价核心公式）。</li>
+        </ul>
+      </article>
+
+      <article class="calc-guide-card">
+        <h2>三、中间量与结果指标（计算）</h2>
+        <ul>
+          <li>G_c = R_c × S_c：可售卖请求吞吐（Goodput，单位：req/s）。</li>
+          <li>T_c = 3600 × G_c × (I_c + O_c)：每小时可售卖 token 总量（Tokens/h，单位：token/h）。</li>
+          <li>Cost_1M,c = (C_hour / T_c) × 10^6：并发 c 下每百万 token 成本（Cost/1M，单位：CN¥/1M token）。</li>
+          <li>Price_1M,c：按净收入比例反推的基础售价（Price/1M，单位：CN¥/1M token）。</li>
+          <li>Final_1M,c：叠加 K_lat、K_rel、K_reserve 后的最终售价（Final/1M，单位：CN¥/1M token）。</li>
+          <li>Profit_h,c：该并发档位下每小时利润（Profit/h，单位：CN¥/h）。</li>
+          <li>Fail Reason：若 FAIL，展示 TTFT95/E2E95/ERR 具体超标项。</li>
+        </ul>
+      </article>
+
+      <article class="calc-guide-card">
+        <h2>四、最优并发与决策区（计算 + 可编辑）</h2>
+        <ul>
+          <li>Best Concurrency：在 SLA_PASS_c = true 的档位中，优先选择 Cost_1M,c 最低的并发。</li>
+          <li>并列时：先比较 G_c（更高优先），再比较 c（更低优先）。</li>
+          <li>Recommended Final/1M：系统根据成本与定价参数推荐的最终售价（单位：CN¥/1M token）。</li>
+          <li>Manual Final/1M：手动覆盖的最终售价输入（单位：CN¥/1M token）。</li>
+          <li>Revenue/h (Manual)：按手动售价计算的小时收入（单位：CN¥/h）。</li>
+          <li>Profit/h (Manual)：按手动售价计算的小时利润（单位：CN¥/h）。</li>
+          <li>Calculate Decision：仅重算 Pricing Decision 区，不重建 Benchmark 区。</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
   <section class="calc-grid">
     <article class="calc-card">
       <h2>Hourly Costs</h2>
@@ -520,39 +634,39 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
         <div class="calc-field"><label for="gpu">GPU / h <span class="symbol">C_gpu</span></label><input id="gpu" type="number" step="0.01" value="6.5"><p class="calc-help">GPU 每小时成本（单位：CN¥/h）。通常是最大头成本。</p></div>
         <div class="calc-field"><label for="cpu">CPU / h <span class="symbol">C_cpu</span></label><input id="cpu" type="number" step="0.01" value="0.7"><p class="calc-help">CPU 计算与系统进程的每小时成本（单位：CN¥/h）。</p></div>
         <div class="calc-field"><label for="mem">Memory / h <span class="symbol">C_mem</span></label><input id="mem" type="number" step="0.01" value="0.3"><p class="calc-help">内存资源每小时成本（单位：CN¥/h）。</p></div>
-        <div class="calc-field"><label for="storage">Storage / h <span class="symbol">C_storage</span></label><input id="storage" type="number" step="0.01" value="0.1"><p class="calc-help">本地盘、对象存储或缓存盘摊销。</p></div>
-        <div class="calc-field"><label for="network">Network / h <span class="symbol">C_network</span></label><input id="network" type="number" step="0.01" value="0.15"><p class="calc-help">公网流量、负载均衡、带宽等成本。</p></div>
-        <div class="calc-field"><label for="gateway">Gateway / h <span class="symbol">C_gateway</span></label><input id="gateway" type="number" step="0.01" value="0.2"><p class="calc-help">API 网关、鉴权、限流等控制面成本。</p></div>
-        <div class="calc-field"><label for="obs">Observability / h <span class="symbol">C_obs</span></label><input id="obs" type="number" step="0.01" value="0.25"><p class="calc-help">日志、监控、追踪与告警系统成本。</p></div>
-        <div class="calc-field"><label for="ops">Ops / h <span class="symbol">C_ops</span></label><input id="ops" type="number" step="0.01" value="0.8"><p class="calc-help">值班、维护、人力摊销等运营成本。</p></div>
-        <div class="calc-field"><label for="risk">Risk / h <span class="symbol">C_risk</span></label><input id="risk" type="number" step="0.01" value="0.2"><p class="calc-help">SLA 赔付、抖动冗余和风险准备金。</p></div>
+        <div class="calc-field"><label for="storage">Storage / h <span class="symbol">C_storage</span></label><input id="storage" type="number" step="0.01" value="0.1"><p class="calc-help">本地盘、对象存储或缓存盘摊销（单位：CN¥/h）。</p></div>
+        <div class="calc-field"><label for="network">Network / h <span class="symbol">C_network</span></label><input id="network" type="number" step="0.01" value="0.15"><p class="calc-help">公网流量、负载均衡、带宽等成本（单位：CN¥/h）。</p></div>
+        <div class="calc-field"><label for="gateway">Gateway / h <span class="symbol">C_gateway</span></label><input id="gateway" type="number" step="0.01" value="0.2"><p class="calc-help">API 网关、鉴权、限流等控制面成本（单位：CN¥/h）。</p></div>
+        <div class="calc-field"><label for="obs">Observability / h <span class="symbol">C_obs</span></label><input id="obs" type="number" step="0.01" value="0.25"><p class="calc-help">日志、监控、追踪与告警系统成本（单位：CN¥/h）。</p></div>
+        <div class="calc-field"><label for="ops">Ops / h <span class="symbol">C_ops</span></label><input id="ops" type="number" step="0.01" value="0.8"><p class="calc-help">值班、维护、人力摊销等运营成本（单位：CN¥/h）。</p></div>
+        <div class="calc-field"><label for="risk">Risk / h <span class="symbol">C_risk</span></label><input id="risk" type="number" step="0.01" value="0.2"><p class="calc-help">SLA 赔付、抖动冗余和风险准备金（单位：CN¥/h）。</p></div>
       </div>
     </article>
 
     <article class="calc-card">
       <h2>Pricing</h2>
       <div class="calc-fields">
-        <div class="calc-field"><label for="margin">Target Margin <span class="symbol">m</span></label><input id="margin" type="number" step="0.01" value="0.55"><p class="calc-help">目标毛利率。0.55 表示希望保留 55% 毛利。</p></div>
-        <div class="calc-field"><label for="paymentFee">Payment Fee <span class="symbol">f_pay</span></label><input id="paymentFee" type="number" step="0.01" value="0.03"><p class="calc-help">支付通道费率或交易手续费。</p></div>
-        <div class="calc-field"><label for="badDebt">Bad Debt <span class="symbol">f_bad</span></label><input id="badDebt" type="number" step="0.01" value="0.01"><p class="calc-help">坏账、促销损耗、折扣等收入损耗。</p></div>
-        <div class="calc-field"><label for="tax">Tax <span class="symbol">f_tax</span></label><input id="tax" type="number" step="0.01" value="0.01"><p class="calc-help">税费或其他需要从收入里扣除的比例。</p></div>
-        <div class="calc-field"><label for="alpha">Alpha <span class="symbol">α</span></label><input id="alpha" type="number" step="0.01" value="0.25"><p class="calc-help">缓存命中价格相对 input 价格的折扣系数。越小代表 cache 越便宜。</p></div>
-        <div class="calc-field"><label for="beta">Beta <span class="symbol">β</span></label><input id="beta" type="number" step="0.01" value="1.8"><p class="calc-help">output 价格相对 input 价格的溢价系数。越大代表输出越贵。</p></div>
-        <div class="calc-field"><label for="weightCache">Weight Cache <span class="symbol">w_cache</span></label><input id="weightCache" type="number" step="0.01" value="0.7"><p class="calc-help">blended 价格里 cache token 的权重。</p></div>
-        <div class="calc-field"><label for="weightInput">Weight Input <span class="symbol">w_in</span></label><input id="weightInput" type="number" step="0.01" value="0.2"><p class="calc-help">blended 价格里 input token 的权重。</p></div>
-        <div class="calc-field"><label for="weightOutput">Weight Output <span class="symbol">w_out</span></label><input id="weightOutput" type="number" step="0.01" value="0.1"><p class="calc-help">blended 价格里 output token 的权重。</p></div>
-        <div class="calc-field"><label for="kLat">K_lat <span class="symbol">K_lat</span></label><input id="kLat" type="number" step="0.01" value="1.1"><p class="calc-help">低延迟溢价系数。SLA 越严格通常越高。</p></div>
-        <div class="calc-field"><label for="kRel">K_rel <span class="symbol">K_rel</span></label><input id="kRel" type="number" step="0.01" value="1.05"><p class="calc-help">高可靠性溢价系数。</p></div>
-        <div class="calc-field"><label for="kReserve">K_reserve <span class="symbol">K_reserve</span></label><input id="kReserve" type="number" step="0.01" value="1.05"><p class="calc-help">容量预留溢价系数，用来覆盖冗余成本。</p></div>
+        <div class="calc-field"><label for="margin">Target Margin <span class="symbol">m</span></label><input id="margin" type="number" step="0.01" value="0.55"><p class="calc-help">目标毛利率（单位：比例 0-1）。0.55 表示希望保留 55% 毛利。</p></div>
+        <div class="calc-field"><label for="paymentFee">Payment Fee <span class="symbol">f_pay</span></label><input id="paymentFee" type="number" step="0.01" value="0.03"><p class="calc-help">支付通道费率或交易手续费（单位：比例 0-1）。</p></div>
+        <div class="calc-field"><label for="badDebt">Bad Debt <span class="symbol">f_bad</span></label><input id="badDebt" type="number" step="0.01" value="0.01"><p class="calc-help">坏账、促销损耗、折扣等收入损耗（单位：比例 0-1）。</p></div>
+        <div class="calc-field"><label for="tax">Tax <span class="symbol">f_tax</span></label><input id="tax" type="number" step="0.01" value="0.01"><p class="calc-help">税费或其他需要从收入里扣除的比例（单位：比例 0-1）。</p></div>
+        <div class="calc-field"><label for="alpha">Alpha <span class="symbol">α</span></label><input id="alpha" type="number" step="0.01" value="0.25"><p class="calc-help">缓存命中价格相对 input 价格的折扣系数（单位：比值，无量纲）。越小代表 cache 越便宜。</p></div>
+        <div class="calc-field"><label for="beta">Beta <span class="symbol">β</span></label><input id="beta" type="number" step="0.01" value="1.8"><p class="calc-help">output 价格相对 input 价格的溢价系数（单位：比值，无量纲）。越大代表输出越贵。</p></div>
+        <div class="calc-field"><label for="weightCache">Weight Cache <span class="symbol">w_cache</span></label><input id="weightCache" type="number" step="0.01" value="0.7"><p class="calc-help">blended 价格里 cache token 的权重（单位：权重比例，无量纲）。</p></div>
+        <div class="calc-field"><label for="weightInput">Weight Input <span class="symbol">w_in</span></label><input id="weightInput" type="number" step="0.01" value="0.2"><p class="calc-help">blended 价格里 input token 的权重（单位：权重比例，无量纲）。</p></div>
+        <div class="calc-field"><label for="weightOutput">Weight Output <span class="symbol">w_out</span></label><input id="weightOutput" type="number" step="0.01" value="0.1"><p class="calc-help">blended 价格里 output token 的权重（单位：权重比例，无量纲）。</p></div>
+        <div class="calc-field"><label for="kLat">K_lat <span class="symbol">K_lat</span></label><input id="kLat" type="number" step="0.01" value="1.1"><p class="calc-help">低延迟溢价系数（单位：乘数，无量纲）。SLA 越严格通常越高。</p></div>
+        <div class="calc-field"><label for="kRel">K_rel <span class="symbol">K_rel</span></label><input id="kRel" type="number" step="0.01" value="1.05"><p class="calc-help">高可靠性溢价系数（单位：乘数，无量纲）。</p></div>
+        <div class="calc-field"><label for="kReserve">K_reserve <span class="symbol">K_reserve</span></label><input id="kReserve" type="number" step="0.01" value="1.05"><p class="calc-help">容量预留溢价系数（单位：乘数，无量纲），用来覆盖冗余成本。</p></div>
       </div>
     </article>
 
     <article class="calc-card">
       <h2>SLA Targets</h2>
       <div class="calc-fields">
-        <div class="calc-field"><label for="slaTtft">TTFT95 SLA <span class="symbol">T_sla</span></label><input id="slaTtft" type="number" step="0.01" value="2.0"><p class="calc-help">P95 首 token 最大允许延迟，单位秒。</p></div>
-        <div class="calc-field"><label for="slaE2e">E2E95 SLA <span class="symbol">E_sla</span></label><input id="slaE2e" type="number" step="0.01" value="12.0"><p class="calc-help">P95 端到端最大允许耗时，单位秒。</p></div>
-        <div class="calc-field"><label for="slaErr">ERR SLA <span class="symbol">e_sla</span></label><input id="slaErr" type="number" step="0.001" value="0.01"><p class="calc-help">允许的最大错误率。0.01 表示 1%。</p></div>
+        <div class="calc-field"><label for="slaTtft">TTFT95 SLA <span class="symbol">T_sla</span></label><input id="slaTtft" type="number" step="0.01" value="2.0"><p class="calc-help">P95 首 token 最大允许延迟（单位：秒 s）。</p></div>
+        <div class="calc-field"><label for="slaE2e">E2E95 SLA <span class="symbol">E_sla</span></label><input id="slaE2e" type="number" step="0.01" value="12.0"><p class="calc-help">P95 端到端最大允许耗时（单位：秒 s）。</p></div>
+        <div class="calc-field"><label for="slaErr">ERR SLA <span class="symbol">e_sla</span></label><input id="slaErr" type="number" step="0.001" value="0.01"><p class="calc-help">允许的最大错误率（单位：比例 0-1）。0.01 表示 1%。</p></div>
       </div>
     </article>
 
@@ -1008,3 +1122,6 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   resetRows();
   calculate();
 </script>
+  </div>
+</body>
+</html>
