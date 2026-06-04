@@ -187,6 +187,10 @@
     color: var(--muted);
   }
 
+  .calc-todo {
+    color: #fbbf24;
+  }
+
   .calc-summary {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -795,6 +799,11 @@
       <li><a href="https://www.anygpu.cn/910b.html" target="_blank" rel="noreferrer">AnyGPU 910B pricing reference</a></li>
       <li><a href="https://www.huaweicloud.com/product/ecs/ascend.html" target="_blank" rel="noreferrer">Huawei Cloud Ascend ECS product page</a></li>
     </ul>
+  </section>
+
+  <section class="calc-card">
+    <h2>TODO</h2>
+    <p class="calc-note calc-todo">补充模型缺陷和高优影响因素。当前测算默认设备可持续满载，但现实里会有闲置率、调度空转、热备冗余、故障切换、流量波动、冷启动和缓存未命中等损耗；后续需要把这些因素显式纳入利用率、成本和 SLA 缓冲中。</p>
   </section>
 </div>
 
