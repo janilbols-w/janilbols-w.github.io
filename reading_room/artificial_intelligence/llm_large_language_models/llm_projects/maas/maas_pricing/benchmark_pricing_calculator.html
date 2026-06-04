@@ -267,6 +267,24 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     min-width: 1750px;
   }
 
+  .benchmark-input-table {
+    min-width: 980px;
+  }
+
+  .benchmark-result-table {
+    min-width: 1320px;
+  }
+
+  .benchmark-result-table th:nth-child(1),
+  .benchmark-result-table td:nth-child(1) {
+    min-width: 92px;
+  }
+
+  .benchmark-result-table th:nth-child(2),
+  .benchmark-result-table td:nth-child(2) {
+    min-width: 92px;
+  }
+
   .decision-table {
     min-width: 1120px;
   }
@@ -374,6 +392,33 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   .reason-chip:focus-visible::after {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .benchmark-result-table .sticky-col-1,
+  .benchmark-result-table .sticky-col-2 {
+    position: sticky;
+    z-index: 3;
+    background: #0f1624;
+  }
+
+  .benchmark-result-table .sticky-col-1 {
+    left: 0;
+  }
+
+  .benchmark-result-table .sticky-col-2 {
+    left: 92px;
+    box-shadow: 1px 0 0 0 var(--line), 6px 0 10px rgba(0, 0, 0, 0.16);
+  }
+
+  .benchmark-result-table th.sticky-col-1,
+  .benchmark-result-table th.sticky-col-2 {
+    z-index: 7;
+    background: #172033;
+  }
+
+  .benchmark-result-table tr.is-best .sticky-col-1,
+  .benchmark-result-table tr.is-best .sticky-col-2 {
+    background: rgba(142, 202, 230, 0.2);
   }
 
   .is-best {
@@ -547,9 +592,9 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   </section>
 
   <section class="calc-card">
-    <h2>Benchmark Rows</h2>
+    <h2>Benchmark Inputs</h2>
     <div class="calc-table-wrap">
-      <table class="calc-table benchmark-table" id="benchmarkTable">
+      <table class="calc-table benchmark-input-table" id="benchmarkTable">
         <thead>
           <tr>
             <th><span class="th-main">Concurrency</span><span class="th-sub">并发档位 `c`</span></th>
@@ -561,7 +606,21 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
             <th><span class="th-main">ERR</span><span class="th-sub">错误率，0.01 = 1%</span></th>
             <th><span class="th-main">Cache Hit</span><span class="th-sub">输入 token 的缓存命中比例</span></th>
             <th><span class="th-main">SLA Ratio</span><span class="th-sub">可售卖比例 `S_c`，留空则自动按 PASS/FAIL 取值</span></th>
-            <th><span class="th-main">SLA</span><span class="th-sub">该并发点是否满足 SLA</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="calc-card">
+    <h2>Benchmark Results</h2>
+    <div class="calc-table-wrap">
+      <table class="calc-table benchmark-result-table" id="benchmarkResultTable">
+        <thead>
+          <tr>
+            <th class="sticky-col-1"><span class="th-main">Concurrency</span><span class="th-sub">并发档位 `c`</span></th>
+            <th class="sticky-col-2"><span class="th-main">SLA</span><span class="th-sub">该并发点是否满足 SLA</span></th>
             <th><span class="th-main">Fail Reason</span><span class="th-sub">未通过时给出超标项</span></th>
             <th><span class="th-main">Goodput</span><span class="th-sub">真正可卖的请求吞吐 `G_c`</span></th>
             <th><span class="th-main">Tokens/h</span><span class="th-sub">每小时可售卖 token 总量 `T_c`</span></th>
@@ -569,7 +628,7 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
             <th><span class="th-main">Price/1M</span><span class="th-sub">按毛利与费率反推的基础售价</span></th>
             <th><span class="th-main">Final/1M</span><span class="th-sub">叠加 SLA 溢价系数后的最终售价</span></th>
             <th><span class="th-main">Cache/Input/Output</span><span class="th-sub">拆分后的三段价格</span></th>
-            <th><span class="th-main">Profit/h</span><span class="th-sub">每小时利润，用来选最优生产并发</span></th>
+            <th><span class="th-main">Profit/h</span><span class="th-sub">每小时利润</span></th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -612,6 +671,7 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   ];
 
   const tbody = document.querySelector('#benchmarkTable tbody');
+  const resultTbody = document.querySelector('#benchmarkResultTable tbody');
   const pricingTbody = document.querySelector('#pricingDecisionTable tbody');
 
   function formatNumber(value, digits = 2) {
@@ -665,17 +725,12 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
       tr.appendChild(td);
     });
 
-    for (let index = 0; index < 9; index += 1) {
-      const td = document.createElement('td');
-      td.dataset.output = '1';
-      tr.appendChild(td);
-    }
-
     tbody.appendChild(tr);
   }
 
   function resetRows() {
     tbody.innerHTML = '';
+    resultTbody.innerHTML = '';
     exampleRows.forEach(addRow);
     pricingTbody.innerHTML = '';
   }
@@ -819,6 +874,7 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     let bestRow = null;
     const results = [];
     const eps = 1e-9;
+    resultTbody.innerHTML = '';
 
     rows.forEach((tr) => {
       tr.classList.remove('is-best');
@@ -863,21 +919,37 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
         recommendedFinalPricePer1M: finalPricePer1M
       });
 
-      const outputs = Array.from(tr.querySelectorAll('td[data-output]'));
-      outputs[0].innerHTML = `<span class="${slaPass ? 'badge-ok' : 'badge-bad'}">${slaPass ? 'PASS' : 'FAIL'}</span>`;
-      if (slaPass) {
-        outputs[1].textContent = '-';
-      } else {
-        const tip = failReasons.join(' | ');
-        outputs[1].innerHTML = `<span class="reason-chip" tabindex="0" data-tip="${tip}">Hover</span>`;
-      }
-      outputs[2].textContent = formatNumber(goodput, 3);
-      outputs[3].textContent = formatNumber(tokensPerHour, 0);
-      outputs[4].textContent = formatNumber(costPer1M, 2);
-      outputs[5].textContent = formatNumber(pricePer1M, 2);
-      outputs[6].textContent = formatNumber(finalPricePer1M, 2);
-      outputs[7].textContent = `${formatNumber(cachePrice, 2)} / ${formatNumber(inputPrice, 2)} / ${formatNumber(outputPrice, 2)}`;
-      outputs[8].textContent = formatNumber(profitPerHour, 2);
+      const resultTr = document.createElement('tr');
+      resultTr.dataset.concurrency = String(concurrency);
+      const cells = [
+        String(concurrency),
+        `<span class="${slaPass ? 'badge-ok' : 'badge-bad'}">${slaPass ? 'PASS' : 'FAIL'}</span>`,
+        slaPass ? '-' : `<span class="reason-chip" tabindex="0" data-tip="${failReasons.join(' | ')}">Hover</span>`,
+        formatNumber(goodput, 3),
+        formatNumber(tokensPerHour, 0),
+        formatNumber(costPer1M, 2),
+        formatNumber(pricePer1M, 2),
+        formatNumber(finalPricePer1M, 2),
+        `${formatNumber(cachePrice, 2)} / ${formatNumber(inputPrice, 2)} / ${formatNumber(outputPrice, 2)}`,
+        formatNumber(profitPerHour, 2)
+      ];
+
+      cells.forEach((value, index) => {
+        const td = document.createElement('td');
+        if (index === 0) {
+          td.classList.add('sticky-col-1');
+        }
+        if (index === 1) {
+          td.classList.add('sticky-col-2');
+        }
+        if (index === 1 || index === 2) {
+          td.innerHTML = value;
+        } else {
+          td.textContent = value;
+        }
+        resultTr.appendChild(td);
+      });
+      resultTbody.appendChild(resultTr);
 
       if (slaPass && Number.isFinite(costPer1M)) {
         const candidate = { concurrency, profitPerHour, finalPricePer1M, costPer1M, goodput, tr };
@@ -899,6 +971,10 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
     if (bestRow) {
       bestRow.tr.classList.add('is-best');
+      const bestResultRow = resultTbody.querySelector(`tr[data-concurrency="${bestRow.concurrency}"]`);
+      if (bestResultRow) {
+        bestResultRow.classList.add('is-best');
+      }
       document.getElementById('bestConcurrency').textContent = bestRow.concurrency;
       document.getElementById('bestProfit').textContent = formatNumber(bestRow.profitPerHour, 2);
       document.getElementById('bestPrice').textContent = formatNumber(bestRow.finalPricePer1M, 2);
