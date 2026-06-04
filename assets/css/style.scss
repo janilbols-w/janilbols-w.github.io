@@ -999,6 +999,17 @@ tr:nth-child(even) td {
   color: var(--accent-strong);
 }
 
+mjx-container {
+  margin: 0.35rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+mjx-container[display="true"] {
+  padding: 0.2rem 0;
+}
+
 img {
   max-width: 100%;
   height: auto;

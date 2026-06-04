@@ -65,8 +65,25 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   }
 
   .calc-field label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
     font-size: 0.82rem;
     color: var(--muted);
+  }
+
+  .calc-field .symbol {
+    color: #8ecae6;
+    font-family: "SFMono-Regular", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+    font-size: 0.76rem;
+  }
+
+  .calc-help {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: #94a3b8;
   }
 
   .calc-field input {
@@ -116,6 +133,40 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     gap: 12px;
   }
 
+  .calc-guide {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .calc-guide-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+
+  .calc-guide-card h2 {
+    margin: 0 0 10px;
+    border-bottom: none;
+    font-size: 0.98rem;
+  }
+
+  .calc-guide-card p,
+  .calc-guide-card li {
+    font-size: 0.84rem;
+    color: #cbd5e1;
+  }
+
+  .calc-guide-card ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .calc-guide-card li + li {
+    margin-top: 6px;
+  }
+
   .calc-stat {
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -159,6 +210,22 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     top: 0;
   }
 
+  .calc-table .th-main {
+    display: block;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .calc-table .th-sub {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    line-height: 1.35;
+    font-weight: 400;
+    white-space: normal;
+  }
+
   .calc-table input {
     width: 92px;
     border: 1px solid #3f3f46;
@@ -194,7 +261,8 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
   @media (max-width: 1080px) {
     .calc-grid,
-    .calc-summary {
+    .calc-summary,
+    .calc-guide {
       grid-template-columns: 1fr;
     }
   }
@@ -206,40 +274,69 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     <p>输入同一套硬件下的 benchmark 数据，自动计算可售卖吞吐、每百万 token 成本、目标售价和最优生产并发。</p>
   </section>
 
+  <section class="calc-guide">
+    <article class="calc-guide-card">
+      <h2>怎么看这个页面</h2>
+      <ul>
+        <li>左侧先填每小时成本，表示这套硬件与平台的固定小时支出。</li>
+        <li>中间填定价参数与 SLA，表示你希望赚多少毛利，以及允许多大的延迟和错误率。</li>
+        <li>下方表格逐行填写不同并发的 benchmark 结果，系统会自动算出价格与利润。</li>
+      </ul>
+    </article>
+
+    <article class="calc-guide-card">
+      <h2>核心判断逻辑</h2>
+      <ul>
+        <li>`SLA PASS` 代表该并发点满足你设定的 TTFT、E2E 和错误率要求。</li>
+        <li>`Goodput` 是真正可售卖的请求吞吐，不是裸 benchmark 吞吐。</li>
+        <li>高并发不一定最好，系统会优先找满足 SLA 且 `Profit / h` 最大的并发点。</li>
+      </ul>
+    </article>
+
+    <article class="calc-guide-card">
+      <h2>价格结果怎么理解</h2>
+      <ul>
+        <li>`Cost / 1M` 是每百万 token 的真实成本。</li>
+        <li>`Price / 1M` 是按毛利率、支付费率、坏账、税费反推的基础售价。</li>
+        <li>`Final / 1M` 再叠加低延迟、可靠性、容量预留等溢价系数。</li>
+      </ul>
+    </article>
+  </section>
+
   <section class="calc-grid">
     <article class="calc-card">
       <h2>Hourly Costs</h2>
       <div class="calc-fields">
-        <div class="calc-field"><label for="gpu">GPU / h</label><input id="gpu" type="number" step="0.01" value="6.5"></div>
-        <div class="calc-field"><label for="cpu">CPU / h</label><input id="cpu" type="number" step="0.01" value="0.7"></div>
-        <div class="calc-field"><label for="mem">Memory / h</label><input id="mem" type="number" step="0.01" value="0.3"></div>
-        <div class="calc-field"><label for="storage">Storage / h</label><input id="storage" type="number" step="0.01" value="0.1"></div>
-        <div class="calc-field"><label for="network">Network / h</label><input id="network" type="number" step="0.01" value="0.15"></div>
-        <div class="calc-field"><label for="gateway">Gateway / h</label><input id="gateway" type="number" step="0.01" value="0.2"></div>
-        <div class="calc-field"><label for="obs">Observability / h</label><input id="obs" type="number" step="0.01" value="0.25"></div>
-        <div class="calc-field"><label for="ops">Ops / h</label><input id="ops" type="number" step="0.01" value="0.8"></div>
-        <div class="calc-field"><label for="risk">Risk / h</label><input id="risk" type="number" step="0.01" value="0.2"></div>
+        <div class="calc-field"><label for="gpu">GPU / h <span class="symbol">C_gpu</span></label><input id="gpu" type="number" step="0.01" value="6.5"><p class="calc-help">GPU 每小时成本。通常是最大头成本。</p></div>
+        <div class="calc-field"><label for="cpu">CPU / h <span class="symbol">C_cpu</span></label><input id="cpu" type="number" step="0.01" value="0.7"><p class="calc-help">CPU 计算与系统进程的每小时成本。</p></div>
+        <div class="calc-field"><label for="mem">Memory / h <span class="symbol">C_mem</span></label><input id="mem" type="number" step="0.01" value="0.3"><p class="calc-help">内存资源每小时成本。</p></div>
+        <div class="calc-field"><label for="storage">Storage / h <span class="symbol">C_storage</span></label><input id="storage" type="number" step="0.01" value="0.1"><p class="calc-help">本地盘、对象存储或缓存盘摊销。</p></div>
+        <div class="calc-field"><label for="network">Network / h <span class="symbol">C_network</span></label><input id="network" type="number" step="0.01" value="0.15"><p class="calc-help">公网流量、负载均衡、带宽等成本。</p></div>
+        <div class="calc-field"><label for="gateway">Gateway / h <span class="symbol">C_gateway</span></label><input id="gateway" type="number" step="0.01" value="0.2"><p class="calc-help">API 网关、鉴权、限流等控制面成本。</p></div>
+        <div class="calc-field"><label for="obs">Observability / h <span class="symbol">C_obs</span></label><input id="obs" type="number" step="0.01" value="0.25"><p class="calc-help">日志、监控、追踪与告警系统成本。</p></div>
+        <div class="calc-field"><label for="ops">Ops / h <span class="symbol">C_ops</span></label><input id="ops" type="number" step="0.01" value="0.8"><p class="calc-help">值班、维护、人力摊销等运营成本。</p></div>
+        <div class="calc-field"><label for="risk">Risk / h <span class="symbol">C_risk</span></label><input id="risk" type="number" step="0.01" value="0.2"><p class="calc-help">SLA 赔付、抖动冗余和风险准备金。</p></div>
       </div>
     </article>
 
     <article class="calc-card">
       <h2>Pricing And SLA</h2>
       <div class="calc-fields">
-        <div class="calc-field"><label for="margin">Target Margin</label><input id="margin" type="number" step="0.01" value="0.55"></div>
-        <div class="calc-field"><label for="paymentFee">Payment Fee</label><input id="paymentFee" type="number" step="0.01" value="0.03"></div>
-        <div class="calc-field"><label for="badDebt">Bad Debt</label><input id="badDebt" type="number" step="0.01" value="0.01"></div>
-        <div class="calc-field"><label for="tax">Tax</label><input id="tax" type="number" step="0.01" value="0.01"></div>
-        <div class="calc-field"><label for="alpha">Alpha (Cache Discount)</label><input id="alpha" type="number" step="0.01" value="0.25"></div>
-        <div class="calc-field"><label for="beta">Beta (Output Premium)</label><input id="beta" type="number" step="0.01" value="1.8"></div>
-        <div class="calc-field"><label for="weightCache">Weight Cache</label><input id="weightCache" type="number" step="0.01" value="0.7"></div>
-        <div class="calc-field"><label for="weightInput">Weight Input</label><input id="weightInput" type="number" step="0.01" value="0.2"></div>
-        <div class="calc-field"><label for="weightOutput">Weight Output</label><input id="weightOutput" type="number" step="0.01" value="0.1"></div>
-        <div class="calc-field"><label for="kLat">K_lat</label><input id="kLat" type="number" step="0.01" value="1.1"></div>
-        <div class="calc-field"><label for="kRel">K_rel</label><input id="kRel" type="number" step="0.01" value="1.05"></div>
-        <div class="calc-field"><label for="kReserve">K_reserve</label><input id="kReserve" type="number" step="0.01" value="1.05"></div>
-        <div class="calc-field"><label for="slaTtft">TTFT95 SLA</label><input id="slaTtft" type="number" step="0.01" value="2.0"></div>
-        <div class="calc-field"><label for="slaE2e">E2E95 SLA</label><input id="slaE2e" type="number" step="0.01" value="12.0"></div>
-        <div class="calc-field"><label for="slaErr">ERR SLA</label><input id="slaErr" type="number" step="0.001" value="0.01"></div>
+        <div class="calc-field"><label for="margin">Target Margin <span class="symbol">m</span></label><input id="margin" type="number" step="0.01" value="0.55"><p class="calc-help">目标毛利率。0.55 表示希望保留 55% 毛利。</p></div>
+        <div class="calc-field"><label for="paymentFee">Payment Fee <span class="symbol">f_pay</span></label><input id="paymentFee" type="number" step="0.01" value="0.03"><p class="calc-help">支付通道费率或交易手续费。</p></div>
+        <div class="calc-field"><label for="badDebt">Bad Debt <span class="symbol">f_bad</span></label><input id="badDebt" type="number" step="0.01" value="0.01"><p class="calc-help">坏账、促销损耗、折扣等收入损耗。</p></div>
+        <div class="calc-field"><label for="tax">Tax <span class="symbol">f_tax</span></label><input id="tax" type="number" step="0.01" value="0.01"><p class="calc-help">税费或其他需要从收入里扣除的比例。</p></div>
+        <div class="calc-field"><label for="alpha">Alpha <span class="symbol">α</span></label><input id="alpha" type="number" step="0.01" value="0.25"><p class="calc-help">缓存命中价格相对 input 价格的折扣系数。越小代表 cache 越便宜。</p></div>
+        <div class="calc-field"><label for="beta">Beta <span class="symbol">β</span></label><input id="beta" type="number" step="0.01" value="1.8"><p class="calc-help">output 价格相对 input 价格的溢价系数。越大代表输出越贵。</p></div>
+        <div class="calc-field"><label for="weightCache">Weight Cache <span class="symbol">w_cache</span></label><input id="weightCache" type="number" step="0.01" value="0.7"><p class="calc-help">blended 价格里 cache token 的权重。</p></div>
+        <div class="calc-field"><label for="weightInput">Weight Input <span class="symbol">w_in</span></label><input id="weightInput" type="number" step="0.01" value="0.2"><p class="calc-help">blended 价格里 input token 的权重。</p></div>
+        <div class="calc-field"><label for="weightOutput">Weight Output <span class="symbol">w_out</span></label><input id="weightOutput" type="number" step="0.01" value="0.1"><p class="calc-help">blended 价格里 output token 的权重。</p></div>
+        <div class="calc-field"><label for="kLat">K_lat <span class="symbol">K_lat</span></label><input id="kLat" type="number" step="0.01" value="1.1"><p class="calc-help">低延迟溢价系数。SLA 越严格通常越高。</p></div>
+        <div class="calc-field"><label for="kRel">K_rel <span class="symbol">K_rel</span></label><input id="kRel" type="number" step="0.01" value="1.05"><p class="calc-help">高可靠性溢价系数。</p></div>
+        <div class="calc-field"><label for="kReserve">K_reserve <span class="symbol">K_reserve</span></label><input id="kReserve" type="number" step="0.01" value="1.05"><p class="calc-help">容量预留溢价系数，用来覆盖冗余成本。</p></div>
+        <div class="calc-field"><label for="slaTtft">TTFT95 SLA <span class="symbol">T_sla</span></label><input id="slaTtft" type="number" step="0.01" value="2.0"><p class="calc-help">P95 首 token 最大允许延迟，单位秒。</p></div>
+        <div class="calc-field"><label for="slaE2e">E2E95 SLA <span class="symbol">E_sla</span></label><input id="slaE2e" type="number" step="0.01" value="12.0"><p class="calc-help">P95 端到端最大允许耗时，单位秒。</p></div>
+        <div class="calc-field"><label for="slaErr">ERR SLA <span class="symbol">e_sla</span></label><input id="slaErr" type="number" step="0.001" value="0.01"><p class="calc-help">允许的最大错误率。0.01 表示 1%。</p></div>
       </div>
     </article>
 
@@ -251,7 +348,8 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
         <button type="button" id="resetBtn">Reset Example</button>
       </div>
       <p class="calc-note">`SLA Ratio` 留空时，系统会按 SLA 是否达标自动取 1 或 0。填写后将直接使用你给出的可售卖比例。</p>
-      <p class="calc-note">综合价格先按毛利公式得到 `Price_1M`，再叠加 `K_lat × K_rel × K_reserve`，最后拆成 cache/input/output 三段价格。</p>
+      <p class="calc-note">综合价格先按毛利公式得到 `Price / 1M`，再叠加 `K_lat × K_rel × K_reserve`，最后拆成 cache/input/output 三段价格。</p>
+      <p class="calc-note">如果你只想做第一轮粗估，可以先只改 `GPU / h`、`Target Margin`、`TTFT95 SLA`、`E2E95 SLA`，其余保留默认值。</p>
     </article>
   </section>
 
@@ -280,23 +378,23 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
       <table class="calc-table" id="benchmarkTable">
         <thead>
           <tr>
-            <th>Concurrency</th>
-            <th>Req/s</th>
-            <th>Input Tok</th>
-            <th>Output Tok</th>
-            <th>TTFT95</th>
-            <th>E2E95</th>
-            <th>ERR</th>
-            <th>Cache Hit</th>
-            <th>SLA Ratio</th>
-            <th>SLA</th>
-            <th>Goodput</th>
-            <th>Tokens/h</th>
-            <th>Cost/1M</th>
-            <th>Price/1M</th>
-            <th>Final/1M</th>
-            <th>Cache/Input/Output</th>
-            <th>Profit/h</th>
+            <th><span class="th-main">Concurrency</span><span class="th-sub">并发档位 `c`</span></th>
+            <th><span class="th-main">Req/s</span><span class="th-sub">该并发下的完成请求吞吐 `R_c`</span></th>
+            <th><span class="th-main">Input Tok</span><span class="th-sub">平均输入 token / 请求 `I_c`</span></th>
+            <th><span class="th-main">Output Tok</span><span class="th-sub">平均输出 token / 请求 `O_c`</span></th>
+            <th><span class="th-main">TTFT95</span><span class="th-sub">P95 首 token 延迟</span></th>
+            <th><span class="th-main">E2E95</span><span class="th-sub">P95 端到端总耗时</span></th>
+            <th><span class="th-main">ERR</span><span class="th-sub">错误率，0.01 = 1%</span></th>
+            <th><span class="th-main">Cache Hit</span><span class="th-sub">输入 token 的缓存命中比例</span></th>
+            <th><span class="th-main">SLA Ratio</span><span class="th-sub">可售卖比例 `S_c`，留空则自动按 PASS/FAIL 取值</span></th>
+            <th><span class="th-main">SLA</span><span class="th-sub">该并发点是否满足 SLA</span></th>
+            <th><span class="th-main">Goodput</span><span class="th-sub">真正可卖的请求吞吐 `G_c`</span></th>
+            <th><span class="th-main">Tokens/h</span><span class="th-sub">每小时可售卖 token 总量 `T_c`</span></th>
+            <th><span class="th-main">Cost/1M</span><span class="th-sub">每百万 token 真实成本</span></th>
+            <th><span class="th-main">Price/1M</span><span class="th-sub">按毛利与费率反推的基础售价</span></th>
+            <th><span class="th-main">Final/1M</span><span class="th-sub">叠加 SLA 溢价系数后的最终售价</span></th>
+            <th><span class="th-main">Cache/Input/Output</span><span class="th-sub">拆分后的三段价格</span></th>
+            <th><span class="th-main">Profit/h</span><span class="th-sub">每小时利润，用来选最优生产并发</span></th>
           </tr>
         </thead>
         <tbody></tbody>
