@@ -139,6 +139,58 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     gap: 14px;
   }
 
+  .calc-formulas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .formula-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .formula-card h2 {
+    margin: 0 0 10px;
+    border-bottom: none;
+    font-size: 1rem;
+  }
+
+  .formula-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .formula-badge.generated {
+    background: rgba(125, 211, 252, 0.18);
+    color: #bae6fd;
+  }
+
+  .formula-badge.derived {
+    background: rgba(134, 239, 172, 0.18);
+    color: #bbf7d0;
+  }
+
+  .formula-note {
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .formula-item {
+    margin: 8px 0;
+    color: #dbeafe;
+    font-size: 0.86rem;
+  }
+
   .calc-guide-card {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
     border: 1px solid var(--line);
@@ -262,7 +314,8 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   @media (max-width: 1080px) {
     .calc-grid,
     .calc-summary,
-    .calc-guide {
+    .calc-guide,
+    .calc-formulas {
       grid-template-columns: 1fr;
     }
   }
@@ -300,6 +353,30 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
         <li>`Price / 1M` 是按毛利率、支付费率、坏账、税费反推的基础售价。</li>
         <li>`Final / 1M` 再叠加低延迟、可靠性、容量预留等溢价系数。</li>
       </ul>
+    </article>
+  </section>
+
+  <section class="calc-formulas">
+    <article class="formula-card">
+      <h2>生成公式<span class="formula-badge generated">输入/策略定义</span></h2>
+      <p class="formula-note">这部分是你设定的定价结构与业务假设，系统按这些公式做后续计算。</p>
+      <div class="formula-item">$$C_{hour}=C_{gpu}+C_{cpu}+C_{mem}+C_{storage}+C_{network}+C_{gateway}+C_{obs}+C_{ops}+C_{risk}$$</div>
+      <div class="formula-item">$$\hat{w}_{cache}=\frac{w_{cache}}{w_{cache}+w_{in}+w_{out}},\;\hat{w}_{in}=\frac{w_{in}}{w_{cache}+w_{in}+w_{out}},\;\hat{w}_{out}=\frac{w_{out}}{w_{cache}+w_{in}+w_{out}}$$</div>
+      <div class="formula-item">$$r_{net}=1-m-f_{pay}-f_{bad}-f_{tax}$$</div>
+      <div class="formula-item">$$P_{base/1M}=\frac{Cost_{1M}}{r_{net}},\quad P_{final/1M}=P_{base/1M}\times K_{lat}\times K_{rel}\times K_{reserve}$$</div>
+      <div class="formula-item">$$P_{in}=\frac{P_{final/1M}}{\alpha\hat{w}_{cache}+\hat{w}_{in}+\beta\hat{w}_{out}},\quad P_{cache}=\alpha P_{in},\quad P_{out}=\beta P_{in}$$</div>
+    </article>
+
+    <article class="formula-card">
+      <h2>推导结果<span class="formula-badge derived">由 benchmark 数据计算</span></h2>
+      <p class="formula-note">这部分是系统根据每个并发点数据推导出来的结果，用于选最优生产并发。</p>
+      <div class="formula-item">$$SLA\_PASS_c=(TTFT95_c\le T_{sla})\land(E2E95_c\le E_{sla})\land(ERR_c\le e_{sla})$$</div>
+      <div class="formula-item">$$S_c=\begin{cases}\text{用户填写的 SLA Ratio},&\text{若填写}\\1,&\text{若未填写且 }SLA\_PASS_c=\text{true}\\0,&\text{若未填写且 }SLA\_PASS_c=\text{false}\end{cases}$$</div>
+      <div class="formula-item">$$G_c=R_c\times S_c$$</div>
+      <div class="formula-item">$$T_c=3600\times G_c\times(I_c+O_c)$$</div>
+      <div class="formula-item">$$Cost_{1M,c}=\frac{C_{hour}}{T_c}\times10^6$$</div>
+      <div class="formula-item">$$Profit_{h,c}=\left(\frac{P_{final/1M,c}}{10^6}\right)\times T_c-C_{hour}$$</div>
+      <div class="formula-item">$$c^*=\arg\max_{c\in\{SLA\_PASS_c=true\}}Profit_{h,c}$$</div>
     </article>
   </section>
 
