@@ -6,6 +6,10 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 <!-- AUTO-GENERATED:START -->
 
+## Sections
+
+- [Maas Pricing]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_pricing/' | relative_url }})
+
 ## Pages
 
 - [Maas Features]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/maas/maas_features/' | relative_url }})
