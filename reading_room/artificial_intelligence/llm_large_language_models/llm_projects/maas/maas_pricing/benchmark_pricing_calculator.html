@@ -248,17 +248,27 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   }
 
   .calc-table-wrap {
-    overflow: auto;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
     border: 1px solid var(--line);
     border-radius: 12px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.005));
+    padding-bottom: 2px;
   }
 
   .calc-table {
     width: max-content;
-    min-width: 100%;
     border-collapse: collapse;
     font-size: 0.8rem;
+  }
+
+  .benchmark-table {
+    min-width: 1750px;
+  }
+
+  .decision-table {
+    min-width: 1120px;
   }
 
   .calc-table th,
@@ -316,6 +326,54 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     margin: 8px 0 0;
     color: var(--muted);
     font-size: 0.82rem;
+  }
+
+  .decision-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .reason-chip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    border: 1px solid #854d0e;
+    background: rgba(234, 179, 8, 0.15);
+    color: #fde68a;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 2px 8px;
+  }
+
+  .reason-chip::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    min-width: 280px;
+    max-width: 420px;
+    white-space: normal;
+    line-height: 1.35;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #0b1220;
+    color: #dbeafe;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 30;
+  }
+
+  .reason-chip:hover::after,
+  .reason-chip:focus-visible::after {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .is-best {
@@ -491,7 +549,7 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   <section class="calc-card">
     <h2>Benchmark Rows</h2>
     <div class="calc-table-wrap">
-      <table class="calc-table" id="benchmarkTable">
+      <table class="calc-table benchmark-table" id="benchmarkTable">
         <thead>
           <tr>
             <th><span class="th-main">Concurrency</span><span class="th-sub">并发档位 `c`</span></th>
@@ -539,6 +597,9 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
       </table>
     </div>
     <p class="decision-note">使用方式：先点 `Calculate` 生成推荐价，再在 `Manual Final/1M` 修改后再次点 `Calculate`，系统会回算手动定价下的 Revenue/h 和 Profit/h。</p>
+    <div class="decision-actions">
+      <button type="button" id="calcDecisionBtn">Calculate Decision</button>
+    </div>
   </section>
 </div>
 
@@ -686,6 +747,46 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
     });
   }
 
+  function parseDisplayNumber(text) {
+    const cleaned = String(text || '').replace(/,/g, '').trim();
+    const value = Number(cleaned);
+    return Number.isFinite(value) ? value : 0;
+  }
+
+  function recalculateDecisionOnly() {
+    const rows = Array.from(pricingTbody.querySelectorAll('tr'));
+    if (!rows.length) {
+      calculate();
+      return;
+    }
+
+    const costHour = hourlyCost();
+    const weights = normalizedWeights();
+    const alpha = num('alpha');
+    const beta = num('beta');
+    const denom = alpha * weights.cache + weights.input + beta * weights.output;
+
+    if (denom <= 0) {
+      alert('Alpha/Beta/Weights combination is invalid');
+      return;
+    }
+
+    rows.forEach((tr) => {
+      const tokensPerHour = parseDisplayNumber(tr.children[2].textContent);
+      const manualPrice = Number(tr.querySelector('input[data-manual-price]').value || 0);
+      const manualInputPrice = denom > 0 ? manualPrice / denom : Infinity;
+      const manualCachePrice = alpha * manualInputPrice;
+      const manualOutputPrice = beta * manualInputPrice;
+      const revenuePerHour = Number.isFinite(manualPrice) ? (manualPrice / 1_000_000) * tokensPerHour : Infinity;
+      const profitPerHour = Number.isFinite(revenuePerHour) ? revenuePerHour - costHour : -Infinity;
+      const outputs = Array.from(tr.querySelectorAll('td[data-decision-output]'));
+
+      outputs[0].textContent = `${formatNumber(manualCachePrice, 2)} / ${formatNumber(manualInputPrice, 2)} / ${formatNumber(manualOutputPrice, 2)}`;
+      outputs[1].textContent = formatNumber(revenuePerHour, 2);
+      outputs[2].textContent = formatNumber(profitPerHour, 2);
+    });
+  }
+
   function calculate() {
     const costHour = hourlyCost();
     const weights = normalizedWeights();
@@ -764,7 +865,12 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
 
       const outputs = Array.from(tr.querySelectorAll('td[data-output]'));
       outputs[0].innerHTML = `<span class="${slaPass ? 'badge-ok' : 'badge-bad'}">${slaPass ? 'PASS' : 'FAIL'}</span>`;
-      outputs[1].textContent = slaPass ? '-' : failReasons.join(' ; ');
+      if (slaPass) {
+        outputs[1].textContent = '-';
+      } else {
+        const tip = failReasons.join(' | ');
+        outputs[1].innerHTML = `<span class="reason-chip" tabindex="0" data-tip="${tip}">Hover</span>`;
+      }
       outputs[2].textContent = formatNumber(goodput, 3);
       outputs[3].textContent = formatNumber(tokensPerHour, 0);
       outputs[4].textContent = formatNumber(costPer1M, 2);
@@ -806,6 +912,7 @@ permalink: /reading_room/artificial_intelligence/llm_large_language_models/llm_p
   }
 
   document.getElementById('calcBtn').addEventListener('click', calculate);
+  document.getElementById('calcDecisionBtn').addEventListener('click', recalculateDecisionOnly);
   document.getElementById('addRowBtn').addEventListener('click', () => addRow({
     concurrency: 0,
     reqPerSec: 0,
