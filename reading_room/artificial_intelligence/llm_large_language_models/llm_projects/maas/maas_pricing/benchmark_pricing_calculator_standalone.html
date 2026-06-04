@@ -189,7 +189,7 @@
 
   .calc-summary {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 12px;
   }
 
@@ -417,13 +417,10 @@
     padding: 2px 8px;
   }
 
-  .reason-chip::after {
-    content: attr(data-tip);
-    position: absolute;
-    left: 0;
-    top: calc(100% + 6px);
-    min-width: 280px;
-    max-width: 420px;
+  .global-reason-tooltip {
+    position: fixed;
+    z-index: 9999;
+    max-width: min(420px, 92vw);
     white-space: normal;
     line-height: 1.35;
     padding: 8px 10px;
@@ -432,15 +429,13 @@
     background: #0b1220;
     color: #dbeafe;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-    opacity: 0;
     pointer-events: none;
+    opacity: 0;
     transform: translateY(-4px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    z-index: 30;
+    transition: opacity 0.12s ease, transform 0.12s ease;
   }
 
-  .reason-chip:hover::after,
-  .reason-chip:focus-visible::after {
+  .global-reason-tooltip.is-visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -469,11 +464,21 @@
 
   .benchmark-result-table tr.is-best .sticky-col-1,
   .benchmark-result-table tr.is-best .sticky-col-2 {
-    background: rgba(142, 202, 230, 0.2);
+    background: rgba(142, 202, 230, 0.28);
+    box-shadow: inset 0 0 0 1px rgba(142, 202, 230, 0.35);
   }
 
-  .is-best {
-    background: rgba(142, 202, 230, 0.12);
+  .benchmark-result-table tr.is-best > td {
+    background: rgba(142, 202, 230, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(142, 202, 230, 0.22);
+  }
+
+  .benchmark-result-table tr.is-best > td:first-child {
+    border-left-color: rgba(142, 202, 230, 0.65);
+  }
+
+  .benchmark-result-table tr.is-best > td:last-child {
+    border-right-color: rgba(142, 202, 230, 0.65);
   }
 
   .badge-ok,
@@ -544,7 +549,7 @@
     <article class="formula-card">
       <h2>生成公式<span class="formula-badge generated">输入/策略定义</span></h2>
       <p class="formula-note">这部分是你设定的定价结构与业务假设，系统按这些公式做后续计算。</p>
-      <div class="formula-item">$$C_{hour}=C_{gpu}+C_{cpu}+C_{mem}+C_{storage}+C_{network}+C_{gateway}+C_{obs}+C_{ops}+C_{risk}$$</div>
+      <div class="formula-item">$$C_{hour}=N_{replica}\times(C_{gpu}+C_{cpu}+C_{mem}+C_{storage}+C_{network}+C_{gateway}+C_{obs}+C_{ops}+C_{risk})$$</div>
       <div class="formula-item">$$\hat{w}_{cache}=\frac{w_{cache}}{w_{cache}+w_{in}+w_{out}},\;\hat{w}_{in}=\frac{w_{in}}{w_{cache}+w_{in}+w_{out}},\;\hat{w}_{out}=\frac{w_{out}}{w_{cache}+w_{in}+w_{out}}$$</div>
       <div class="formula-item">$$r_{net}=1-m-f_{pay}-f_{bad}-f_{tax}$$</div>
       <div class="formula-item">$$P_{base/1M}=\frac{Cost_{1M}}{r_{net}},\quad P_{final/1M}=P_{base/1M}\times K_{lat}\times K_{rel}\times K_{reserve}$$</div>
@@ -570,8 +575,9 @@
       <article class="calc-guide-card">
         <h2>一、成本与定价参数（输入）</h2>
         <ul>
-          <li>C_hour：每小时总成本（单位：CN¥/h），C_gpu + C_cpu + C_mem + C_storage + C_network + C_gateway + C_obs + C_ops + C_risk。</li>
-          <li>C_gpu / C_cpu / C_mem / C_storage / C_network / C_gateway / C_obs / C_ops / C_risk：各项小时成本输入（单位：CN¥/h）。</li>
+          <li>N_replica：单个副本占用的机器数量（单位：台）。</li>
+          <li>C_hour：每个副本的每小时总成本（单位：CN¥/h），N_replica × (C_gpu + C_cpu + C_mem + C_storage + C_network + C_gateway + C_obs + C_ops + C_risk)。</li>
+          <li>C_gpu / C_cpu / C_mem / C_storage / C_network / C_gateway / C_obs / C_ops / C_risk：单台机器的各项小时成本输入（单位：CN¥/h）。</li>
           <li>m：目标毛利率（Target Margin，单位：比例 0-1，无量纲）。</li>
           <li>f_pay / f_bad / f_tax：支付费率、坏账损耗、税费比例（单位：比例 0-1，无量纲）。</li>
           <li>r_net = 1 - m - f_pay - f_bad - f_tax：净可用收入比例（单位：比例 0-1，无量纲）。</li>
@@ -631,7 +637,8 @@
     <article class="calc-card">
       <h2>Hourly Costs</h2>
       <div class="calc-fields">
-        <div class="calc-field"><label for="gpu">GPU / h <span class="symbol">C_gpu</span></label><input id="gpu" type="number" step="0.01" value="6.5"><p class="calc-help">GPU 每小时成本（单位：CN¥/h）。通常是最大头成本。</p></div>
+        <div class="calc-field"><label for="replicaMachines">Machines / Replica <span class="symbol">N_replica</span></label><input id="replicaMachines" type="number" step="1" value="16"><p class="calc-help">单个副本占用的机器数量。默认用例按 16 张 GPU 卡部署，所有小时成本会按这个数量放大。</p></div>
+        <div class="calc-field"><label for="gpu">GPU / h <span class="symbol">C_gpu</span></label><input id="gpu" type="number" step="0.01" value="18.3"><p class="calc-help">GPU 每小时成本（单位：CN¥/h）。默认参考 8*910B 月租 13200 CNY 折算约 18.3 CNY/h。</p></div>
         <div class="calc-field"><label for="cpu">CPU / h <span class="symbol">C_cpu</span></label><input id="cpu" type="number" step="0.01" value="0.7"><p class="calc-help">CPU 计算与系统进程的每小时成本（单位：CN¥/h）。</p></div>
         <div class="calc-field"><label for="mem">Memory / h <span class="symbol">C_mem</span></label><input id="mem" type="number" step="0.01" value="0.3"><p class="calc-help">内存资源每小时成本（单位：CN¥/h）。</p></div>
         <div class="calc-field"><label for="storage">Storage / h <span class="symbol">C_storage</span></label><input id="storage" type="number" step="0.01" value="0.1"><p class="calc-help">本地盘、对象存储或缓存盘摊销（单位：CN¥/h）。</p></div>
@@ -664,8 +671,8 @@
     <article class="calc-card">
       <h2>SLA Targets</h2>
       <div class="calc-fields">
-        <div class="calc-field"><label for="slaTtft">TTFT95 SLA <span class="symbol">T_sla</span></label><input id="slaTtft" type="number" step="0.01" value="2.0"><p class="calc-help">P95 首 token 最大允许延迟（单位：秒 s）。</p></div>
-        <div class="calc-field"><label for="slaE2e">E2E95 SLA <span class="symbol">E_sla</span></label><input id="slaE2e" type="number" step="0.01" value="12.0"><p class="calc-help">P95 端到端最大允许耗时（单位：秒 s）。</p></div>
+        <div class="calc-field"><label for="slaTtft">TTFT95 SLA <span class="symbol">T_sla</span></label><input id="slaTtft" type="number" step="0.01" value="1.86"><p class="calc-help">P95 首 token 最大允许延迟（单位：秒 s）。基线按 AA: TTFT 1.69s 放宽 10%。</p></div>
+        <div class="calc-field"><label for="slaE2e">E2E95 SLA <span class="symbol">E_sla</span></label><input id="slaE2e" type="number" step="0.01" value="188.8"><p class="calc-help">P95 端到端最大允许耗时（单位：秒 s）。基线按你给的 950DT benchmark 中最慢批次总时延约 171.6s，再放宽 10%。</p></div>
         <div class="calc-field"><label for="slaErr">ERR SLA <span class="symbol">e_sla</span></label><input id="slaErr" type="number" step="0.001" value="0.01"><p class="calc-help">允许的最大错误率（单位：比例 0-1）。0.01 表示 1%。</p></div>
       </div>
     </article>
@@ -694,6 +701,21 @@
     </div>
   </section>
 
+  <section class="calc-actions-row">
+    <article class="calc-card">
+      <h2>Actions</h2>
+      <div class="calc-actions">
+        <button type="button" id="calcBtn">Calculate</button>
+        <button type="button" id="addRowBtn">Add Row</button>
+        <button type="button" id="resetBtn">Reset Example</button>
+      </div>
+      <p class="calc-note">`SLA Ratio` 留空时，系统会按 SLA 是否达标自动取 1 或 0。填写后将直接使用你给出的可售卖比例。</p>
+      <p class="calc-note">综合价格先按毛利公式得到 `Price / 1M`，再叠加 `K_lat × K_rel × K_reserve`，最后拆成 cache/input/output 三段价格。</p>
+      <p class="calc-note">如果你只想做第一轮粗估，可以先只改 `GPU / h`、`Target Margin`、`TTFT95 SLA`、`E2E95 SLA`，其余保留默认值。</p>
+      <p class="calc-note">默认样例说明：950DTx16 vs Deepseek-V4-Pro。benchmark input 已按你提供的 950DT DeepSeek-V4 Pro 表格映射（16/64/128 batch，8K/131072 seq，TPOT/TPS 反推 req/s），默认用例按 16 张 GPU 卡部署，E2E95 按 batch_size 放大为批次总时延，成本口径参考 AnyGPU 910B 与华为云昇腾实例页面，统一使用 CNY。</p>
+    </article>
+  </section>
+
   <section class="calc-card">
     <h2>Benchmark Results</h2>
     <div class="calc-table-wrap">
@@ -717,24 +739,14 @@
     </div>
   </section>
 
-  <section class="calc-actions-row">
-    <article class="calc-card">
-      <h2>Actions</h2>
-      <div class="calc-actions">
-        <button type="button" id="calcBtn">Calculate</button>
-        <button type="button" id="addRowBtn">Add Row</button>
-        <button type="button" id="resetBtn">Reset Example</button>
-      </div>
-      <p class="calc-note">`SLA Ratio` 留空时，系统会按 SLA 是否达标自动取 1 或 0。填写后将直接使用你给出的可售卖比例。</p>
-      <p class="calc-note">综合价格先按毛利公式得到 `Price / 1M`，再叠加 `K_lat × K_rel × K_reserve`，最后拆成 cache/input/output 三段价格。</p>
-      <p class="calc-note">如果你只想做第一轮粗估，可以先只改 `GPU / h`、`Target Margin`、`TTFT95 SLA`、`E2E95 SLA`，其余保留默认值。</p>
-    </article>
-  </section>
-
   <section class="calc-summary">
     <article class="calc-stat">
       <div class="label">Best Concurrency</div>
       <div class="value" id="bestConcurrency">-</div>
+    </article>
+    <article class="calc-stat">
+      <div class="label">Machines / Replica</div>
+      <div class="value" id="replicaMachinesStat">-</div>
     </article>
     <article class="calc-stat">
       <div class="label">Best Profit / h</div>
@@ -774,19 +786,33 @@
       <button type="button" id="calcDecisionBtn">Calculate Decision</button>
     </div>
   </section>
+
+  <section class="calc-card">
+    <h2>Data Sources</h2>
+    <ul>
+      <li><a href="https://artificialanalysis.ai/models/deepseek-v4-pro" target="_blank" rel="noreferrer">Artificial Analysis: DeepSeek V4 Pro</a></li>
+      <li><a href="https://gitcode.com/cann/cann-recipes-infer/blob/master/docs/models/deepseek-v4/deepseek_v4_inference_guide.md?_fb=tree#benchmark" target="_blank" rel="noreferrer">CANN DeepSeek-V4 inference guide benchmark</a></li>
+      <li><a href="https://www.anygpu.cn/910b.html" target="_blank" rel="noreferrer">AnyGPU 910B pricing reference</a></li>
+      <li><a href="https://www.huaweicloud.com/product/ecs/ascend.html" target="_blank" rel="noreferrer">Huawei Cloud Ascend ECS product page</a></li>
+    </ul>
+  </section>
 </div>
 
 <script>
   const exampleRows = [
-    { concurrency: 1, reqPerSec: 0.9, inputTokens: 1500, outputTokens: 600, ttft95: 0.8, e2e95: 5.1, err: 0.001, cacheHit: 0.15, slaRatio: '' },
-    { concurrency: 4, reqPerSec: 2.9, inputTokens: 1500, outputTokens: 600, ttft95: 1.1, e2e95: 6.8, err: 0.004, cacheHit: 0.15, slaRatio: '' },
-    { concurrency: 8, reqPerSec: 4.6, inputTokens: 1500, outputTokens: 600, ttft95: 1.9, e2e95: 10.4, err: 0.008, cacheHit: 0.15, slaRatio: '' },
-    { concurrency: 16, reqPerSec: 5.7, inputTokens: 1500, outputTokens: 600, ttft95: 2.5, e2e95: 14.1, err: 0.018, cacheHit: 0.15, slaRatio: '' }
+    { concurrency: 16, reqPerSec: 0.1134, inputTokens: 8192, outputTokens: 500, ttft95: 1.86, e2e95: 143.3, err: 0.002, cacheHit: 0.10, slaRatio: '' },
+    { concurrency: 64, reqPerSec: 0.4203, inputTokens: 8192, outputTokens: 500, ttft95: 1.86, e2e95: 154.0, err: 0.003, cacheHit: 0.10, slaRatio: '' },
+    { concurrency: 128, reqPerSec: 0.7765, inputTokens: 8192, outputTokens: 500, ttft95: 1.86, e2e95: 166.4, err: 0.004, cacheHit: 0.10, slaRatio: '' },
+    { concurrency: 16, reqPerSec: 0.1028, inputTokens: 131072, outputTokens: 500, ttft95: 1.86, e2e95: 156.4, err: 0.002, cacheHit: 0.05, slaRatio: '' },
+    { concurrency: 64, reqPerSec: 0.3768, inputTokens: 131072, outputTokens: 500, ttft95: 1.86, e2e95: 171.5, err: 0.004, cacheHit: 0.05, slaRatio: '' }
   ];
 
   const tbody = document.querySelector('#benchmarkTable tbody');
   const resultTbody = document.querySelector('#benchmarkResultTable tbody');
   const pricingTbody = document.querySelector('#pricingDecisionTable tbody');
+  const reasonTooltip = document.createElement('div');
+  reasonTooltip.className = 'global-reason-tooltip';
+  document.body.appendChild(reasonTooltip);
 
   function formatNumber(value, digits = 2) {
     if (!Number.isFinite(value)) return '-';
@@ -798,9 +824,10 @@
   }
 
   function hourlyCost() {
+    const machineCount = Math.max(1, num('replicaMachines'));
     return ['gpu', 'cpu', 'mem', 'storage', 'network', 'gateway', 'obs', 'ops', 'risk']
       .map((key) => num(key))
-      .reduce((sum, value) => sum + value, 0);
+      .reduce((sum, value) => sum + value, 0) * machineCount;
   }
 
   function normalizedWeights() {
@@ -922,6 +949,45 @@
     return Number.isFinite(value) ? value : 0;
   }
 
+  function escapeHtmlAttr(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function showReasonTooltip(text, rect) {
+    if (!text) return;
+    reasonTooltip.textContent = text;
+    const gap = 10;
+    const tooltipWidth = Math.min(420, window.innerWidth * 0.92);
+    const left = Math.max(gap, Math.min(rect.left, window.innerWidth - tooltipWidth - gap));
+    const top = rect.bottom + gap;
+    reasonTooltip.style.left = `${left}px`;
+    reasonTooltip.style.top = `${Math.min(top, window.innerHeight - 60)}px`;
+    reasonTooltip.classList.add('is-visible');
+  }
+
+  function hideReasonTooltip() {
+    reasonTooltip.classList.remove('is-visible');
+  }
+
+  function bindReasonChips() {
+    const chips = Array.from(resultTbody.querySelectorAll('.reason-chip[data-reason]'));
+    chips.forEach((chip) => {
+      const getReason = () => chip.getAttribute('data-reason') || '';
+      chip.addEventListener('mouseenter', () => showReasonTooltip(getReason(), chip.getBoundingClientRect()));
+      chip.addEventListener('focus', () => showReasonTooltip(getReason(), chip.getBoundingClientRect()));
+      chip.addEventListener('mouseleave', hideReasonTooltip);
+      chip.addEventListener('blur', hideReasonTooltip);
+      chip.addEventListener('click', (event) => {
+        event.stopPropagation();
+        showReasonTooltip(getReason(), chip.getBoundingClientRect());
+      });
+    });
+  }
+
   function recalculateDecisionOnly() {
     const rows = Array.from(pricingTbody.querySelectorAll('tr'));
     if (!rows.length) {
@@ -1038,7 +1104,7 @@
       const cells = [
         String(concurrency),
         `<span class="${slaPass ? 'badge-ok' : 'badge-bad'}">${slaPass ? 'PASS' : 'FAIL'}</span>`,
-        slaPass ? '-' : `<span class="reason-chip" tabindex="0" data-tip="${failReasons.join(' | ')}">Hover</span>`,
+        slaPass ? '-' : `<span class="reason-chip" tabindex="0" data-reason="${escapeHtmlAttr(failReasons.join(' | '))}">查看</span>`,
         formatNumber(goodput, 3),
         formatNumber(tokensPerHour, 0),
         formatNumber(costPer1M, 2),
@@ -1066,7 +1132,7 @@
       resultTbody.appendChild(resultTr);
 
       if (slaPass && Number.isFinite(costPer1M)) {
-        const candidate = { concurrency, profitPerHour, finalPricePer1M, costPer1M, goodput, tr };
+        const candidate = { concurrency, profitPerHour, finalPricePer1M, costPer1M, goodput, tr: resultTr };
         if (!bestRow) {
           bestRow = candidate;
         } else if (candidate.costPer1M + eps < bestRow.costPer1M) {
@@ -1081,14 +1147,11 @@
       }
     });
 
+    document.getElementById('replicaMachinesStat').textContent = formatNumber(Math.max(1, num('replicaMachines')), 0);
     document.getElementById('hourlyCost').textContent = formatNumber(costHour, 2);
 
     if (bestRow) {
       bestRow.tr.classList.add('is-best');
-      const bestResultRow = resultTbody.querySelector(`tr[data-concurrency="${bestRow.concurrency}"]`);
-      if (bestResultRow) {
-        bestResultRow.classList.add('is-best');
-      }
       document.getElementById('bestConcurrency').textContent = bestRow.concurrency;
       document.getElementById('bestProfit').textContent = formatNumber(bestRow.profitPerHour, 2);
       document.getElementById('bestPrice').textContent = formatNumber(bestRow.finalPricePer1M, 2);
@@ -1098,8 +1161,14 @@
       document.getElementById('bestPrice').textContent = '-';
     }
 
+    bindReasonChips();
+
     syncPricingDecisionTable(results, costHour, alpha, beta, denom);
   }
+
+  document.addEventListener('click', hideReasonTooltip);
+  window.addEventListener('scroll', hideReasonTooltip, true);
+  window.addEventListener('resize', hideReasonTooltip);
 
   document.getElementById('calcBtn').addEventListener('click', calculate);
   document.getElementById('calcDecisionBtn').addEventListener('click', recalculateDecisionOnly);
