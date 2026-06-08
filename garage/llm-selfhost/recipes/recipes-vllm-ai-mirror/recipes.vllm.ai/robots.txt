@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /og
+Disallow: /api/
+
+Host: https://recipes.vllm.ai
+Sitemap: https://recipes.vllm.ai/sitemap.xml

@@ -32,6 +32,9 @@ defaults:
     values:
       layout: default
 
+include:
+  - garage/llm-selfhost/recipes/recipes-vllm-ai-mirror/recipes.vllm.ai/_next
+
 exclude:
   - Gemfile.lock
   - vendor/
