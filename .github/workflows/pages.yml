@@ -6,6 +6,11 @@ on:
       - master
       - main
   workflow_dispatch:
+    inputs:
+      recipes_ref:
+        description: "recipes ref to deploy (branch, tag, or commit)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -19,9 +24,66 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RECIPES_REPO: https://github.com/vllm-project/recipes.git
+      RECIPES_TARGET_DIR: garage/llm-selfhost/recipes/vllm-recipes
+      RECIPES_REF: ${{ github.event.inputs.recipes_ref || vars.VLLM_RECIPES_REF || 'main' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Fetch vLLM Recipes Snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Using RECIPES_REF=${RECIPES_REF}"
+          rm -rf "${RECIPES_TARGET_DIR}"
+          git clone --filter=blob:none "${RECIPES_REPO}" "${RECIPES_TARGET_DIR}"
+
+          if git -C "${RECIPES_TARGET_DIR}" rev-parse --verify "${RECIPES_REF}^{commit}" >/dev/null 2>&1; then
+            git -C "${RECIPES_TARGET_DIR}" checkout --detach "${RECIPES_REF}"
+          elif git -C "${RECIPES_TARGET_DIR}" rev-parse --verify "origin/${RECIPES_REF}^{commit}" >/dev/null 2>&1; then
+            git -C "${RECIPES_TARGET_DIR}" checkout --detach "origin/${RECIPES_REF}"
+          else
+            echo "Cannot resolve RECIPES_REF=${RECIPES_REF}" >&2
+            exit 1
+          fi
+
+          RECIPES_COMMIT="$(git -C "${RECIPES_TARGET_DIR}" rev-parse --short HEAD)"
+          RECIPES_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+          rm -rf "${RECIPES_TARGET_DIR}/.git"
+
+          cat > "${RECIPES_TARGET_DIR}/index.md" <<'EOF'
+          ---
+          title: vLLM Recipes Snapshot
+          ---
+
+          # vLLM Recipes Snapshot
+
+          This folder is populated dynamically during GitHub Pages build.
+
+          - Upstream repository: https://github.com/vllm-project/recipes
+          - Upstream site: https://recipes.vllm.ai/
+
+          ## Snapshot Metadata
+
+          - Requested ref: __RECIPES_REF__
+          - Resolved commit: __RECIPES_COMMIT__
+          - Built at (UTC): __RECIPES_DATE__
+
+          ## Entry Points
+
+          - [README](./README.md)
+          - [Model catalog](./models/)
+          - [Strategies](./strategies/)
+          - [Taxonomy](./taxonomy.yaml)
+          EOF
+
+          sed -i "s/__RECIPES_REF__/${RECIPES_REF//\//\\/}/g" "${RECIPES_TARGET_DIR}/index.md"
+          sed -i "s/__RECIPES_COMMIT__/${RECIPES_COMMIT}/g" "${RECIPES_TARGET_DIR}/index.md"
+          sed -i "s/__RECIPES_DATE__/${RECIPES_DATE}/g" "${RECIPES_TARGET_DIR}/index.md"
 
       - name: Setup Pages
         id: pages

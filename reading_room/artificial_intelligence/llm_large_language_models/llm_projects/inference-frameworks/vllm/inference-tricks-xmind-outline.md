@@ -133,6 +133,38 @@ title: vLLM Inference Tricks XMind Outline
   - 低 acceptance rate 自动降级关闭
   - 对短请求流量灰度启用
 
+### B6. 参考 recipes.vllm.ai 的模型分类
+
+- Dense 文本模型
+  - 示例：Qwen3-32B
+  - 优化重点：先单机 TP，再调 batch、显存占比
+  - 典型手段：`tensor-parallel-size`、`max-num-seqs`、`max-num-batched-tokens`
+
+- 超大 MoE 模型
+  - 示例：Qwen3-235B-A22B-Instruct
+  - 优化重点：先选并行策略，不是先提 batch
+  - 典型手段：TP、TEP、DEP、TP+PP、PD cluster
+
+- 长上下文 / Hybrid / Mamba
+  - 示例：Nemotron-3-Ultra-550B-A55B
+  - 优化重点：先控 KV 和调度
+  - 典型手段：`kv-cache-dtype fp8`、小 `max-num-seqs`、`async-scheduling`、`enable-flashinfer-autotune`、MTP speculative decoding、`mamba-backend`
+
+- 多模态统一模型
+  - 示例：Gemma 4 12B IT
+  - 优化重点：先保运行时兼容和模态链路正确
+  - 典型手段：特定镜像、nightly、audio extras、小 TP 起步
+
+- Embedding 模型
+  - 示例：jina-embeddings-v5-text-small
+  - 优化重点：先选对任务变体和 pooling runner
+  - 典型手段：`--runner pooling`、小 TP、任务适配版本选择
+
+- Reranker 模型
+  - 示例：jina-reranker-m0
+  - 优化重点：保守批量优化，稳住单批次评分时延
+  - 典型手段：较低 `gpu-memory-utilization`、较低 `max-num-seqs`
+
 ---
 
 ## C. 三方服务插件优化（Ecosystem）

@@ -106,6 +106,110 @@ vllm serve <model> \
 
 ---
 
+## 2.6 参考 recipes.vllm.ai 的模型分类优化手段
+
+recipes.vllm.ai 的组织方式更接近“模型家族 + 部署策略 + 硬件画像”。从公开 recipe 看，不同模型最常见的优化手段大致如下。
+
+| 模型类型 | 官方示例 | 常见优化手段 | 适用判断 |
+| --- | --- | --- | --- |
+| Dense 文本模型 | `Qwen/Qwen3-32B` | 单机 `tensor-parallel-size` 起步；按 GPU 数量做单机或多机 TP；先保证最简单稳定路径，再扩并行 | 7B~32B 一类模型，优先追求低复杂度和稳定上线 |
+| 超大 MoE 模型 | `Qwen/Qwen3-235B-A22B-Instruct-2507` | 大 TP 起步；官方额外提供 TEP、DEP、TP+PP、PD cluster 等替代策略；优先按拓扑选并行方案 | 总参数超大、活跃参数较小、通信成为主瓶颈 |
+| 长上下文 / Hybrid / Mamba / MoE | `nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16` | `kv-cache-dtype fp8`、`max-model-len 262144`、较保守 `max-num-seqs`、`enable-flashinfer-autotune`、`async-scheduling`、MTP speculative decoding、专用 `mamba-backend` | 128K+ 上下文、混合注意力、Mamba 或长推理链模型 |
+| 多模态统一模型 | `google/gemma-4-12B-it` | 单卡或小 TP 起步；使用特定镜像或 nightly；按模态启用额外依赖；图文音频能力优先保证兼容性而不是极致并发 | 文本 + 图像 + 音频统一服务的模型 |
+| Embedding / Pooling 模型 | `jinaai/jina-embeddings-v5-text-small` | `--runner pooling`；通常 TP 很小；重点是任务变体选择（retrieval / matching / classification / clustering），不是 decode 吞吐优化 | 只做向量编码，不做生成 |
+| Reranker 模型 | `jinaai/jina-reranker-m0` | 更保守的 `gpu-memory-utilization` 和 `max-num-seqs`；优先稳定 batch 打分延迟；通常单卡或小 TP | 文档重排、cross-encoder 打分场景 |
+
+### Dense 文本模型
+
+从 recipes 看，Dense 文本模型的默认思路非常克制：
+
+- 先用最简单的单机 TP 跑通。
+- 只有当模型放不下或吞吐不够时，才切多机 TP。
+- 工具调用、reasoning parser 这些更多是能力开关，不属于性能优化主旋钮。
+
+这类模型最值得优先调的是：
+
+- `tensor-parallel-size`
+- `max-num-seqs`
+- `max-num-batched-tokens`
+- `gpu-memory-utilization`
+
+### 超大 MoE 模型
+
+recipes 对 MoE 的信号很明确：优化重点不是“把 batch 调更大”，而是“先选对并行策略”。
+
+官方常见策略包括：
+
+- TP：默认和最通用的起点
+- TEP：Tensor + Expert Parallel，适合专家路由明显的 MoE
+- DEP：Data + Expert Parallel，适合更大规模吞吐扩展
+- TP + PP：当单纯 TP 无法兼顾装载与效率时使用
+- PD cluster：Prefill / Decode 解耦，适合长上下文和高并发混合场景
+
+因此这类模型的首要优化项通常是：
+
+- 并行切分方式
+- 节点间互联质量（NVLink / IB）
+- 每卡负载是否均衡
+- 长请求与短请求是否需要分池
+
+### 长上下文 / Hybrid / Mamba 类模型
+
+Nemotron 这类 recipe 给出的信息很典型，说明长上下文模型会把优化重点放在 KV 和调度层：
+
+- 用 `kv-cache-dtype fp8` 降低 KV 开销
+- 用较小 `max-num-seqs` 控制长上下文并发风险
+- 提高 `max-model-len` 时同步控制 `max-num-batched-tokens`
+- 开启 `async-scheduling` 降低等待开销
+- 开启 `enable-flashinfer-autotune` 提升 kernel 路径表现
+- 对 Mamba 结构单独指定 `mamba-backend` 和 `mamba-ssm-cache-dtype`
+- 对 reasoning 模型叠加 MTP speculative decoding 降低延迟
+
+结论是：长上下文模型的主要优化点不在“盲目扩 batch”，而在 KV 压缩、异步调度、结构专用后端和 prefill/decode 拆分。
+
+### 多模态统一模型
+
+Gemma 4 这类 recipe 显示，多模态模型首先关注的是兼容性和模态支持完整性：
+
+- 特定 Docker 镜像或 nightly 版本
+- 模态额外依赖按需安装，例如 audio extras
+- 通常先从单卡或小 TP 启动
+- 优先验证聊天模板、工具调用模板、reasoning parser 是否匹配模型协议
+
+所以多模态模型的优化顺序通常是：
+
+1. 先确认运行时、镜像、模板、依赖完全匹配。
+2. 再压测图文混合负载。
+3. 最后才扩大并发和 batch。
+
+### Embedding 与 Reranker 模型
+
+recipes 对这两类模型的优化思路与生成模型明显不同。
+
+Embedding：
+
+- 重点不是 decode，而是 pooling 路径，因此常见 `--runner pooling`
+- 更关注任务变体是否正确，如 retrieval、text matching、classification、clustering
+- 一般不需要复杂 speculative decoding、prefix caching、tool parser 一类配置
+
+Reranker：
+
+- 更保守地设置 `gpu-memory-utilization`
+- 更保守地设置 `max-num-seqs`
+- 优先稳定单批次评分延迟，而不是追求超高 tokens/s
+
+可以把这两类模型理解为“非生成式推理”，优化重心更偏批评分吞吐、显存稳定性和任务头正确性。
+
+### 一句话归类
+
+- Dense：先用最简单 TP 跑通，再调 batch 和显存。
+- MoE：先选对并行策略，再谈 batch。
+- 长上下文 / Hybrid：先控 KV 和调度，再追求并发。
+- 多模态：先保兼容与模态链路正确，再做性能优化。
+- Embedding / Reranker：先选对 runner 和任务变体，再做保守批量优化。
+
+---
+
 ## 3. 三方服务插件优化（Ecosystem）
 
 ## 3.1 LMCache（KV 外部化/跨实例复用）

@@ -40,3 +40,6 @@ Thumbs.db
 *.swp
 *.swo
 *.swn
+
+# Publish-time recipes snapshot (fetched in CI)
+garage/llm-selfhost/recipes/vllm-recipes/
