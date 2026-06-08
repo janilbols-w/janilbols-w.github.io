@@ -13,6 +13,8 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Pages
 
+- [Inference Optimization Playbook]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/inference-optimization-playbook/' | relative_url }})
+- [Inference Tricks Xmind Outline]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/inference-tricks-xmind-outline/' | relative_url }})
 - [vLLM Meetups Summary]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_projects/inference-frameworks/vllm/vllm-meetups-summary/' | relative_url }})
 
 <!-- AUTO-GENERATED:END -->
