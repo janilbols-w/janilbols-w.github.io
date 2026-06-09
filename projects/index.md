@@ -7,7 +7,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 ## Snapshot
 
-- Total repositories tracked: 74
+- Total repositories tracked: 75
 - Source: GitHub public API (repositories + public events)
 - Refresh: scheduled by GitHub Actions
 
@@ -15,7 +15,8 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
-| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | HTML | 0 | 0 | 2026-06-05 | 2026-06-04: Push (0 commits) to master |
+| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | HTML | 0 | 0 | 2026-06-08 | 2026-06-08: Push (0 commits) to master |
+| [vllm-recipes](https://github.com/janilbols-w/vllm-recipes) | Common recipes to run vLLM | - | 0 | 0 | 2026-06-07 | - |
 | [job-scheduler](https://github.com/janilbols-w/job-scheduler) | vibe coding for fun, try manage job schedule in clusters with shared gpus | Python | 0 | 0 | 2026-05-28 | 2026-05-28: Push (0 commits) to master |
 | [llm-kv-collection](https://github.com/janilbols-w/llm-kv-collection) | examples of llm frameworks deployments with kvcache | - | 0 | 0 | 2026-05-19 | 2026-05-19: Push (0 commits) to main |
 | [claw-code](https://github.com/janilbols-w/claw-code) | The fastest repo in history to surpass 50K stars ⭐, reaching the milestone in just 2 hours after ... | - | 0 | 0 | 2026-04-01 | - |
