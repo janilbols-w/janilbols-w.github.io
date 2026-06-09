@@ -10,10 +10,6 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 <!-- AUTO-GENERATED:START -->
 
-## Sections
-
-- [Recipes]({{ '/garage/llm-selfhost/recipes/' | relative_url }})
-
 ## Pages
 
 - [Claude Code]({{ '/garage/llm-selfhost/claude_code/' | relative_url }})
