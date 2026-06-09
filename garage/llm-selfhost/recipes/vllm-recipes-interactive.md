@@ -99,6 +99,7 @@ hide_sidebar: true
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
+  color: #d9eeff;
   transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
 }
 
@@ -110,16 +111,28 @@ hide_sidebar: true
 .rx-strategy[aria-pressed="true"] {
   border-color: var(--rx-accent-2);
   background: rgba(17, 53, 58, 0.75);
+  color: #f3fff9;
 }
 
 .rx-strategy b {
   display: block;
   font-size: 14px;
+  color: #f4fbff;
 }
 
 .rx-strategy span {
-  color: var(--rx-muted);
+  color: #b8d5e8;
   font-size: 12px;
+}
+
+.rx-strategy:hover b,
+.rx-strategy[aria-pressed="true"] b {
+  color: #ffffff;
+}
+
+.rx-strategy:hover span,
+.rx-strategy[aria-pressed="true"] span {
+  color: #d6f5e7;
 }
 
 .rx-form {
@@ -322,7 +335,10 @@ hide_sidebar: true
               <select id="kv-dtype" class="rx-select">
                 <option value="auto">auto</option>
                 <option value="fp8">fp8</option>
-                <option value="bf16">bf16</option>
+                <option value="fp8_e4m3">fp8_e4m3</option>
+                <option value="fp8_e5m2">fp8_e5m2</option>
+                <option value="bfloat16">bfloat16</option>
+                <option value="float16">float16</option>
               </select>
             </div>
             <div class="rx-field">
@@ -334,11 +350,51 @@ hide_sidebar: true
           <h3 style="margin-top:8px;">3) Feature 开关</h3>
           <div class="rx-switches">
             <label class="rx-switch"><input id="tool-calling" type="checkbox" checked /><span><b>tool_calling</b><span>--enable-auto-tool-choice + --tool-call-parser</span></span></label>
-            <label class="rx-switch"><input id="reasoning" type="checkbox" checked /><span><b>reasoning</b><span>--reasoning-parser qwen3</span></span></label>
-            <label class="rx-switch"><input id="spec" type="checkbox" /><span><b>spec_decoding</b><span>--speculative-config JSON</span></span></label>
+            <label class="rx-switch"><input id="reasoning" type="checkbox" checked /><span><b>reasoning</b><span>--reasoning-parser &lt;value&gt;</span></span></label>
+            <label class="rx-switch"><input id="spec" type="checkbox" /><span><b>spec_decoding</b><span>--speculative-config &lt;json&gt;</span></span></label>
             <label class="rx-switch"><input id="prefix" type="checkbox" checked /><span><b>prefix_caching</b><span>--enable-prefix-caching / --no-enable-prefix-caching</span></span></label>
             <label class="rx-switch"><input id="text-only" type="checkbox" /><span><b>text_only</b><span>--language-model-only (与 encoder_parallel 互斥)</span></span></label>
             <label class="rx-switch"><input id="encoder-parallel" type="checkbox" /><span><b>encoder_parallel</b><span>--mm-encoder-tp-mode data (与 text_only 互斥)</span></span></label>
+          </div>
+          <div class="rx-row">
+            <div class="rx-field">
+              <label for="tool-call-parser">tool call parser</label>
+              <input id="tool-call-parser" class="rx-input" value="qwen3_json" placeholder="qwen3_json" />
+            </div>
+            <div class="rx-field">
+              <label for="reasoning-parser">reasoning parser</label>
+              <input id="reasoning-parser" class="rx-input" value="qwen3" placeholder="qwen3" />
+            </div>
+          </div>
+          <div class="rx-row">
+            <div class="rx-field">
+              <label for="spec-config">speculative config JSON</label>
+              <input id="spec-config" class="rx-input" value='{"method":"mtp","num_speculative_tokens":1}' placeholder='{"method":"mtp","num_speculative_tokens":1}' />
+            </div>
+            <div class="rx-field"></div>
+          </div>
+
+          <h3 style="margin-top:8px;">4) 多机启动参数</h3>
+          <div class="rx-row">
+            <div class="rx-field">
+              <label for="head-ip">Ray Head IP</label>
+              <input id="head-ip" class="rx-input" value="10.0.0.1" placeholder="10.0.0.1" />
+            </div>
+            <div class="rx-field">
+              <label for="worker-ip">当前 Worker IP</label>
+              <input id="worker-ip" class="rx-input" value="10.0.0.2" placeholder="10.0.0.2" />
+            </div>
+          </div>
+
+          <div class="rx-row">
+            <div class="rx-field">
+              <label for="ray-port">Ray Port</label>
+              <input id="ray-port" type="number" min="1" class="rx-input" value="6379" />
+            </div>
+            <div class="rx-field">
+              <label for="dash-port">Dashboard Port</label>
+              <input id="dash-port" type="number" min="1" class="rx-input" value="8265" />
+            </div>
           </div>
           <p id="feature-note" class="rx-note"></p>
         </div>
@@ -346,9 +402,18 @@ hide_sidebar: true
 
       <div class="rx-card">
         <h2>生成命令</h2>
+        <h3 style="margin-top:6px;">Ray Head 启动</h3>
+        <div id="cmd-head" class="rx-code"></div>
+
+        <h3 style="margin-top:10px;">Ray Worker 启动</h3>
+        <div id="cmd-worker" class="rx-code"></div>
+
+        <h3 style="margin-top:10px;">vLLM Serve</h3>
         <div id="cmd" class="rx-code"></div>
         <div class="rx-actions" style="margin-top:10px;">
-          <button id="copy-btn" class="rx-btn" type="button">复制命令</button>
+          <button id="copy-head-btn" class="rx-btn" type="button">复制 Head</button>
+          <button id="copy-worker-btn" class="rx-btn" type="button">复制 Worker</button>
+          <button id="copy-serve-btn" class="rx-btn" type="button">复制 Serve</button>
           <button id="share-btn" class="rx-btn" type="button">复制当前链接</button>
         </div>
 
@@ -405,14 +470,25 @@ hide_sidebar: true
     kvDtype: document.getElementById("kv-dtype"),
     gpuMem: document.getElementById("gpu-mem"),
     toolCalling: document.getElementById("tool-calling"),
+    toolCallParser: document.getElementById("tool-call-parser"),
     reasoning: document.getElementById("reasoning"),
+    reasoningParser: document.getElementById("reasoning-parser"),
     spec: document.getElementById("spec"),
+    specConfig: document.getElementById("spec-config"),
+    headIp: document.getElementById("head-ip"),
+    workerIp: document.getElementById("worker-ip"),
+    rayPort: document.getElementById("ray-port"),
+    dashPort: document.getElementById("dash-port"),
     prefix: document.getElementById("prefix"),
     textOnly: document.getElementById("text-only"),
     encoderParallel: document.getElementById("encoder-parallel"),
     featureNote: document.getElementById("feature-note"),
+    cmdHead: document.getElementById("cmd-head"),
+    cmdWorker: document.getElementById("cmd-worker"),
     cmd: document.getElementById("cmd"),
-    copyBtn: document.getElementById("copy-btn"),
+    copyHeadBtn: document.getElementById("copy-head-btn"),
+    copyWorkerBtn: document.getElementById("copy-worker-btn"),
+    copyServeBtn: document.getElementById("copy-serve-btn"),
     shareBtn: document.getElementById("share-btn"),
     kpiStrategy: document.getElementById("kpi-strategy"),
     kpiParallel: document.getElementById("kpi-parallel"),
@@ -485,16 +561,19 @@ hide_sidebar: true
     }
 
     if (dom.toolCalling.checked) {
+      const parser = (dom.toolCallParser.value || "").trim() || "qwen3_json";
       args.push("--enable-auto-tool-choice");
-      args.push("--tool-call-parser qwen3_json");
+      args.push(`--tool-call-parser ${parser}`);
     }
 
     if (dom.reasoning.checked) {
-      args.push("--reasoning-parser qwen3");
+      const parser = (dom.reasoningParser.value || "").trim() || "qwen3";
+      args.push(`--reasoning-parser ${parser}`);
     }
 
     if (dom.spec.checked) {
-      args.push("--speculative-config '{\"method\":\"mtp\",\"num_speculative_tokens\":1}'");
+      const rawSpec = (dom.specConfig.value || "").trim() || '{"method":"mtp","num_speculative_tokens":1}';
+      args.push(`--speculative-config ${JSON.stringify(rawSpec)}`);
     }
 
     if (dom.prefix.checked) {
@@ -513,6 +592,45 @@ hide_sidebar: true
 
     dom.featureNote.textContent = note;
     return args;
+  }
+
+  function isMultiNodeStrategy() {
+    return state.strategy !== "single_node_tp";
+  }
+
+  function formatCommand(baseLine, args) {
+    const lines = [baseLine, ...args];
+    return lines
+      .map((line, i) => (i === 0 ? line + " \\\n" : "  " + line + (i === lines.length - 1 ? "" : " \\\n")))
+      .join("");
+  }
+
+  function headCommandText() {
+    if (!isMultiNodeStrategy()) {
+      return "# 当前策略为单机，无需 Ray Head 启动命令";
+    }
+    const headIp = (dom.headIp.value || "").trim() || "10.0.0.1";
+    const rayPort = Number(dom.rayPort.value || 6379);
+    const dashPort = Number(dom.dashPort.value || 8265);
+    return formatCommand("ray start --head", [
+      `--node-ip-address ${headIp}`,
+      `--port ${rayPort}`,
+      "--dashboard-host 0.0.0.0",
+      `--dashboard-port ${dashPort}`
+    ]);
+  }
+
+  function workerCommandText() {
+    if (!isMultiNodeStrategy()) {
+      return "# 当前策略为单机，无需 Ray Worker 启动命令";
+    }
+    const headIp = (dom.headIp.value || "").trim() || "10.0.0.1";
+    const workerIp = (dom.workerIp.value || "").trim() || "10.0.0.2";
+    const rayPort = Number(dom.rayPort.value || 6379);
+    return formatCommand("ray start", [
+      `--address ${headIp}:${rayPort}`,
+      `--node-ip-address ${workerIp}`
+    ]);
   }
 
   function commandText() {
@@ -537,7 +655,7 @@ hide_sidebar: true
 
     lines.push(...featureArgs());
 
-    return lines.map((line, i) => (i === 0 ? line + " \\\n" : "  " + line + (i === lines.length - 1 ? "" : " \\\n"))).join("");
+    return formatCommand(lines[0], lines.slice(1));
   }
 
   function updateKpi() {
@@ -562,6 +680,8 @@ hide_sidebar: true
 
   function update() {
     renderStrategies();
+    dom.cmdHead.textContent = headCommandText();
+    dom.cmdWorker.textContent = workerCommandText();
     dom.cmd.textContent = commandText();
     updateKpi();
     updateQuery();
@@ -577,26 +697,45 @@ hide_sidebar: true
     dom.kvDtype,
     dom.gpuMem,
     dom.toolCalling,
+    dom.toolCallParser,
     dom.reasoning,
+    dom.reasoningParser,
     dom.spec,
+    dom.specConfig,
+    dom.headIp,
+    dom.workerIp,
+    dom.rayPort,
+    dom.dashPort,
     dom.prefix,
     dom.textOnly,
     dom.encoderParallel
   ].forEach((el) => el.addEventListener("input", update));
 
-  dom.copyBtn.addEventListener("click", async () => {
+  async function copyText(btn, text, successLabel, defaultLabel) {
     try {
-      await navigator.clipboard.writeText(dom.cmd.textContent);
-      dom.copyBtn.textContent = "已复制";
+      await navigator.clipboard.writeText(text);
+      btn.textContent = successLabel;
       setTimeout(() => {
-        dom.copyBtn.textContent = "复制命令";
+        btn.textContent = defaultLabel;
       }, 1300);
     } catch {
-      dom.copyBtn.textContent = "复制失败";
+      btn.textContent = "复制失败";
       setTimeout(() => {
-        dom.copyBtn.textContent = "复制命令";
+        btn.textContent = defaultLabel;
       }, 1300);
     }
+  }
+
+  dom.copyHeadBtn.addEventListener("click", async () => {
+    await copyText(dom.copyHeadBtn, dom.cmdHead.textContent, "Head 已复制", "复制 Head");
+  });
+
+  dom.copyWorkerBtn.addEventListener("click", async () => {
+    await copyText(dom.copyWorkerBtn, dom.cmdWorker.textContent, "Worker 已复制", "复制 Worker");
+  });
+
+  dom.copyServeBtn.addEventListener("click", async () => {
+    await copyText(dom.copyServeBtn, dom.cmd.textContent, "Serve 已复制", "复制 Serve");
   });
 
   dom.shareBtn.addEventListener("click", async () => {
