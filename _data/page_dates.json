@@ -31,6 +31,18 @@
     "created": "2026-05-26",
     "updated": "2026-05-27"
   },
+  "garage/llm-selfhost/recipes/vllm-recipes-inference-optimization-by-model.md": {
+    "created": "2026-06-08",
+    "updated": "2026-06-08"
+  },
+  "garage/llm-selfhost/recipes/vllm-recipes-inference-optimization-summary.md": {
+    "created": "2026-06-08",
+    "updated": "2026-06-09"
+  },
+  "garage/llm-selfhost/recipes/vllm-recipes-interactive.md": {
+    "created": "2026-06-09",
+    "updated": "2026-06-09"
+  },
   "reading_room/artificial_intelligence/llm_large_language_models/README.md": {
     "created": "2025-02-06",
     "updated": "2025-02-06"

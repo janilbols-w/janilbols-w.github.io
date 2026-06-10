@@ -14,10 +14,6 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 <!-- AUTO-GENERATED:START -->
 
-## Sections
-
-- [vLLM Recipes]({{ '/garage/llm-selfhost/recipes/vllm-recipes/' | relative_url }})
-
 ## Pages
 
 - [vLLM Recipes Inference Optimization By Model]({{ '/garage/llm-selfhost/recipes/vllm-recipes-inference-optimization-by-model/' | relative_url }})
