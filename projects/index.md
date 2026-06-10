@@ -7,7 +7,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 ## Snapshot
 
-- Total repositories tracked: 75
+- Total repositories tracked: 76
 - Source: GitHub public API (repositories + public events)
 - Refresh: scheduled by GitHub Actions
 
@@ -25,6 +25,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 | [daily_stock_analysis](https://github.com/janilbols-w/daily_stock_analysis) | LLM驱动的 A/H/美股智能分析器，多数据源行情 + 实时新闻 + Gemini 决策仪表盘 + 多渠道推送，零成本，纯白嫖，定时运行 | - | 0 | 0 | 2026-03-08 | - |
 | [higress](https://github.com/janilbols-w/higress) | 🤖 AI Gateway \| AI Native API Gateway | - | 0 | 0 | 2026-02-10 | - |
 | [abu](https://github.com/janilbols-w/abu) | 阿布量化交易系统(股票，期权，期货，比特币，机器学习) 基于python的开源量化交易，量化投资架构 | - | 0 | 0 | 2026-01-24 | - |
+| [what-to-eat](https://github.com/janilbols-w/what-to-eat) | 一饭封神：一个基于 AI 的智能菜谱生成平台，支持中华八大菜系 + 国际料理，提供营养分析、酒水推荐、菜谱效果图生成等全方位烹饪指导。 | - | 0 | 0 | 2026-01-12 | - |
 | [hf_model_info_collector](https://github.com/janilbols-w/hf_model_info_collector) | based on accelerate memory-estimator, collecting model information | Python | 0 | 0 | 2025-10-24 | - |
 | [radix_cache](https://github.com/janilbols-w/radix_cache) | - | Jupyter Notebook | 0 | 0 | 2025-09-25 | - |
 | [llm-benchmarks](https://github.com/janilbols-w/llm-benchmarks) | collection of benchmark for LLM service engine | Python | 0 | 0 | 2025-06-23 | - |
