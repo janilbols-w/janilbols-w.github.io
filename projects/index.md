@@ -15,7 +15,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
-| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | HTML | 0 | 0 | 2026-06-12 | 2026-06-09: Push (0 commits) to master |
+| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | HTML | 0 | 0 | 2026-06-19 | 2026-06-09: Push (0 commits) to master |
 | [llm-observability](https://github.com/janilbols-w/llm-observability) | 本仓库用于沉淀 LLM 推理服务的可观测性看板与运行脚本。 | Shell | 0 | 0 | 2026-06-11 | 2026-06-11: Create branch |
 | [vllm-recipes](https://github.com/janilbols-w/vllm-recipes) | Common recipes to run vLLM | - | 0 | 0 | 2026-06-07 | - |
 | [job-scheduler](https://github.com/janilbols-w/job-scheduler) | vibe coding for fun, try manage job schedule in clusters with shared gpus | Python | 0 | 0 | 2026-05-28 | 2026-05-28: Push (0 commits) to master |
