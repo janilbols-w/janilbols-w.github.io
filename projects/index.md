@@ -7,7 +7,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 ## Snapshot
 
-- Total repositories tracked: 77
+- Total repositories tracked: 78
 - Source: GitHub public API (repositories + public events)
 - Refresh: scheduled by GitHub Actions
 
@@ -15,6 +15,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
+| [Household-Guidebook](https://github.com/janilbols-w/Household-Guidebook) | 家庭琐事百科 | - | 0 | 0 | 2026-06-24 | 2026-06-24: Create branch |
 | [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | HTML | 0 | 0 | 2026-06-19 | 2026-06-09: Push (0 commits) to master |
 | [llm-observability](https://github.com/janilbols-w/llm-observability) | 本仓库用于沉淀 LLM 推理服务的可观测性看板与运行脚本。 | Shell | 0 | 0 | 2026-06-11 | 2026-06-11: Create branch |
 | [vllm-recipes](https://github.com/janilbols-w/vllm-recipes) | Common recipes to run vLLM | - | 0 | 0 | 2026-06-07 | - |
