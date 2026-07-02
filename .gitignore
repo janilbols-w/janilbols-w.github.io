@@ -43,3 +43,6 @@ Thumbs.db
 
 # Publish-time recipes snapshot (fetched in CI)
 garage/llm-selfhost/recipes/vllm-recipes/
+
+*/price_calculator/data/*
+*data/
