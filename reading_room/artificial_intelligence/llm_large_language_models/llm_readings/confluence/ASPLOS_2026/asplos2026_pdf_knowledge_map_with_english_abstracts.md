@@ -1,3 +1,7 @@
+---
+title: ASPLOS 2026 Proceedings 知识地图（含英文摘要）
+---
+
 # ASPLOS 2026 Proceedings 知识地图（基于 Volume 1/2 PDF）
 
 整理日期：2026-07-11
