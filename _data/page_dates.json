@@ -43,6 +43,10 @@
     "created": "2026-06-09",
     "updated": "2026-06-09"
   },
+  "reading_room/artificial_intelligence/llm_large_language_models/README.md": {
+    "created": "2025-02-06",
+    "updated": "2025-02-06"
+  },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_projects/benchmark/artificialanalysis.md": {
     "created": "2026-06-04",
     "updated": "2026-06-04"
@@ -156,16 +160,16 @@
     "updated": "2026-05-29"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/confluence/ASPLOS2026/asplos2026_pdf_knowledge_map.md": {
-    "created": "2026-07-11",
-    "updated": "2026-07-11"
+    "created": "2026-07-12",
+    "updated": "2026-07-12"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/confluence/ASPLOS2026/asplos2026_pdf_knowledge_map_with_english_abstracts.md": {
-    "created": "2026-07-11",
-    "updated": "2026-07-11"
+    "created": "2026-07-12",
+    "updated": "2026-07-12"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/confluence/MLSys2026/mlsys2026_knowledge_map.md": {
     "created": "2026-07-12",
-    "updated": "2026-07-11"
+    "updated": "2026-07-12"
   },
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/LLM-Inference-Serving_Survey-of-Recent-Advances-and-Opportunities.md": {
     "created": "2025-02-21",
@@ -298,10 +302,6 @@
   "reading_room/artificial_intelligence/llm_large_language_models/llm_readings/train/test-time scaling/s1.Simple_test-time_scaling.md": {
     "created": "2025-02-21",
     "updated": "2026-04-08"
-  },
-  "reading_room/artificial_intelligence/llm_large_language_models/README.md": {
-    "created": "2025-02-06",
-    "updated": "2025-02-06"
   },
   "reading_room/private-room/study_catalog.md": {
     "created": "2026-04-08",

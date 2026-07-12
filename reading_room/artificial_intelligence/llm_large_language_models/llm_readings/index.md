@@ -8,6 +8,7 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 ## Sections
 
+- [Confluence]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/confluence/' | relative_url }})
 - [Inference]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/inference/' | relative_url }})
 - [KVCache]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/kvcache/' | relative_url }})
 - [Model]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/model/' | relative_url }})
