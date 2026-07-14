@@ -10,5 +10,6 @@ This page is generated automatically. Keep writing markdown files, then run the 
 
 - [Asplos2026 Pdf Knowledge Map]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/confluence/ASPLOS2026/asplos2026_pdf_knowledge_map/' | relative_url }})
 - [Asplos2026 Pdf Knowledge Map With English Abstracts]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/confluence/ASPLOS2026/asplos2026_pdf_knowledge_map_with_english_abstracts/' | relative_url }})
+- [Asplos2026 Three Focus Areas]({{ '/reading_room/artificial_intelligence/llm_large_language_models/llm_readings/confluence/ASPLOS2026/asplos2026_three_focus_areas/' | relative_url }})
 
 <!-- AUTO-GENERATED:END -->
