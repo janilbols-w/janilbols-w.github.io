@@ -15,6 +15,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
+| [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-08-05 | 2026-08-05: Push (0 commits) to main |
 | [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-08-03 | 2026-07-13: Push (0 commits) to master |
 | [awesome-papers-lingyunyang](https://github.com/janilbols-w/awesome-papers-lingyunyang) | Here are my personal paper reading notes (including machine learning systems, AI infrastructure, ... | - | 0 | 0 | 2026-07-08 | - |
 | [LLM-on-ascend](https://github.com/janilbols-w/LLM-on-ascend) | Collection of LLM examples on ascend | Shell | 0 | 0 | 2026-07-03 | - |
@@ -94,7 +95,6 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 | [tensorflow-notebooks-examples](https://github.com/janilbols-w/tensorflow-notebooks-examples) | Tensorflow Notebook Examples and Tutorials | - | 0 | 0 | 2019-05-13 | - |
 | [bindsnet](https://github.com/janilbols-w/bindsnet) | Simulation of spiking neural networks (SNNs) using PyTorch. | - | 0 | 0 | 2019-01-10 | - |
 | [snn](https://github.com/janilbols-w/snn) | - | - | 0 | 0 | 2018-12-10 | - |
-| [tensorflow_notes](https://github.com/janilbols-w/tensorflow_notes) | tensorflow源码阅读笔记 | - | 0 | 0 | 2018-09-18 | - |
 
 ## Notes
 
