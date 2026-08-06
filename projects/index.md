@@ -15,8 +15,8 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
-| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-08-05 | 2026-07-13: Push (0 commits) to master |
-| [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-08-05 | 2026-08-05: Push (0 commits) to main |
+| [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-08-06 | 2026-08-05: Push (0 commits) to main |
+| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-08-06 | 2026-07-13: Push (0 commits) to master |
 | [awesome-papers-lingyunyang](https://github.com/janilbols-w/awesome-papers-lingyunyang) | Here are my personal paper reading notes (including machine learning systems, AI infrastructure, ... | - | 0 | 0 | 2026-07-08 | - |
 | [LLM-on-ascend](https://github.com/janilbols-w/LLM-on-ascend) | Collection of LLM examples on ascend | Shell | 0 | 0 | 2026-07-03 | - |
 | [Household-Guidebook](https://github.com/janilbols-w/Household-Guidebook) | 家庭琐事百科 | HTML | 0 | 0 | 2026-06-25 | - |
