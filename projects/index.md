@@ -15,6 +15,7 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
+| [MealMate](https://github.com/janilbols-w/MealMate) | - | Python | 0 | 0 | 2026-08-09 | 2026-08-09: Create branch |
 | [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-08-08 | 2026-07-13: Push (0 commits) to master |
 | [llm-recipes](https://github.com/janilbols-w/llm-recipes) | deploy recipes for llm models | Ruby | 0 | 0 | 2026-08-08 | 2026-08-08: Push (0 commits) to main |
 | [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-08-07 | 2026-08-05: Push (0 commits) to main |
@@ -94,7 +95,6 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 | [Forecasting](https://github.com/janilbols-w/Forecasting) | repo for methods to analyze time series data | - | 0 | 0 | 2019-11-14 | - |
 | [PyDataRoad](https://github.com/janilbols-w/PyDataRoad) | open source for wechat-official-account (ID: PythonDataLab) | - | 0 | 0 | 2019-11-01 | - |
 | [tensorflow-notebooks-examples](https://github.com/janilbols-w/tensorflow-notebooks-examples) | Tensorflow Notebook Examples and Tutorials | - | 0 | 0 | 2019-05-13 | - |
-| [bindsnet](https://github.com/janilbols-w/bindsnet) | Simulation of spiking neural networks (SNNs) using PyTorch. | - | 0 | 0 | 2019-01-10 | - |
 
 ## Notes
 
