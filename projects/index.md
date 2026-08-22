@@ -15,7 +15,8 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
-| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-08-21 | - |
+| [llm-workload-simulator](https://github.com/janilbols-w/llm-workload-simulator) | - | Python | 0 | 0 | 2026-08-22 | 2026-08-22: Push (0 commits) to main |
+| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-08-22 | - |
 | [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-08-21 | 2026-08-14: Push (0 commits) to main |
 | [sglang-examples](https://github.com/janilbols-w/sglang-examples) | examples for sglang deployment | Shell | 0 | 0 | 2026-08-14 | 2026-08-14: Create branch |
 | [MealMate](https://github.com/janilbols-w/MealMate) | - | Python | 0 | 0 | 2026-08-10 | 2026-08-10: Push (0 commits) to master |
@@ -94,7 +95,6 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 | [orion](https://github.com/janilbols-w/orion) | - | - | 0 | 0 | 2020-01-28 | - |
 | [statsmodels](https://github.com/janilbols-w/statsmodels) | Statsmodels: statistical modeling and econometrics in Python | - | 0 | 0 | 2019-11-27 | - |
 | [Forecasting](https://github.com/janilbols-w/Forecasting) | repo for methods to analyze time series data | - | 0 | 0 | 2019-11-14 | - |
-| [PyDataRoad](https://github.com/janilbols-w/PyDataRoad) | open source for wechat-official-account (ID: PythonDataLab) | - | 0 | 0 | 2019-11-01 | - |
 
 ## Notes
 
