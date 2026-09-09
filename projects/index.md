@@ -15,12 +15,12 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
-| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-09-08 | - |
-| [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-09-08 | 2026-09-05: Push (0 commits) to main |
+| [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-09-09 | 2026-09-05: Push (0 commits) to main |
+| [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-09-09 | - |
 | [skill-project-development-workflow](https://github.com/janilbols-w/skill-project-development-workflow) | - | - | 0 | 0 | 2026-08-28 | 2026-08-28: Create branch |
 | [llm-workload-simulator](https://github.com/janilbols-w/llm-workload-simulator) | - | Python | 0 | 0 | 2026-08-22 | 2026-08-22: Push (0 commits) to main |
 | [sglang-examples](https://github.com/janilbols-w/sglang-examples) | examples for sglang deployment | Shell | 0 | 0 | 2026-08-14 | 2026-08-14: Create branch |
-| [MealMate](https://github.com/janilbols-w/MealMate) | - | Python | 0 | 0 | 2026-08-10 | 2026-08-10: Push (0 commits) to master |
+| [MealMate](https://github.com/janilbols-w/MealMate) | - | Python | 0 | 0 | 2026-08-10 | - |
 | [llm-recipes](https://github.com/janilbols-w/llm-recipes) | deploy recipes for llm models | Ruby | 0 | 0 | 2026-08-08 | - |
 | [awesome-papers-lingyunyang](https://github.com/janilbols-w/awesome-papers-lingyunyang) | Here are my personal paper reading notes (including machine learning systems, AI infrastructure, ... | - | 0 | 0 | 2026-07-08 | - |
 | [LLM-on-ascend](https://github.com/janilbols-w/LLM-on-ascend) | Collection of LLM examples on ascend | Shell | 0 | 0 | 2026-07-03 | - |
