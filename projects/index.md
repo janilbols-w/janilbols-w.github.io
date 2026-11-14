@@ -15,8 +15,8 @@ Auto-tracked updates for [github.com/janilbols-w](https://github.com/janilbols-w
 
 | Repository | Description | Language | Stars | Forks | Last Push | Last Activity |
 |---|---|---|---:|---:|---|---|
-| [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-11-13 | 2026-11-06: Push (0 commits) to main |
 | [janilbols-w.github.io](https://github.com/janilbols-w/janilbols-w.github.io) | janilbols' github pages | Jupyter Notebook | 0 | 0 | 2026-11-13 | - |
+| [weekly-paper](https://github.com/janilbols-w/weekly-paper) | weekly paper readings collection by bot | Python | 0 | 0 | 2026-11-13 | 2026-11-06: Push (0 commits) to main |
 | [gpu-serving-tuner](https://github.com/janilbols-w/gpu-serving-tuner) | - | Shell | 0 | 0 | 2026-11-12 | 2026-11-12: Create branch |
 | [skill-project-development-workflow](https://github.com/janilbols-w/skill-project-development-workflow) | - | - | 0 | 0 | 2026-08-28 | - |
 | [llm-workload-simulator](https://github.com/janilbols-w/llm-workload-simulator) | - | Python | 0 | 0 | 2026-08-22 | - |
